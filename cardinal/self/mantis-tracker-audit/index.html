@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MANTIS Web Tracker Audit Workflow — SCAN, CLASSIFY, TRACE, DECIDE. A 30-minute process for complete third-party tracker inventory and Loi 25 / GDPR exposure mapping.">
+<title>MANTIS — Web Tracker Audit Workflow | Cardinal Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--blue:#3B82F6;--r:8px;--rl:12px;--max:880px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65}
+a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
+code,pre{font-family:'JetBrains Mono','Fira Code',monospace}
+pre{font-size:13px;background:var(--s1);border:1px solid var(--s3);border-radius:var(--r);padding:16px;overflow-x:auto;line-height:1.55;tab-size:2}
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--s2);padding:18px 0}
+.hdr{display:flex;align-items:center;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--red-b);color:var(--red);background:var(--red-s)}
+
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--s2)}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px}
+.hero h1 span{color:var(--red)}
+.hero .sub{font-size:17px;color:var(--muted);max-width:580px;margin-bottom:32px;line-height:1.7}
+
+.phase-row{display:flex;gap:8px;flex-wrap:wrap}
+.pc{flex:1;min-width:130px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s;text-align:left}
+.pc:hover,.pc.active{border-color:var(--red);background:var(--red-s)}
+.pc .L{font-size:22px;font-weight:800;color:var(--red);line-height:1;margin-bottom:3px}
+.pc .W{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:3px}
+.pc .D{font-size:12px;color:var(--dim);line-height:1.4}
+
+.stage-wrap{padding:28px 0 36px;border-bottom:1px solid var(--s2)}
+.sp{display:none}.sp.active{display:block}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.sl{font-size:36px;font-weight:800;color:var(--red);line-height:1;font-family:'JetBrains Mono',monospace}
+.sw{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.sm h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+
+.tabs-bar{position:sticky;top:0;z-index:10;background:rgba(9,9,11,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2)}
+.tabs{display:flex;max-width:var(--max);margin:0 auto;padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex-shrink:0;padding:13px 16px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s}
+.tb:hover{color:var(--muted)}
+.tb.active{color:var(--text);border-bottom-color:var(--red)}
+
+.panel{display:none;padding:44px 0}.panel.active{display:block}
+.sh2{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+h3{font-size:15px;font-weight:600;margin-bottom:6px}
+p{color:var(--muted);margin-bottom:12px}p:last-child{margin-bottom:0}
+ul,ol{padding-left:20px;color:var(--muted);margin-bottom:12px}
+li{margin-bottom:4px}li strong{color:var(--text)}
+
+.card{background:var(--s1);border:1px solid var(--s2);border-radius:var(--rl);padding:20px;margin-bottom:12px}
+
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:20px 0}
+.dc{background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px}
+.dc .dn{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.dc .dt{font-size:13px;font-weight:600;margin-bottom:3px}
+.dc .dd{font-size:12px;color:var(--dim);line-height:1.45}
+
+.acc{margin-bottom:6px}
+.acc-h{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);cursor:pointer;transition:border-color .15s;user-select:none}
+.acc-h:hover{border-color:var(--s3)}
+.acc.open .acc-h{border-color:var(--red-b);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.acc-n{width:24px;height:24px;border-radius:5px;background:var(--red-s);border:1px solid var(--red-b);color:var(--red);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-t{font-size:13px;font-weight:600;flex:1}
+.acc-a{color:var(--dim);font-size:11px;transition:transform .2s}
+.acc.open .acc-a{transform:rotate(90deg)}
+.acc-b{display:none;padding:14px 16px;background:var(--s1);border:1px solid var(--red-b);border-top:none;border-bottom-left-radius:var(--r);border-bottom-right-radius:var(--r);font-size:13px;color:var(--muted);line-height:1.6}
+.acc.open .acc-b{display:block}
+
+.cw{position:relative;margin-bottom:16px}
+.cl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.cp{position:absolute;top:34px;right:10px;padding:4px 10px;background:var(--s2);border:1px solid var(--s3);border-radius:4px;color:var(--muted);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;z-index:1}
+.cp:hover{background:var(--s3);color:var(--text)}
+.cp.ok{color:var(--green);border-color:var(--green)}
+
+.tl{list-style:none;padding:0}
+.step{display:flex;gap:14px;margin-bottom:18px;position:relative}
+.step::before{content:'';position:absolute;left:14px;top:28px;bottom:-14px;width:1px;background:var(--s3)}
+.step:last-child::before{display:none}
+.sn{width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--muted);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.sb h3{color:var(--text);margin-bottom:3px;font-size:14px}
+.sb p{font-size:13px;margin-bottom:6px}
+.sm2{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--s2);color:var(--dim);border:1px solid var(--s3)}
+.chip-warn{background:rgba(245,158,11,.08);color:var(--gold);border-color:rgba(245,158,11,.25)}
+.chip-ok{background:rgba(34,197,94,.08);color:var(--green);border-color:rgba(34,197,94,.25)}
+
+.flow{margin-bottom:24px}
+.fs{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--s1);border:1px solid var(--s2);border-bottom:none;transition:background .15s}
+.fs:first-child{border-radius:var(--rl) var(--rl) 0 0}
+.fs:last-child{border-bottom:1px solid var(--s2);border-radius:0 0 var(--rl) var(--rl)}
+.fi{width:30px;height:30px;border-radius:var(--r);background:var(--red-s);border:1px solid var(--red-b);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.fs h3{font-size:13px;color:var(--text);margin-bottom:2px}
+.fs p{font-size:12px;margin:0}
+
+.cl2{list-style:none;padding:0}
+.cl2 li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--s2);color:var(--muted);font-size:14px}
+.cl2 li:last-child{border-bottom:none}
+.ci{color:var(--green);flex-shrink:0;margin-top:1px}
+.wi{color:var(--gold);flex-shrink:0;margin-top:1px}
+
+.decide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:20px 0}
+.dcard{border-radius:var(--r);padding:16px;border:1px solid var(--s2)}
+.dcard.keep{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.06)}
+.dcard.flag{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.06)}
+.dcard.remove{border-color:rgba(220,38,38,.3);background:var(--red-s)}
+.dcard.gate{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.06)}
+.dcard .dk{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.dcard.keep .dk{color:var(--green)}
+.dcard.flag .dk{color:var(--gold)}
+.dcard.remove .dk{color:var(--red)}
+.dcard.gate .dk{color:var(--blue)}
+.dcard h3{font-size:13px;margin-bottom:4px}
+.dcard p{font-size:12px;color:var(--dim);margin:0}
+
+.risk-row{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.risk{padding:8px 14px;border-radius:var(--r);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.risk.low{background:rgba(34,197,94,.08);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.risk.med{background:rgba(245,158,11,.08);color:var(--gold);border:1px solid rgba(245,158,11,.2)}
+.risk.high{background:var(--red-s);color:var(--red-h);border:1px solid var(--red-b)}
+
+.cat-table{width:100%;border-collapse:collapse;margin:16px 0}
+.cat-table th{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);text-align:left;padding:8px 12px;border-bottom:1px solid var(--s2)}
+.cat-table td{padding:10px 12px;border-bottom:1px solid var(--s2);font-size:13px;color:var(--muted);vertical-align:top}
+.cat-table tr:last-child td{border-bottom:none}
+.cat-table td:first-child{color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
+
+footer{border-top:1px solid var(--s2);padding:28px 0;margin-top:48px}
+.ft{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fl{font-size:13px;color:var(--dim)}
+.fl strong{color:var(--muted)}
+
+@media(max-width:580px){.pc{min-width:calc(50% - 4px)}.dgrid{grid-template-columns:1fr}.decide-grid{grid-template-columns:1fr 1fr}.hdr .badge{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="brand"><span class="dot"></span>Cardinal Conseils</div>
+    <span class="badge">Self</span>
+  </div>
+</header>
+
+<div class="hero container">
+  <p class="sh2">Privacy &amp; Security Audit</p>
+  <h1><span>MANTIS</span> — Web Tracker<br>Audit Workflow</h1>
+  <p class="sub">Complete third-party tracker inventory for any website. Vendors identified, execution flows mapped, privacy risk scored, Loi 25 / GDPR exposure documented. Under 30 minutes from cold start.</p>
+  <div class="phase-row">
+    <div class="pc active" onclick="showPhase('SCAN',this)"><div class="L">01</div><div class="W">SCAN</div><div class="D">Record live browser traffic on the target page</div></div>
+    <div class="pc" onclick="showPhase('CLASSIFY',this)"><div class="L">02</div><div class="W">CLASSIFY</div><div class="D">Cross-reference requests against Tracker Radar</div></div>
+    <div class="pc" onclick="showPhase('TRACE',this)"><div class="L">03</div><div class="W">TRACE</div><div class="D">Follow upstream &amp; downstream call chains</div></div>
+    <div class="pc" onclick="showPhase('DECIDE',this)"><div class="L">04</div><div class="W">DECIDE</div><div class="D">Keep / Flag / Remove / Consent-gate per vendor</div></div>
+  </div>
+</div>
+
+<div class="stage-wrap container">
+  <div id="pSCAN" class="sp active">
+    <div class="sh"><div class="sl">SCAN</div><div class="sm"><div class="sw">Phase 01</div><h2>Record live browser traffic</h2></div></div>
+    <p>MANTIS intercepts network requests live as the page loads and as you interact. The quality of your recording determines everything downstream.</p>
+    <div class="dgrid">
+      <div class="dc"><div class="dn">Prerequisite</div><div class="dt">Clean profile</div><div class="dd">Chrome Guest mode or fresh profile. No cached cookies, consent states, or session tokens.</div></div>
+      <div class="dc"><div class="dn">State 1</div><div class="dt">Pre-consent load</div><div class="dd">Let the page fully load without touching the cookie banner. The legally critical window.</div></div>
+      <div class="dc"><div class="dn">State 2</div><div class="dt">Post-consent interaction</div><div class="dd">Accept the banner, navigate 2–3 pages, trigger cart / signup / contact if relevant.</div></div>
+      <div class="dc"><div class="dn">Output</div><div class="dt">Session with N requests</div><div class="dd">Typical sites: 150–400 total requests. Complex marketing stacks: 400+.</div></div>
+    </div>
+  </div>
+  <div id="pCLASSIFY" class="sp">
+    <div class="sh"><div class="sl">CLASSIFY</div><div class="sm"><div class="sw">Phase 02</div><h2>Cross-reference against Tracker Radar</h2></div></div>
+    <p>MANTIS uses DuckDuckGo's Tracker Radar — the same classification dataset that powers the DDG browser — to identify every request by vendor, product, role, and legal category.</p>
+    <div class="risk-row">
+      <div class="risk low">LOW — no active privacy signals detected</div>
+      <div class="risk med">MEDIUM — behavioral or cross-site signals</div>
+      <div class="risk high">HIGH — fingerprinting or aggressive tracking</div>
+    </div>
+    <p style="font-size:13px;margin-top:4px"><strong style="color:var(--text)">Confidence 95%+</strong> = treat as confirmed. Below 95% = verify manually.</p>
+  </div>
+  <div id="pTRACE" class="sp">
+    <div class="sh"><div class="sl">TRACE</div><div class="sm"><div class="sw">Phase 03</div><h2>Follow upstream &amp; downstream call chains</h2></div></div>
+    <p>Use the Upstream / Downstream toggle in MANTIS to trace each vendor's execution context.</p>
+    <div class="flow">
+      <div class="fs"><div class="fi">↑</div><div><h3>Upstream — who loaded this?</h3><p>Identifies the initiating script. tag_manager entries (GTM) are usually the root of most chains. If GTM fires pre-consent, every downstream vendor also fires pre-consent.</p></div></div>
+      <div class="fs"><div class="fi">↓</div><div><h3>Downstream — what does it load next?</h3><p>Maps the vendor's call chain. A high downstream count (10+) means one consent failure cascades into many tracker fires. Priority for remediation.</p></div></div>
+      <div class="fs"><div class="fi">?</div><div><h3>Unclassified — investigate manually</h3><p>Domains not in Tracker Radar DB. May be custom pixels, subdomain proxies, or obscure analytics. Never skip this cluster.</p></div></div>
+    </div>
+  </div>
+  <div id="pDECIDE" class="sp">
+    <div class="sh"><div class="sl">DECIDE</div><div class="sm"><div class="sw">Phase 04</div><h2>One decision per vendor — no exceptions</h2></div></div>
+    <p>Every vendor in the findings table gets a decision before you close the session.</p>
+    <div class="decide-grid">
+      <div class="dcard keep"><div class="dk">Keep</div><h3>Core functionality</h3><p>Low risk, consent-gated. Document and move on.</p></div>
+      <div class="dcard flag"><div class="dk">Flag</div><h3>High downstream / unclear basis</h3><p>Escalate to legal or DPO review before next deploy.</p></div>
+      <div class="dcard remove"><div class="dk">Remove</div><h3>No consent, no legitimate interest</h3><p>Tag for GTM or developer removal this sprint.</p></div>
+      <div class="dcard gate"><div class="dk">Consent-gate</div><h3>Useful, needs explicit opt-in</h3><p>Ensure CMP blocks it until user accepts. Verify in pre-consent recording.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs">
+    <button class="tb active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tb" onclick="showTab('workflow',this)">Workflow</button>
+    <button class="tb" onclick="showTab('cheatsheet',this)">Cheat Sheet</button>
+    <button class="tb" onclick="showTab('templates',this)">Templates</button>
+    <button class="tb" onclick="showTab('pitfalls',this)">Pitfalls</button>
+  </div>
+</div>
+
+<div id="tab-overview" class="panel active container">
+  <p class="sh2">What you get</p>
+  <h2>Complete tracker inventory in under 30 minutes.</h2>
+  <p>MANTIS + DuckDuckGo Tracker Radar gives you vendor identification, execution flow mapping, privacy risk scoring, and a findings file with clear actions — without touching the site's code or needing server access.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:20px 0 32px">
+    <div class="card"><p class="sh2" style="margin-bottom:6px">Where this applies</p><h3>Any public web page</h3><p style="font-size:13px">Client sites, Cardinal Conseils properties, PayFacto web layer, competitor marketing stacks, government portals for benchmarking. Anything a browser can load.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">The legal angle</p><h3>Loi 25 · PIPEDA · GDPR</h3><p style="font-size:13px">The pre-consent recording state reveals what fires before a user consents. Every vendor in that window without a legitimate interest exemption is a compliance gap.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">The CISO angle</p><h3>Web-layer input for threat model</h3><p style="font-size:13px">Third-party trackers are also third-party code execution on your domain. Advertising pixels with high downstream counts expand the attack surface for supply-chain compromise.</p></div>
+  </div>
+  <p class="sh2">Proof of implementation</p>
+  <h2 style="margin-bottom:12px">You know it worked when:</h2>
+  <ul class="cl2">
+    <li><span class="ci">✓</span>Findings table complete — DECIDE column filled for every vendor</li>
+    <li><span class="ci">✓</span>Both pre-consent and post-consent states recorded</li>
+    <li><span class="ci">✓</span>At least one pre-consent vendor identified (or confirmed zero)</li>
+    <li><span class="ci">✓</span>Unclassified cluster is empty or each entry is explained</li>
+    <li><span class="ci">✓</span>GTM's full downstream chain traced — which tags, under what conditions</li>
+    <li><span class="ci">✓</span>Written action list with owner and timeline attached</li>
+    <li><span class="wi">⚠</span>NOT done if: only one recording state was captured</li>
+    <li><span class="wi">⚠</span>NOT done if: Unclassified cluster was skipped without investigation</li>
+    <li><span class="wi">⚠</span>NOT done if: any vendor row has no DECIDE value</li>
+  </ul>
+</div>
+
+<div id="tab-workflow" class="panel container">
+  <p class="sh2">Step by step</p>
+  <h2>Implementation Workflow</h2>
+  <ul class="tl" style="margin-top:22px">
+    <li class="step"><div class="sn">1</div><div class="sb"><h3>Install MANTIS and prep the environment</h3><p>Install MANTIS Chrome extension. Open Chrome Guest mode or a fresh profile with no cookies, sessions, or other extensions active.</p><div class="sm2"><span class="chip">Produces: clean recording environment</span><span class="chip">5 min (first install)</span></div></div></li>
+    <li class="step"><div class="sn">2</div><div class="sb"><h3>Record State 1 — pre-consent</h3><p>Navigate to the target URL. Start MANTIS recording. Let the page fully load without interacting with any banner or CTA. Note the request count at stabilization.</p><div class="sm2"><span class="chip">Produces: pre-consent session</span><span class="chip">2–3 min</span><span class="chip-warn">Legally critical window</span></div></div></li>
+    <li class="step"><div class="sn">3</div><div class="sb"><h3>Record State 2 — post-consent interaction</h3><p>Accept the cookie banner. Navigate 2–3 key pages. Trigger any cart, signup, or contact flow. Let MANTIS capture the full interaction state.</p><div class="sm2"><span class="chip">Produces: full interaction session</span><span class="chip">5–10 min</span></div></div></li>
+    <li class="step"><div class="sn">4</div><div class="sb"><h3>Navigate the vendor graph</h3><p>Expand each cluster in MANTIS graph view. For each vendor: check Classification, Privacy Risk badge, and Execution Flow. Use Upstream/Downstream to trace call chains. Pay special attention to tag_manager entries and the Unclassified cluster.</p><div class="sm2"><span class="chip">Produces: vendor map</span><span class="chip">10–15 min</span></div></div></li>
+    <li class="step"><div class="sn">5</div><div class="sb"><h3>Export and fill the findings file</h3><p>Click Export → pull the request log. Open the findings template. Fill one row per vendor: name, product, role, legal category, privacy risk, downstream count, total endpoints.</p><div class="sm2"><span class="chip">Produces: vendor inventory table</span><span class="chip">5–10 min</span></div></div></li>
+    <li class="step"><div class="sn">6</div><div class="sb"><h3>Apply DECIDE logic</h3><p>For each vendor: Keep / Flag / Remove / Consent-gate. No row left blank. Add the three Loi 25 compliance columns if this is a formal audit: Requires Consent, Currently Gated, Gap.</p><div class="sm2"><span class="chip">Produces: action list</span><span class="chip">5 min</span><span class="chip-ok">Session complete</span></div></div></li>
+  </ul>
+  <div style="margin-top:8px">
+    <p class="sh2">Sprint Plan</p>
+    <h2 style="margin-bottom:16px">Three 30-minute blocks to full coverage</h2>
+    <div class="acc open"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">S1</span><span class="acc-t">Install + First Audit</span><span class="acc-a">▶</span></div><div class="acc-b">Install MANTIS · Create Chrome Guest profile · Pick a target (your site, a client site, or gouvernement.qc.ca for practice) · Run full recording: page load + banner interaction + 2 page navigations · Export the request log.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">S2</span><span class="acc-t">Build the Findings File</span><span class="acc-a">▶</span></div><div class="acc-b">Open findings template · Fill vendor inventory from MANTIS graph · Classify each vendor using the cheat sheet · Apply DECIDE logic to each row.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">S3</span><span class="acc-t">Loi 25 Exposure Check</span><span class="acc-a">▶</span></div><div class="acc-b">Re-run recording in pre-consent state only · List every vendor that fires before the banner is touched · These are your Gap items — Flag or Remove column · Draft action list with owner and timeline.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">→</span><span class="acc-t">Ongoing — 15 min/quarter per site</span><span class="acc-a">▶</span></div><div class="acc-b">Re-run Steps 2–5 on any site with changes in the prior quarter · Check for new Unclassified entries — new pixels injected through GTM, agency access, or plugin updates.</div></div>
+  </div>
+</div>
+
+<div id="tab-cheatsheet" class="panel container">
+  <p class="sh2">MANTIS graph view</p>
+  <h2>Reading the Interface</h2>
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-bottom:14px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)">Node Legend</h3>
+    <table class="cat-table">
+      <tr><th>Node</th><th>Meaning</th></tr>
+      <tr><td>Left anchor</td><td>Target page — the First Party root</td></tr>
+      <tr><td>Middle · Unclassified</td><td>Domains not in Tracker Radar — investigate manually</td></tr>
+      <tr><td>Middle · First Party</td><td>Same-domain requests — usually safe</td></tr>
+      <tr><td>Middle · Vendors</td><td>Confirmed third-party vendors from Tracker Radar</td></tr>
+      <tr><td>Right nodes</td><td>Specific products / endpoints per vendor</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:14px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)">Classification Categories</h3>
+    <table class="cat-table">
+      <tr><th>Category</th><th>What it means</th><th>Default DECIDE</th></tr>
+      <tr><td>tag_manager</td><td>Loads other trackers. GTM, Tealium, etc. Trace downstream chain first.</td><td>Keep if consent-gated; Flag if not</td></tr>
+      <tr><td>analytics</td><td>Behavioral / session tracking. GA4, Clarity, Hotjar, etc.</td><td>Consent-gate</td></tr>
+      <tr><td>advertising</td><td>Ad networks, retargeting, conversion pixels.</td><td>Consent-gate or Remove</td></tr>
+      <tr><td>functionality_preference</td><td>UX tools, consent widgets, chat, A/B testing infrastructure.</td><td>Keep if low risk</td></tr>
+      <tr><td>non-tracking</td><td>CDNs, fonts, captcha, security tools. No behavioral signal.</td><td>Keep</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:14px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)">Detail Panel Fields</h3>
+    <table class="cat-table">
+      <tr><th>Field</th><th>What to look for</th></tr>
+      <tr><td>Privacy Risk</td><td>LOW / MEDIUM / HIGH based on signals in session. LOW ≠ compliant — it means no signal detected, not no risk.</td></tr>
+      <tr><td>Confidence</td><td>% match to Tracker Radar DB. 95%+ = confirmed. Below 95% = verify manually before acting.</td></tr>
+      <tr><td>Initiates N downstream</td><td>How many requests this vendor triggers. &gt;5 = high-impact for consent remediation.</td></tr>
+      <tr><td>Total endpoints N</td><td>Total touch points in the vendor's full call chain.</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:14px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim)">Controls</h3>
+    <table class="cat-table">
+      <tr><th>Control</th><th>Use it to</th></tr>
+      <tr><td>Upstream</td><td>Show what loaded this vendor. Identifies root initiator (usually GTM).</td></tr>
+      <tr><td>Downstream</td><td>Show what this vendor loads next. Maps the consent cascade.</td></tr>
+      <tr><td>Filter</td><td>Isolate by vendor name or classification category.</td></tr>
+      <tr><td>Export</td><td>Pull full request log as CSV / JSON. Feed into findings file.</td></tr>
+    </table>
+  </div>
+</div>
+
+<div id="tab-templates" class="panel container">
+  <p class="sh2">Copy-paste assets</p>
+  <h2>Findings File &amp; Templates</h2>
+  <div class="cw" style="margin-top:20px"><div class="cl">Findings file — vendor inventory table</div><button class="cp" onclick="cpCode(this)">Copy</button><pre># Tracker Audit — [domain] — [YYYY-MM-DD]
+
+**Auditor:** PMC
+**Method:** MANTIS live recording
+**Total Requests Captured:** [N]
+**Recording States:** Pre-consent / Post-consent
+
+---
+
+## Vendor Inventory
+
+| Vendor | Product | Role | Legal Category | Privacy Risk | Downstream | Endpoints | DECIDE |
+|--------|---------|------|----------------|-------------|------------|-----------|--------|
+| Google | Google Tag Manager | tag_manager | functionality_preference | LOW | 14 | 24 | Keep — consent-gated |
+| Google | GA4 | analytics | tracking | LOW | — | — | Consent-gate |
+| Google | DoubleClick | advertising | advertising | MEDIUM | — | — | Flag / Remove |
+| LinkedIn | Insight Tag | analytics | tracking | MEDIUM | — | — | Consent-gate |
+| Meta | Pixel | advertising | tracking | MEDIUM | — | — | Consent-gate |
+| TikTok | Pixel | advertising | tracking | MEDIUM | — | — | Consent-gate |
+| Microsoft | Clarity / UET | analytics | tracking | LOW | — | — | Consent-gate |
+| Zendesk | Widget | functionality | non-tracking | LOW | — | — | Keep |
+| OneTrust | CMP | consent | functionality_preference | LOW | — | — | Keep |
+
+---
+
+## Key Findings
+
+- **Fires before consent:** [list vendors]
+- **High downstream impact (>5 requests):** [list vendors]
+- **Unclassified requests:** [count] — [domains]
+- **Loi 25 / GDPR exposure:** YES / NO — [detail]
+
+---
+
+## Recommended Actions
+
+1. [Action — owner — timeline]
+2. [Action — owner — timeline]
+3. [Action — owner — timeline]</pre></div>
+
+  <div class="cw"><div class="cl">Loi 25 / GDPR exposure columns (add to findings table)</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>| Vendor | ... | Requires Consent | Currently Gated | Gap |
+|--------|-----|-----------------|-----------------|-----|
+| Google | GA4 | YES | NO | YES — exposure |
+| Meta   | Pixel | YES | YES | NO — compliant |
+| Zendesk | Widget | NO | N/A | NO — exempt |
+
+Gap = YES means the vendor fires pre-consent without a legitimate interest exemption.
+Every Gap YES is a Loi 25 / GDPR finding.</pre></div>
+
+  <div class="cw"><div class="cl">Pre-audit checklist</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>[ ] MANTIS installed in Chrome
+[ ] Chrome Guest profile or fresh profile ready (no cookies, no extensions)
+[ ] Target URL identified
+[ ] Two recording states planned: pre-consent load, post-consent interaction
+[ ] Findings file template open and ready to fill
+[ ] Unclassified cluster: plan to investigate each entry manually
+[ ] GTM identified: will trace full downstream chain
+[ ] Action list will have an owner and timeline per item</pre></div>
+
+  <div class="cw"><div class="cl">Common vendor reference (typical marketing stack)</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>Google Tag Manager    tag_manager      functionality_preference   Keep if properly consent-gated
+Google Analytics 4    analytics        tracking                   Consent-gate
+Google DoubleClick    advertising      advertising                Consent-gate or Remove
+Meta Pixel            advertising      tracking                   Consent-gate
+LinkedIn Insight Tag  analytics        tracking                   Consent-gate
+TikTok Pixel          advertising      tracking                   Consent-gate
+Microsoft Clarity     analytics        tracking                   Consent-gate
+Microsoft UET         advertising      advertising                Consent-gate
+HotJar                analytics        tracking                   Consent-gate
+OneTrust              consent          functionality_preference   Keep
+Cookiebot             consent          functionality_preference   Keep
+Zendesk Widget        functionality    non-tracking               Keep
+Intercom              functionality    non-tracking               Keep (check data residency)
+Stripe.js             functionality    non-tracking               Keep</pre></div>
+</div>
+
+<div id="tab-pitfalls" class="panel container">
+  <p class="sh2">What kills the audit</p>
+  <h2>Pitfalls &amp; Failure Modes</h2>
+  <div style="margin-top:20px">
+    <div class="acc open"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Recording in your main browser profile</span><span class="acc-a">▶</span></div><div class="acc-b">Cached consent states and session cookies suppress tracker fires that would hit a real new visitor. Your session looks clean. A first-time visitor's session fires everything. Always use Guest mode or a fresh profile — this is the most common audit error.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Stopping before user interaction</span><span class="acc-a">▶</span></div><div class="acc-b">Many trackers don't fire on page load — they fire on scroll, click, or form fill. A recording that stops after the initial load misses conversion pixels, retargeting fires, and chat widget initialization. Record at least one complete user journey.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Ignoring the Unclassified cluster</span><span class="acc-a">▶</span></div><div class="acc-b">Unclassified doesn't mean harmless — it means MANTIS has no Tracker Radar entry for that domain. These are the entries worth investigating manually. They could be custom pixels, obscure analytics platforms, or first-party subdomains proxying third-party data. Never skip this cluster.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Treating tag_manager as "just infrastructure"</span><span class="acc-a">▶</span></div><div class="acc-b">GTM is the master loader. In a typical site it initiates 14+ downstream requests. If GTM fires before consent, everything it loads also fires before consent — regardless of whether each individual tag has a consent trigger configured. GTM consent triggering is where most Loi 25 violations actually live. Always trace GTM's full downstream chain in the pre-consent state.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Confusing Privacy Risk LOW with "no problem"</span><span class="acc-a">▶</span></div><div class="acc-b">LOW risk means no active privacy signals were detected in your current recording session — not that the vendor is inherently safe or compliant. A DoubleClick tag showing LOW risk can still be a Loi 25 violation if it fires pre-consent. Risk badge describes signal type in this session; compliance status depends on consent timing.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">One-state recording</span><span class="acc-a">▶</span></div><div class="acc-b">Recording only after consent accept gives a false-clean picture. The legally dangerous window is the pre-consent state — what fires between page load and the user touching the consent banner. Always document both states, and specifically call out what vendors appear in the pre-consent list that are not legitimately interest-exempt.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">!</span><span class="acc-t">Leaving the session without a DECIDE per vendor</span><span class="acc-a">▶</span></div><div class="acc-b">A findings file with no DECIDE column is observation, not audit. The value of MANTIS is not the vendor list — it's the action list. Every vendor row must have Keep / Flag / Remove / Consent-gate before the session is closed. If you can't decide in the session, it defaults to Flag.</div></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft">
+    <div class="fl"><strong>Cardinal Conseils</strong> — Privacy &amp; Security Audit<br>MANTIS Web Tracker Audit Workflow v1 &middot; 2026-05-21</div>
+    <div style="font-size:13px;color:var(--dim)">
+      <a href="https://github.com/cardinalconseils/Artifacts">GitHub</a> &middot;
+      <a href="../../../_index.json">_index.json</a> &middot;
+      <a href="../../../llms.txt">llms.txt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showPhase(key,card){
+  document.querySelectorAll('.pc').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.sp').forEach(p=>p.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('p'+key).classList.add('active');
+}
+function togAcc(h){
+  h.parentElement.classList.toggle('open');
+}
+function cpCode(btn){
+  const pre=btn.nextElementSibling;
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    btn.textContent='Copied!';
+    btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);
+  });
+}
+</script>
+</body>
+</html>
