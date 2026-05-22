@@ -1,5 +1,23 @@
 [
   {
+    "title": "MANTIS — Web Tracker Audit Workflow",
+    "topic_slug": "mantis-tracker-audit",
+    "venture": "cardinal",
+    "modes": ["self"],
+    "primary_mode": "self",
+    "format": ["md", "interactive-html"],
+    "branded": true,
+    "source": "internal",
+    "created": "2026-05-21",
+    "published_at": "2026-05-22T00:00:00Z",
+    "version": 1,
+    "path": "cardinal/self/mantis-tracker-audit",
+    "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/mantis-tracker-audit",
+    "live_url": null,
+    "tags": ["implementation-guide", "self", "privacy", "security", "tracker-audit", "loi25", "ciso", "web-audit"],
+    "summary": "SCAN → CLASSIFY → TRACE → DECIDE — a 30-minute workflow using the MANTIS Chrome extension and DuckDuckGo Tracker Radar to produce a complete third-party tracker inventory for any website, with privacy risk scoring and a Loi 25 / GDPR exposure findings file."
+  },
+  {
     "title": "Implementation Guide Builder — The BUILD Framework",
     "topic_slug": "implementation-guide-builder",
     "venture": "cardinal",
