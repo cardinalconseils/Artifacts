@@ -1,5 +1,23 @@
 [
   {
+    "title": "The AI–Strategy Alignment Framework",
+    "topic_slug": "ai-strategy-alignment",
+    "venture": "cardinal",
+    "modes": ["framework"],
+    "primary_mode": "framework",
+    "format": ["md", "interactive-html"],
+    "branded": true,
+    "source": "internal",
+    "created": "2026-05-22",
+    "published_at": "2026-05-22T00:00:00Z",
+    "version": 1,
+    "path": "cardinal/framework/ai-strategy-alignment",
+    "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/ai-strategy-alignment",
+    "live_url": null,
+    "tags": ["framework", "cardinal", "ai-strategy", "alignment", "okrs", "scrum", "strategy-execution", "outcomes", "measurement", "ai-adoption"],
+    "summary": "Link every AI initiative to corporate strategy. Three frameworks — the five AI roles across the strategy lifecycle, OKRs + Scrum for organizing around outcomes, and the Define→Build→Measure→Adapt alignment loop — plus an interactive Alignment Canvas that scores any AI project on strategic, operational, and financial value before you build, surfacing the output-vs-outcome trap that stalls most AI work."
+  },
+  {
     "title": "The Five H Framework — A Leadership Philosophy for Real AI Adoption",
     "topic_slug": "five-h-framework",
     "venture": "cardinal",
