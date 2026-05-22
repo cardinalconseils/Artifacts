@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The BUILD Framework — Brief, Unpack, Install, Layer, Deploy. Turn any input into a deployable, sellable, teachable guide in one Claude Code session.">
+<title>BUILD Framework — Implementation Guide Builder | Cardinal Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--r:8px;--rl:12px;--max:880px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65}
+a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
+code,pre{font-family:'JetBrains Mono','Fira Code',monospace}
+pre{font-size:13px;background:var(--s1);border:1px solid var(--s3);border-radius:var(--r);padding:16px;overflow-x:auto;line-height:1.55;tab-size:2}
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--s2);padding:18px 0}
+.hdr{display:flex;align-items:center;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--red-b);color:var(--red);background:var(--red-s)}
+
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--s2)}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px}
+.hero h1 span{color:var(--red)}
+.hero .sub{font-size:17px;color:var(--muted);max-width:580px;margin-bottom:32px;line-height:1.7}
+
+.build-row{display:flex;gap:8px;flex-wrap:wrap}
+.bc{flex:1;min-width:130px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s;text-align:left}
+.bc:hover,.bc.active{border-color:var(--red);background:var(--red-s)}
+.bc .L{font-size:26px;font-weight:800;color:var(--red);line-height:1;margin-bottom:3px}
+.bc .W{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:3px}
+.bc .D{font-size:12px;color:var(--dim);line-height:1.4}
+
+.stage-wrap{padding:28px 0 36px;border-bottom:1px solid var(--s2)}
+.sp{display:none}.sp.active{display:block}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.sl{font-size:44px;font-weight:800;color:var(--red);line-height:1}
+.sw{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.sm h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+
+.tabs-bar{position:sticky;top:0;z-index:10;background:rgba(9,9,11,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2)}
+.tabs{display:flex;max-width:var(--max);margin:0 auto;padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex-shrink:0;padding:13px 16px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s}
+.tb:hover{color:var(--muted)}
+.tb.active{color:var(--text);border-bottom-color:var(--red)}
+
+.panel{display:none;padding:44px 0}.panel.active{display:block}
+.sh2{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+h3{font-size:15px;font-weight:600;margin-bottom:6px}
+p{color:var(--muted);margin-bottom:12px}p:last-child{margin-bottom:0}
+ul,ol{padding-left:20px;color:var(--muted);margin-bottom:12px}
+li{margin-bottom:4px}li strong{color:var(--text)}
+
+.card{background:var(--s1);border:1px solid var(--s2);border-radius:var(--rl);padding:20px;margin-bottom:12px}
+
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:20px 0}
+.dc{background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px}
+.dc .dn{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.dc .dt{font-size:13px;font-weight:600;margin-bottom:3px}
+.dc .dd{font-size:12px;color:var(--dim);line-height:1.45}
+
+.acc{margin-bottom:6px}
+.acc-h{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);cursor:pointer;transition:border-color .15s;user-select:none}
+.acc-h:hover{border-color:var(--s3)}
+.acc.open .acc-h{border-color:var(--red-b);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.acc-n{width:24px;height:24px;border-radius:5px;background:var(--red-s);border:1px solid var(--red-b);color:var(--red);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-t{font-size:13px;font-weight:600;flex:1}
+.acc-a{color:var(--dim);font-size:11px;transition:transform .2s}
+.acc.open .acc-a{transform:rotate(90deg)}
+.acc-b{display:none;padding:14px 16px;background:var(--s1);border:1px solid var(--red-b);border-top:none;border-bottom-left-radius:var(--r);border-bottom-right-radius:var(--r);font-size:13px;color:var(--muted);line-height:1.6}
+.acc.open .acc-b{display:block}
+
+.cw{position:relative;margin-bottom:16px}
+.cl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.cp{position:absolute;top:34px;right:10px;padding:4px 10px;background:var(--s2);border:1px solid var(--s3);border-radius:4px;color:var(--muted);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;z-index:1}
+.cp:hover{background:var(--s3);color:var(--text)}
+.cp.ok{color:var(--green);border-color:var(--green)}
+
+.tl{list-style:none;padding:0}
+.step{display:flex;gap:14px;margin-bottom:18px;position:relative}
+.step::before{content:'';position:absolute;left:14px;top:28px;bottom:-14px;width:1px;background:var(--s3)}
+.step:last-child::before{display:none}
+.sn{width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--muted);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.sb h3{color:var(--text);margin-bottom:3px;font-size:14px}
+.sb p{font-size:13px;margin-bottom:6px}
+.sm2{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--s2);color:var(--dim);border:1px solid var(--s3)}
+
+.flow{margin-bottom:24px}
+.fs{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--s1);border:1px solid var(--s2);border-bottom:none;transition:background .15s}
+.fs:first-child{border-radius:var(--rl) var(--rl) 0 0}
+.fs:last-child{border-bottom:1px solid var(--s2);border-radius:0 0 var(--rl) var(--rl)}
+.fi{width:30px;height:30px;border-radius:var(--r);background:var(--red-s);border:1px solid var(--red-b);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.fs h3{font-size:13px;color:var(--text);margin-bottom:2px}
+.fs p{font-size:12px;margin:0}
+
+.cl2{list-style:none;padding:0}
+.cl2 li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--s2);color:var(--muted);font-size:14px}
+.cl2 li:last-child{border-bottom:none}
+.ci{color:var(--green);flex-shrink:0;margin-top:1px}
+.wi{color:var(--gold);flex-shrink:0;margin-top:1px}
+
+footer{border-top:1px solid var(--s2);padding:28px 0;margin-top:48px}
+.ft{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fl{font-size:13px;color:var(--dim)}
+.fl strong{color:var(--muted)}
+
+@media(max-width:580px){.bc{min-width:calc(50% - 4px)}.dgrid{grid-template-columns:1fr}.hdr .badge{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="brand"><span class="dot"></span>Cardinal Conseils</div>
+    <span class="badge">Framework</span>
+  </div>
+</header>
+
+<div class="hero container">
+  <p class="sh2">Knowledge Infrastructure</p>
+  <h1>The <span>BUILD</span> Framework<br>Implementation Guide Builder</h1>
+  <p class="sub">Turn any input into a deployable, sellable, teachable guide in one Claude Code session. Five stages. One session. Live on Vercel.</p>
+  <div class="build-row">
+    <div class="bc active" onclick="showStage('B',this)"><div class="L">B</div><div class="W">Brief</div><div class="D">Lock 5 decisions before writing</div></div>
+    <div class="bc" onclick="showStage('U',this)"><div class="L">U</div><div class="W">Unpack</div><div class="D">Extract mechanism &amp; failure modes</div></div>
+    <div class="bc" onclick="showStage('I',this)"><div class="L">I</div><div class="W">Install</div><div class="D">Write the ten-part structure</div></div>
+    <div class="bc" onclick="showStage('L',this)"><div class="L">L</div><div class="W">Layer</div><div class="D">Add mode-specific sections</div></div>
+    <div class="bc" onclick="showStage('D',this)"><div class="L">D</div><div class="W">Deploy</div><div class="D">Save → Index → Publish → Serve</div></div>
+  </div>
+</div>
+
+<div class="stage-wrap container">
+  <div id="sB" class="sp active">
+    <div class="sh"><div class="sl">B</div><div class="sm"><div class="sw">Brief</div><h2>Lock 5 decisions before writing</h2></div></div>
+    <p>No writing happens until five decisions are locked. These are not preferences — they change the document structure, appended sections, and publishing path.</p>
+    <div class="dgrid">
+      <div class="dc"><div class="dn">Decision 1</div><div class="dt">Mode</div><div class="dd">self / client / product / framework — multi-select OK. Changes what’s appended after the ten-part structure.</div></div>
+      <div class="dc"><div class="dn">Decision 2</div><div class="dt">Venture</div><div class="dd">cardinal / payfacto / serviconnect / proposai / personal. Drives Obsidian folder placement.</div></div>
+      <div class="dc"><div class="dn">Decision 3</div><div class="dt">Format</div><div class="dd">md (always) + interactive-html / simple-html / json / docx. MD is never optional.</div></div>
+      <div class="dc"><div class="dn">Decision 4</div><div class="dt">Branding</div><div class="dd">cardinal-brand or unbranded. Affects voice, visual tokens on HTML output, and footer.</div></div>
+      <div class="dc"><div class="dn">Decision 5</div><div class="dt">Publish</div><div class="dd">publish (GitHub + Vercel) or private (vault only). Suggested default: client/product/framework → publish; self → private.</div></div>
+    </div>
+  </div>
+  <div id="sU" class="sp">
+    <div class="sh"><div class="sl">U</div><div class="sm"><div class="sw">Unpack</div><h2>Extract mechanism, not summary</h2></div></div>
+    <p>Silently accesses source material via web fetch, Brain search, or pasted content. Extracts the underlying logic — not a summary.</p>
+    <ul>
+      <li><strong>The promise</strong> — what the source claims you’ll get</li>
+      <li><strong>The mechanism</strong> — why it works (actual cause-and-effect)</li>
+      <li><strong>Required inputs</strong> — what you need before starting</li>
+      <li><strong>The sequence</strong> — what order things must happen</li>
+      <li><strong>Failure modes</strong> — where this breaks specifically</li>
+      <li><strong>Hidden assumptions</strong> — what the source takes for granted</li>
+    </ul>
+    <div class="card" style="margin-top:14px;border-color:var(--red-b);background:var(--red-s)"><h3 style="color:var(--red)">If source is inaccessible</h3><p style="margin:0">Skill asks you to paste the key content. It will not hallucinate mechanism or sequence from a vague description.</p></div>
+  </div>
+  <div id="sI" class="sp">
+    <div class="sh"><div class="sl">I</div><div class="sm"><div class="sw">Install</div><h2>Write the ten-part structure</h2></div></div>
+    <p>Every guide uses the same skeleton. The headers don’t change. What fills them does — mode changes the content, not the structure. See the <strong>Guide Structure</strong> tab for all ten sections.</p>
+  </div>
+  <div id="sL" class="sp">
+    <div class="sh"><div class="sl">L</div><div class="sm"><div class="sw">Layer</div><h2>Append mode-specific sections</h2></div></div>
+    <p>After the ten-part structure, appends one or more mode-specific sections in this order:</p>
+    <ul>
+      <li><strong>self →</strong> Sprint Plan (30-min sprints, ADHD-friendly pacing)</li>
+      <li><strong>client →</strong> Delivery Kit (RACI, kickoff agenda, handoff checklist)</li>
+      <li><strong>product →</strong> Commercialization Pack (positioning, pricing tiers, hooks, upsell)</li>
+      <li><strong>framework →</strong> Teaching Kit (diagram, worked examples, IP defense note)</li>
+    </ul>
+  </div>
+  <div id="sD" class="sp">
+    <div class="sh"><div class="sl">D</div><div class="sm"><div class="sw">Deploy</div><h2>Save → Index → Publish → Serve</h2></div></div>
+    <p>Fully automated when <code>publish</code> is selected in pre-flight.</p>
+    <div class="flow">
+      <div class="fs"><div class="fi">📁</div><div><h3>Save to Obsidian</h3><p>Writes .md to vault at 013 - Ideas and guides/[venture]/[mode]/[slug].md</p></div></div>
+      <div class="fs"><div class="fi">🧠</div><div><h3>Index in Brain</h3><p>Calls save_memory with title, mode, venture, path, and 2–3 sentence summary</p></div></div>
+      <div class="fs"><div class="fi">📄</div><div><h3>Produce additional formats</h3><p>Generates index.html / artifact.json / .docx if selected in pre-flight</p></div></div>
+      <div class="fs"><div class="fi">🐙</div><div><h3>Push to GitHub</h3><p>Single commit to cardinalconseils/Artifacts master via GitHub MCP. Includes meta.json and regenerated root index.</p></div></div>
+      <div class="fs"><div class="fi">▲</div><div><h3>Vercel deploys</h3><p>GitHub Actions triggers on push to master. vercel build → vercel deploy --prebuilt --prod. Live in ~60 seconds.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs">
+    <button class="tb active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tb" onclick="showTab('structure',this)">Guide Structure</button>
+    <button class="tb" onclick="showTab('path',this)">Implementation</button>
+    <button class="tb" onclick="showTab('templates',this)">Templates</button>
+    <button class="tb" onclick="showTab('deploy',this)">Deploy</button>
+  </div>
+</div>
+
+<div id="tab-overview" class="panel active container">
+  <p class="sh2">What you get</p>
+  <h2>One session. One artifact. Zero packaging debt.</h2>
+  <p>Raw input goes in. A structured guide comes out: saved to Obsidian, indexed in Brain, deployed to Vercel via GitHub Actions. The BUILD framework removes the packaging cost from knowledge work.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:20px 0 32px">
+    <div class="card"><p class="sh2" style="margin-bottom:6px">Where we play</p><h3>Cardinal Conseils practitioners</h3><p style="font-size:13px">Knowledge workers and solo operators who produce expertise faster than they can package it. PMC and anyone he trains, licenses, or deploys this to.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">How we win</p><h3>Fixed structure × mode switching</h3><p style="font-size:13px">The same ten-part skeleton works for self use, client delivery, product launch, and framework teaching. Mode-aware sections do the switching automatically.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">What we do better</p><h3>Extraction → Structure → Deploy, one session</h3><p style="font-size:13px">No other tool combines mechanism extraction, multi-format rendering, vault indexing, and CI/CD deployment in a single Claude Code workflow.</p></div>
+  </div>
+  <p class="sh2">Proof of implementation</p>
+  <h2 style="margin-bottom:12px">You know it worked when:</h2>
+  <ul class="cl2">
+    <li><span class="ci">✓</span>.md exists in Obsidian at 013 - Ideas and guides/[venture]/[mode]/[slug].md with valid frontmatter</li>
+    <li><span class="ci">✓</span>search_brain &quot;[topic]&quot; returns a result with vault path and summary</li>
+    <li><span class="ci">✓</span>GitHub commit shows in cardinalconseils/Artifacts/master with the guide folder</li>
+    <li><span class="ci">✓</span>Vercel deployment shows ✓ Production in the Actions tab</li>
+    <li><span class="ci">✓</span>Live URL returns a rendered page, not a 404</li>
+    <li><span class="ci">✓</span>Section 7 has at least one copy-paste asset</li>
+    <li><span class="ci">✓</span>Section 2 names a specific arena and disqualifies someone</li>
+    <li><span class="wi">⚠</span>NOT done if: guide exists in vault but Brain has no record (indexing skipped)</li>
+    <li><span class="wi">⚠</span>NOT done if: push landed on non-master branch (Vercel won’t deploy)</li>
+  </ul>
+</div>
+
+<div id="tab-structure" class="panel container">
+  <p class="sh2">The skeleton</p>
+  <h2>Ten-part guide structure</h2>
+  <p>Every guide uses this skeleton. Click any section for details.</p>
+  <div style="margin-top:20px">
+    <div class="acc open"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">1</span><span class="acc-t">The Promise</span><span class="acc-a">▶</span></div><div class="acc-b">One paragraph. What the reader has after finishing. Concrete, time-bound, measurable. No “you’ll understand” — only “you’ll have built X / be able to do Y / have shipped Z.”</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">2</span><span class="acc-t">The Strategy — Where We Play / How We Win / What We Do Better</span><span class="acc-a">▶</span></div><div class="acc-b">The strategic spine. Uses the Lafley/Martin <em>Playing to Win</em> cascade. Three sub-parts: <strong>Where we play</strong> (specific enough to disqualify someone), <strong>How we win</strong> (given real constraints), <strong>What we do better</strong> (repeatable, not lucky). Failure mode: “We win on quality” is not a strategy. If it applies to any business anywhere, rewrite it.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">3</span><span class="acc-t">Who This Is For / Who It’s Not For</span><span class="acc-a">▶</span></div><div class="acc-b">Two short lists. Qualification filter. Skipped in self mode. Product mode: buyer disqualifiers raise conversion. Framework mode: “this applies when…”</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">4</span><span class="acc-t">The Core Framework</span><span class="acc-a">▶</span></div><div class="acc-b">3–7 principles or stages. Each gets a name and a one-sentence explanation. Load-bearing IP — make it memorable. Collapse to an acronym or visual model if possible. Must operationalize the Strategy from Section 2. If there’s no causal link, one of them is wrong.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">5</span><span class="acc-t">The Implementation Path</span><span class="acc-a">▶</span></div><div class="acc-b">Sequenced steps, not a checklist dump. Each step: Name (verb-led), What you do (1–3 sentences), What you produce (the artifact), How long (realistic). Order matters. Parallels called out explicitly.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">6</span><span class="acc-t">The Tools &amp; Stack</span><span class="acc-a">▶</span></div><div class="acc-b">What the reader needs to execute. Prefer PMC’s stack: Next.js, TypeScript, Supabase, Tailwind, n8n, Stripe, Telnyx, ElevenLabs, Deepgram, OpenAI, Gemini. Note free vs. paid. Flag technical setup requirements.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">7</span><span class="acc-t">Templates &amp; Scripts</span><span class="acc-a">▶</span></div><div class="acc-b"><strong>No assets = no guide.</strong> At least one copy-paste asset: email templates, prompts, config files, SQL schemas, n8n JSON, scripts, printable checklists. This is what makes the guide deployable instead of theoretical.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">8</span><span class="acc-t">Pitfalls &amp; Failure Modes</span><span class="acc-a">▶</span></div><div class="acc-b">What kills implementation. Be specific. “Don’t skip step 3” is useless. “If you skip the webhook signature verification, Stripe will silently accept spoofed events and your subscription state will desync from production” is useful.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">9</span><span class="acc-t">Proof of Implementation</span><span class="acc-a">▶</span></div><div class="acc-b">How the reader knows it worked. Concrete signals — a metric, an artifact, a behavior change, a working endpoint. Distinguish between <em>built it</em> and <em>it’s working</em>.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">10</span><span class="acc-t">Next Level</span><span class="acc-a">▶</span></div><div class="acc-b">What to do once it’s running. Keeps momentum after launch and creates the natural upsell/upgrade path for product and client modes.</div></div>
+  </div>
+</div>
+
+<div id="tab-path" class="panel container">
+  <p class="sh2">Step by step</p>
+  <h2>Implementation Path</h2>
+  <ul class="tl" style="margin-top:22px">
+    <li class="step"><div class="sn">1</div><div class="sb"><h3>Invoke the skill</h3><p>Type any trigger phrase in Claude Code: “build me a guide”, “turn this into a guide”, “make this sellable”, “package this”, “push to GitHub”.</p><div class="sm2"><span class="chip">Produces: skill activation</span><span class="chip">Instant</span></div></div></li>
+    <li class="step"><div class="sn">2</div><div class="sb"><h3>Complete pre-flight</h3><p>Answer five tappable questions: Mode, Venture, Format, Branding, Publish. Already specified? Skipped automatically.</p><div class="sm2"><span class="chip">Produces: locked decisions object</span><span class="chip">30–60s</span></div></div></li>
+    <li class="step"><div class="sn">3</div><div class="sb"><h3>Source extraction</h3><p>Skill silently accesses source via web fetch, Brain search, or paste. Extracts mechanism, sequence, failure modes. Not shown to you.</p><div class="sm2"><span class="chip">Produces: internal extraction</span><span class="chip">30–90s</span></div></div></li>
+    <li class="step"><div class="sn">4</div><div class="sb"><h3>Guide generation</h3><p>Full ten-part guide plus mode-specific sections. Strategy uses Playing to Win. Core Framework gets a named model. Section 7 always has at least one copy-paste asset.</p><div class="sm2"><span class="chip">Produces: full .md with frontmatter</span><span class="chip">2–5 min</span></div></div></li>
+    <li class="step"><div class="sn">5</div><div class="sb"><h3>Additional format production</h3><p>If interactive-html, simple-html, json, or docx was picked, the additional artifact is produced alongside the .md.</p><div class="sm2"><span class="chip">Produces: index.html / artifact.json / .docx</span><span class="chip">1–3 min</span></div></div></li>
+    <li class="step"><div class="sn">6</div><div class="sb"><h3>Save and index</h3><p>.md saves to Obsidian vault. Brain MCP indexes with title, mode, venture, topic, path, and 2–3 sentence summary.</p><div class="sm2"><span class="chip">Produces: vault file + Brain index entry</span><span class="chip">10–20s</span></div></div></li>
+    <li class="step"><div class="sn">7</div><div class="sb"><h3>GitHub push + Vercel deploy</h3><p>Single commit to cardinalconseils/Artifacts master via GitHub MCP. GitHub Actions triggers Vercel deploy automatically.</p><div class="sm2"><span class="chip">Produces: live URL</span><span class="chip">60–90s push + 30–90s build</span></div></div></li>
+  </ul>
+</div>
+
+<div id="tab-templates" class="panel container">
+  <p class="sh2">Copy-paste assets</p>
+  <h2>Templates &amp; Scripts</h2>
+  <div class="cw" style="margin-top:20px"><div class="cl">Trigger phrases</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>Build me a guide on [topic]
+Turn this into a sellable framework: [paste content]
+Package this for a client: [paste notes]
+Make this teachable: [paste methodology]
+Push this to GitHub as a deployable artifact: [paste content]</pre></div>
+  <div class="cw"><div class="cl">Pre-flight checklist</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>[ ] Source material accessible (URL, paste, or Brain entry)
+[ ] Mode: self / client / product / framework
+[ ] Venture: cardinal / payfacto / serviconnect / proposai / personal
+[ ] Format: md + interactive-html / simple-html / json / docx
+[ ] Branding: cardinal-brand / unbranded
+[ ] Publish: publish (GitHub + Vercel) / private (vault only)
+[ ] GitHub MCP authenticated
+[ ] Vercel secrets set: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID</pre></div>
+  <div class="cw"><div class="cl">vercel-deploy.yml</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>name: Vercel Production Deployment
+on:
+  push:
+    branches: [master]
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install --global vercel@latest
+      - run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}</pre></div>
+  <div class="cw"><div class="cl">vercel.json (static site)</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>{"buildCommand":"","outputDirectory":".","cleanUrls":true,"trailingSlash":false}</pre></div>
+  <div class="cw"><div class="cl">meta.json schema</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>{
+  "title": "...",
+  "topic_slug": "...",
+  "venture": "cardinal | payfacto | serviconnect | proposai | personal",
+  "modes": ["self | client | product | framework"],
+  "primary_mode": "...",
+  "format": ["md", "interactive-html"],
+  "branded": true,
+  "source": "URL or internal",
+  "created": "YYYY-MM-DD",
+  "published_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "version": 1,
+  "versions": [],
+  "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/[path]",
+  "live_url": "https://[vercel-domain]/[path]/",
+  "tags": []
+}</pre></div>
+</div>
+
+<div id="tab-deploy" class="panel container">
+  <p class="sh2">Publishing pipeline</p>
+  <h2>From Claude Code to live URL</h2>
+  <div class="flow" style="margin-top:20px;margin-bottom:28px">
+    <div class="fs"><div class="fi">🔍</div><div><h3>1. Check repo state</h3><p>GitHub MCP reads current folder. Same slug + different guide → append -v2. Never overwrite silently.</p></div></div>
+    <div class="fs"><div class="fi">📦</div><div><h3>2. Single commit</h3><p>Pushes README.md, index.html, meta.json, regenerated root README.md and _index.json. One commit per publish.</p></div></div>
+    <div class="fs"><div class="fi">⚡</div><div><h3>3. GitHub Actions fires</h3><p>Push to master triggers vercel-deploy.yml: vercel pull → vercel build --prod → vercel deploy --prebuilt --prod.</p></div></div>
+    <div class="fs"><div class="fi">✅</div><div><h3>4. Live URL confirmed</h3><p>Skill surfaces GitHub URL (immediate) and Vercel live URL (~60s). Reports building / live / errored status.</p></div></div>
+  </div>
+  <p class="sh2">Required secrets</p>
+  <h2 style="margin-bottom:12px">GitHub Actions → Settings → Secrets → Actions</h2>
+  <div class="card">
+    <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--s2)"><code style="color:var(--gold);min-width:150px;font-size:13px">VERCEL_TOKEN</code><span style="color:var(--muted);font-size:13px">Personal access token from vercel.com/account/tokens</span></div>
+    <div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--s2)"><code style="color:var(--gold);min-width:150px;font-size:13px">VERCEL_ORG_ID</code><span style="color:var(--muted);font-size:13px">From vercel.json or run <code>vercel env</code> locally</span></div>
+    <div style="display:flex;gap:10px;padding:8px 0"><code style="color:var(--gold);min-width:150px;font-size:13px">VERCEL_PROJECT_ID</code><span style="color:var(--muted);font-size:13px">From .vercel/project.json after running <code>vercel link</code> locally</span></div>
+  </div>
+  <p class="sh2" style="margin-top:28px">Failure modes</p>
+  <div class="card" style="margin-top:8px">
+    <div style="padding:10px 0;border-bottom:1px solid var(--s2)"><strong style="color:var(--red)">Push fails (auth)</strong><br><span style="color:var(--muted);font-size:13px">GitHub MCP session expired. Reconnect. Obsidian save already done — not lost.</span></div>
+    <div style="padding:10px 0;border-bottom:1px solid var(--s2)"><strong style="color:var(--red)">Vercel build errors</strong><br><span style="color:var(--muted);font-size:13px">Secrets not set or project not linked. Check the Actions tab for the specific error.</span></div>
+    <div style="padding:10px 0;border-bottom:1px solid var(--s2)"><strong style="color:var(--red)">live_url 404</strong><br><span style="color:var(--muted);font-size:13px">index.html missing from guide folder, or push landed on non-master branch.</span></div>
+    <div style="padding:10px 0"><strong style="color:var(--red)">Folder collision</strong><br><span style="color:var(--muted);font-size:13px">Same slug, different guide. Skill auto-appends -v2. Say &quot;update this&quot; to overwrite in place.</span></div>
+  </div>
+</div>
+
+<footer>
+  <div class="ft">
+    <div class="fl"><strong>Cardinal Conseils</strong> — Knowledge Infrastructure<br>Implementation Guide Builder v1 &middot; BUILD Framework &middot; 2026</div>
+    <div style="font-size:13px;color:var(--dim)">
+      <a href="https://github.com/cardinalconseils/Artifacts">GitHub</a> &middot;
+      <a href="../../../_index.json">_index.json</a> &middot;
+      <a href="../../../llms.txt">llms.txt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showStage(l,card){
+  document.querySelectorAll('.bc').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.sp').forEach(p=>p.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('s'+l).classList.add('active');
+}
+function togAcc(h){
+  h.parentElement.classList.toggle('open');
+}
+function cpCode(btn){
+  const pre=btn.nextElementSibling;
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    btn.textContent='Copied!';
+    btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);
+  });
+}
+</script>
+</body>
+</html>
