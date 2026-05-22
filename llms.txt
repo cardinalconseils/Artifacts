@@ -30,6 +30,12 @@ Each guide lives at `[venture]/[mode]/[topic-slug]/` with:
 
 ## Available Guides
 
+### cardinal/framework/five-h-framework
+Title: The Five H Framework — A Leadership Philosophy for Real AI Adoption
+Summary: Human · Horizon · Habits · Handoff · Harvest — a leadership philosophy for real AI adoption delivered as a 90-day single-leader coaching engagement. Diagnoses where a leader's own AI adoption is shallow, installs AI-augmented habits and team governance, and proves impact with a Leader AI Impact Dashboard measuring outcomes, not activity.
+Tags: framework, cardinal, ai-adoption, leadership, coaching, ai-strategy, change-management, quebec, bilingual
+GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/five-h-framework
+
 ### cardinal/framework/implementation-guide-builder
 Title: Implementation Guide Builder — The BUILD Framework  
 Summary: The BUILD framework for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions.  

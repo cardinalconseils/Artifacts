@@ -1,5 +1,23 @@
 [
   {
+    "title": "The Five H Framework — A Leadership Philosophy for Real AI Adoption",
+    "topic_slug": "five-h-framework",
+    "venture": "cardinal",
+    "modes": ["framework", "product"],
+    "primary_mode": "framework",
+    "format": ["md", "interactive-html"],
+    "branded": true,
+    "source": "internal",
+    "created": "2026-05-22",
+    "published_at": "2026-05-22T00:00:00Z",
+    "version": 1,
+    "path": "cardinal/framework/five-h-framework",
+    "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/five-h-framework",
+    "live_url": null,
+    "tags": ["framework", "cardinal", "ai-adoption", "leadership", "coaching", "ai-strategy", "change-management", "quebec", "bilingual"],
+    "summary": "The Five H Framework — Human, Horizon, Habits, Handoff, Harvest — a leadership philosophy for real AI adoption delivered as a 90-day single-leader coaching engagement. Diagnoses where a leader's own AI adoption is shallow, installs AI-augmented habits and team governance, and proves impact with a Leader AI Impact Dashboard measuring outcomes, not activity."
+  },
+  {
     "title": "MANTIS — Web Tracker Audit Workflow",
     "topic_slug": "mantis-tracker-audit",
     "venture": "cardinal",

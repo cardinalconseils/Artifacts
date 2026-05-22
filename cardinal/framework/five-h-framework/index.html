@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The Five H Framework — Human, Horizon, Habits, Handoff, Harvest. A leadership philosophy for real AI adoption, delivered as a 90-day single-leader coaching engagement.">
+<title>The Five H Framework — Real AI Adoption for Leaders | Cardinal Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--r:8px;--rl:12px;--max:880px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65}
+a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
+code,pre{font-family:'JetBrains Mono','Fira Code',monospace}
+pre{font-size:13px;background:var(--s1);border:1px solid var(--s3);border-radius:var(--r);padding:16px;overflow-x:auto;line-height:1.55;tab-size:2}
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--s2);padding:18px 0}
+.hdr{display:flex;align-items:center;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--red-b);color:var(--red);background:var(--red-s)}
+
+.hero{padding:56px 0 40px;border-bottom:1px solid var(--s2)}
+.hero h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px}
+.hero h1 span{color:var(--red)}
+.hero .sub{font-size:17px;color:var(--muted);max-width:600px;margin-bottom:14px;line-height:1.7}
+.hero .stat{font-size:13px;color:var(--dim);max-width:600px;margin-bottom:32px}
+.hero .stat b{color:var(--gold)}
+
+.build-row{display:flex;gap:8px;flex-wrap:wrap}
+.bc{flex:1;min-width:130px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s;text-align:left}
+.bc:hover,.bc.active{border-color:var(--red);background:var(--red-s)}
+.bc .L{font-size:24px;font-weight:800;color:var(--red);line-height:1;margin-bottom:3px}
+.bc .W{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:3px}
+.bc .D{font-size:12px;color:var(--dim);line-height:1.4}
+
+.stage-wrap{padding:28px 0 36px;border-bottom:1px solid var(--s2)}
+.sp{display:none}.sp.active{display:block}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.sl{font-size:44px;font-weight:800;color:var(--red);line-height:1}
+.sw{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.sm h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
+
+.tabs-bar{position:sticky;top:0;z-index:10;background:rgba(9,9,11,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2)}
+.tabs{display:flex;max-width:var(--max);margin:0 auto;padding:0 24px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tb{flex-shrink:0;padding:13px 16px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s}
+.tb:hover{color:var(--muted)}
+.tb.active{color:var(--text);border-bottom-color:var(--red)}
+
+.panel{display:none;padding:44px 0}.panel.active{display:block}
+.sh2{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+h3{font-size:15px;font-weight:600;margin-bottom:6px}
+p{color:var(--muted);margin-bottom:12px}p:last-child{margin-bottom:0}
+ul,ol{padding-left:20px;color:var(--muted);margin-bottom:12px}
+li{margin-bottom:4px}li strong{color:var(--text)}
+
+.card{background:var(--s1);border:1px solid var(--s2);border-radius:var(--rl);padding:20px;margin-bottom:12px}
+.q{margin-top:14px;padding:13px 16px;background:var(--red-s);border:1px solid var(--red-b);border-radius:var(--r)}
+.q .ql{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:4px}
+.q p{color:var(--text);font-weight:500;margin:0;font-style:italic}
+
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:20px 0}
+.dc{background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);padding:14px}
+.dc .dn{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.dc .dt{font-size:13px;font-weight:600;margin-bottom:3px}
+.dc .dd{font-size:12px;color:var(--dim);line-height:1.45}
+
+.acc{margin-bottom:6px}
+.acc-h{display:flex;align-items:center;gap:10px;padding:13px 16px;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);cursor:pointer;transition:border-color .15s;user-select:none}
+.acc-h:hover{border-color:var(--s3)}
+.acc.open .acc-h{border-color:var(--red-b);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.acc-n{width:24px;height:24px;border-radius:5px;background:var(--red-s);border:1px solid var(--red-b);color:var(--red);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.acc-t{font-size:13px;font-weight:600;flex:1}
+.acc-a{color:var(--dim);font-size:11px;transition:transform .2s}
+.acc.open .acc-a{transform:rotate(90deg)}
+.acc-b{display:none;padding:14px 16px;background:var(--s1);border:1px solid var(--red-b);border-top:none;border-bottom-left-radius:var(--r);border-bottom-right-radius:var(--r);font-size:13px;color:var(--muted);line-height:1.6}
+.acc.open .acc-b{display:block}
+
+.cw{position:relative;margin-bottom:16px}
+.cl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.cp{position:absolute;top:34px;right:10px;padding:4px 10px;background:var(--s2);border:1px solid var(--s3);border-radius:4px;color:var(--muted);font-size:11px;font-weight:500;cursor:pointer;transition:all .15s;z-index:1}
+.cp:hover{background:var(--s3);color:var(--text)}
+.cp.ok{color:var(--green);border-color:var(--green)}
+
+.tl{list-style:none;padding:0}
+.step{display:flex;gap:14px;margin-bottom:18px;position:relative}
+.step::before{content:'';position:absolute;left:14px;top:28px;bottom:-14px;width:1px;background:var(--s3)}
+.step:last-child::before{display:none}
+.sn{width:28px;height:28px;border-radius:50%;background:var(--s2);border:1px solid var(--s3);color:var(--muted);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.sb h3{color:var(--text);margin-bottom:3px;font-size:14px}
+.sb p{font-size:13px;margin-bottom:6px}
+.sm2{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11px;padding:2px 8px;border-radius:4px;background:var(--s2);color:var(--dim);border:1px solid var(--s3)}
+.phase-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:24px 0 10px}
+
+.cl2{list-style:none;padding:0}
+.cl2 li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--s2);color:var(--muted);font-size:14px}
+.cl2 li:last-child{border-bottom:none}
+.ci{color:var(--green);flex-shrink:0;margin-top:1px}
+.wi{color:var(--gold);flex-shrink:0;margin-top:1px}
+
+.ptable{width:100%;border-collapse:collapse;margin:18px 0;font-size:13px}
+.ptable th{text-align:left;padding:10px 12px;color:var(--red);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--s3)}
+.ptable td{padding:11px 12px;color:var(--muted);border-bottom:1px solid var(--s2);vertical-align:top}
+.ptable td strong{color:var(--text)}
+.ptable .price{color:var(--gold);font-weight:600;white-space:nowrap}
+
+footer{border-top:1px solid var(--s2);padding:28px 0;margin-top:48px}
+.ft{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.fl{font-size:13px;color:var(--dim)}
+.fl strong{color:var(--muted)}
+
+@media(max-width:580px){.bc{min-width:calc(50% - 4px)}.dgrid{grid-template-columns:1fr}.hdr .badge{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="brand"><span class="dot"></span>Cardinal Conseils</div>
+    <span class="badge">Framework</span>
+  </div>
+</header>
+
+<div class="hero container">
+  <p class="sh2">AI Leadership · Coaching Engagement</p>
+  <h1>The <span>Five H</span> Framework<br>Real AI adoption for leaders</h1>
+  <p class="sub">You're not behind on AI. You're blind to what real adoption looks like — and it's costing you speed, margin, and the best people on your team.</p>
+  <p class="stat">88% of companies use AI. Only <b>6%</b> are winning. The gap isn't access — it's adoption depth. And depth is a coaching problem, not a tooling one.</p>
+  <div class="build-row">
+    <div class="bc active" onclick="showStage('1',this)"><div class="L">H1</div><div class="W">Human</div><div class="D">You are the constraint</div></div>
+    <div class="bc" onclick="showStage('2',this)"><div class="L">H2</div><div class="W">Horizon</div><div class="D">You optimize for now</div></div>
+    <div class="bc" onclick="showStage('3',this)"><div class="L">H3</div><div class="W">Habits</div><div class="D">Change, not willpower</div></div>
+    <div class="bc" onclick="showStage('4',this)"><div class="L">H4</div><div class="W">Handoff</div><div class="D">You're the bottleneck</div></div>
+    <div class="bc" onclick="showStage('5',this)"><div class="L">H5</div><div class="W">Harvest</div><div class="D">Activity, not impact</div></div>
+  </div>
+</div>
+
+<div class="stage-wrap container">
+  <div id="s1" class="sp active">
+    <div class="sh"><div class="sl">H1</div><div class="sm"><div class="sw">Human · The blindspot</div><h2>You are the constraint</h2></div></div>
+    <p>Most leaders optimize their team's AI use before their own. That's backwards. The highest-leverage AI investment in any organization is the leader's own thinking process — because decisions cascade.</p>
+    <ul>
+      <li>Self-awareness of how you currently process information</li>
+      <li>Identifying where cognitive load is highest — where AI augmentation has the most impact</li>
+      <li>Separating tasks you <strong>should</strong> do yourself from tasks you <strong>habitually</strong> do yourself</li>
+    </ul>
+    <div class="q"><div class="ql">The question every leader must answer</div><p>Where do I slow things down because I haven't changed how I work?</p></div>
+  </div>
+  <div id="s2" class="sp">
+    <div class="sh"><div class="sl">H2</div><div class="sm"><div class="sw">Horizon · The blindspot</div><h2>You're optimizing for now</h2></div></div>
+    <p>Leaders who adopt AI tactically — for today's tasks — miss the strategic shift happening 18 months out. Horizon builds foresight capacity: compressing scenario planning, competitive analysis, and signal detection from weeks to hours.</p>
+    <ul>
+      <li>Using AI as a strategic sounding board, not just a task executor</li>
+      <li>Mapping your industry's AI trajectory — not just your competitors' tool stack</li>
+      <li>Identifying the 2–3 decisions that will matter most in the next 18 months — and pressure-testing them now</li>
+    </ul>
+    <div class="q"><div class="ql">The question every leader must answer</div><p>What would I decide differently if I could run 10x more scenarios before committing?</p></div>
+  </div>
+  <div id="s3" class="sp">
+    <div class="sh"><div class="sl">H3</div><div class="sm"><div class="sw">Habits · The blindspot</div><h2>Adoption requires behavior change, not willpower</h2></div></div>
+    <p>AI integration fails at the habit layer. Leaders try it, find it useful, then revert to old patterns under pressure. That's not laziness — it's how habits work. New behavior requires friction removal and reinforcement, not motivation.</p>
+    <ul>
+      <li>Identifying the 3–5 daily leader workflows where AI integration has the highest ROI</li>
+      <li>Designing frictionless entry points — no new apps, no long prompts, just integrated into existing flow</li>
+      <li>The 21-day habit lock-in protocol for AI-augmented decision-making</li>
+    </ul>
+    <div class="q"><div class="ql">The question every leader must answer</div><p>What do I do every day that I'd never accept doing manually if there was a better way?</p></div>
+  </div>
+  <div id="s4" class="sp">
+    <div class="sh"><div class="sl">H4</div><div class="sm"><div class="sw">Handoff · The blindspot</div><h2>You're the bottleneck for your team</h2></div></div>
+    <p>Leaders who personally adopt AI but don't redesign how their team works around AI just create a new bottleneck. Handoff is trust architecture: what to delegate to AI-augmented processes, what to delegate to humans, and what to keep.</p>
+    <ul>
+      <li>Redesigning team workflows around AI capabilities — not adding AI on top of old processes</li>
+      <li>Building team AI fluency without becoming the IT department</li>
+      <li>Governance: what decisions need a human in the loop, and where autonomous AI execution is acceptable</li>
+    </ul>
+    <div class="q"><div class="ql">The question every leader must answer</div><p>What am I holding that I should be delegating — and what am I delegating that I should be governing?</p></div>
+  </div>
+  <div id="s5" class="sp">
+    <div class="sh"><div class="sl">H5</div><div class="sm"><div class="sw">Harvest · The blindspot</div><h2>You're measuring activity, not impact</h2></div></div>
+    <p>Most leaders track AI adoption by volume: how many tools, how many users, how many prompts. That's activity. Harvest measures the right things — speed of decision, quality of output, reduction in cognitive load, and business outcomes tied to AI integration.</p>
+    <ul>
+      <li>Defining your personal AI ROI baseline (before/after on 3 key metrics)</li>
+      <li>The Leader AI Impact Dashboard: 5 metrics that actually matter</li>
+      <li>Building the business case for deeper AI investment using your own data</li>
+    </ul>
+    <div class="q"><div class="ql">The question every leader must answer</div><p>What would I need to measure to know whether AI is making me a better leader — or just a busier one?</p></div>
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <div class="tabs">
+    <button class="tb active" onclick="showTab('overview',this)">Overview</button>
+    <button class="tb" onclick="showTab('engagement',this)">90-Day Engagement</button>
+    <button class="tb" onclick="showTab('templates',this)">Templates</button>
+    <button class="tb" onclick="showTab('pitfalls',this)">Pitfalls</button>
+    <button class="tb" onclick="showTab('pricing',this)">Pricing</button>
+  </div>
+</div>
+
+<div id="tab-overview" class="panel active container">
+  <p class="sh2">The problem worth solving</p>
+  <h2>Leaders are confident and blind at the same time</h2>
+  <p>Leaders think they've adopted AI because they use ChatGPT. They haven't — they've adopted a tool. That's not the same as integrating AI into how they think, decide, and lead. Gartner found 68% of leaders say they keep pace with AI, yet 93% report their teams lack the skills to execute. That's not a tool problem. It's a coaching problem.</p>
+  <p>Organizations combining coaching with training see <strong>88% productivity gains</strong>. Training alone delivers 22%. The difference is a thinking partner who compresses your learning curve and exposes what you can't see from inside your own mental model.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin:20px 0 32px">
+    <div class="card"><p class="sh2" style="margin-bottom:6px">Where we play</p><h3>Leaders who think they've already adopted AI</h3><p style="font-size:13px">Quebec and Canadian leaders, French or English, willing to be challenged. Single-leader engagements. Not for anyone shopping a tool list.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">How we win</p><h3>Coaching beats tooling, 88% vs 22%</h3><p style="font-size:13px">The bottleneck is adoption depth, not access. We attack the leader's own thinking process — the highest-leverage point — because decisions cascade.</p></div>
+    <div class="card"><p class="sh2" style="margin-bottom:6px">What we do better</p><h3>Philosophy, leader-first, bilingual, anti-bullshit</h3><p style="font-size:13px">No vendor affiliations. Starts with you, not your org. French or English. No hype, no AGI slides — just what's measurably true.</p></div>
+  </div>
+  <p class="sh2">The diagnostic spine</p>
+  <h2 style="margin-bottom:12px">Five lenses, run in sequence</h2>
+  <p>The order is load-bearing. You can't redesign team handoffs (H4) before your own habits are stable (H3), and you can't build habits (H3) before you know your constraint (H1) and where the horizon demands change (H2). Harvest (H5) is last because you measure what you changed — not what you intended to change. Click any H card above to explore the blindspot it exposes.</p>
+  <p class="sh2" style="margin-top:28px">Who it's for</p>
+  <ul class="cl2">
+    <li><span class="ci">✓</span>Leaders who think "I already test things myself" — willing to be shown the gap between using a tool and integrating AI</li>
+    <li><span class="ci">✓</span>Leaders whose decisions cascade to a team, a function, or a company</li>
+    <li><span class="ci">✓</span>Leaders who want measurable change in 90 days, tied to their own metrics</li>
+    <li><span class="wi">⚠</span>NOT for leaders looking for a tool recommendation list or vendor shortlist</li>
+    <li><span class="wi">⚠</span>NOT for leaders who want a team rollout before changing their own working patterns</li>
+  </ul>
+</div>
+
+<div id="tab-engagement" class="panel container">
+  <p class="sh2">The coaching model</p>
+  <h2>The 90-day engagement</h2>
+  <p>The Five H Framework is the diagnostic spine of a 90-day AI leadership coaching engagement. Three phases. No generic frameworks — every leader's constraint profile is different.</p>
+
+  <div class="phase-tag">Phase 1 · Weeks 1–3 · Human + Horizon · Baseline</div>
+  <ul class="tl">
+    <li class="step"><div class="sn">1</div><div class="sb"><h3>Constraint diagnosis (H1)</h3><p>Map how the leader processes information and where cognitive load is highest. Separate tasks they should do from tasks they habitually do.</p><div class="sm2"><span class="chip">Produces: personal constraint profile</span><span class="chip">Week 1</span></div></div></li>
+    <li class="step"><div class="sn">2</div><div class="sb"><h3>Horizon scan (H2)</h3><p>Map the industry's AI trajectory — not competitors' tool stacks. Identify the 2–3 decisions that matter most over the next 18 months.</p><div class="sm2"><span class="chip">Produces: 18-month signal map</span><span class="chip">Weeks 2–3</span></div></div></li>
+    <li class="step"><div class="sn">3</div><div class="sb"><h3>Baseline the metrics (H5, early)</h3><p>Capture the before-state on 3 key metrics so Harvest has something to compare against. No baseline, no business case.</p><div class="sm2"><span class="chip">Produces: AI ROI baseline</span><span class="chip">End of Week 3</span></div></div></li>
+  </ul>
+
+  <div class="phase-tag">Phase 2 · Weeks 4–8 · Habits + Handoff · Integration Sprint</div>
+  <ul class="tl">
+    <li class="step"><div class="sn">4</div><div class="sb"><h3>Habit installation (H3)</h3><p>Identify the 3–5 daily workflows with highest AI ROI. Design frictionless entry points. Run the 21-day lock-in protocol.</p><div class="sm2"><span class="chip">Produces: 3–5 locked habits</span><span class="chip">Weeks 4–6</span></div></div></li>
+    <li class="step"><div class="sn">5</div><div class="sb"><h3>Team workflow redesign (H4)</h3><p>Redesign workflows around AI capabilities — not AI bolted on. Build team fluency without becoming the IT department.</p><div class="sm2"><span class="chip">Produces: redesigned workflows</span><span class="chip">Weeks 6–7</span></div></div></li>
+    <li class="step"><div class="sn">6</div><div class="sb"><h3>Governance install (H4)</h3><p>Define what needs a human in the loop and where autonomous execution is acceptable. The trust architecture that removes the bottleneck.</p><div class="sm2"><span class="chip">Produces: governance map</span><span class="chip">Week 8</span></div></div></li>
+  </ul>
+
+  <div class="phase-tag">Phase 3 · Weeks 9–12 · Harvest · Measurement &amp; Lock-In</div>
+  <ul class="tl">
+    <li class="step"><div class="sn">7</div><div class="sb"><h3>Measure the impact (H5)</h3><p>Re-measure the 3 baseline metrics. Stand up the Leader AI Impact Dashboard. Quantify against the Week 3 baseline.</p><div class="sm2"><span class="chip">Produces: before/after + live dashboard</span><span class="chip">Weeks 9–10</span></div></div></li>
+    <li class="step"><div class="sn">8</div><div class="sb"><h3>Business case &amp; next horizon</h3><p>Use the leader's own data to build the case for deeper AI investment. Define the next horizon so momentum survives the engagement.</p><div class="sm2"><span class="chip">Produces: business case + next-horizon plan</span><span class="chip">Weeks 11–12</span></div></div></li>
+  </ul>
+</div>
+
+<div id="tab-templates" class="panel container">
+  <p class="sh2">Copy-paste assets</p>
+  <h2>Templates &amp; scripts</h2>
+  <div class="cw" style="margin-top:20px"><div class="cl">The Five H Diagnostic — one question per lens</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>H1 HUMAN     Where do I slow things down because I haven't changed how I work?
+H2 HORIZON   What would I decide differently if I could run 10x more
+             scenarios before committing?
+H3 HABITS    What do I do every day that I'd never accept doing manually
+             if there was a better way?
+H4 HANDOFF   What am I holding that I should be delegating — and what am I
+             delegating that I should be governing?
+H5 HARVEST   What would I need to measure to know whether AI is making me
+             a better leader — or just a busier one?</pre></div>
+  <div class="cw"><div class="cl">The Leader AI Impact Dashboard — 5 metrics that actually matter</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>1. SPEED OF DECISION
+   Baseline: avg. days from "problem surfaced" to "decision made"
+   Target:   compression %, not raw count
+
+2. QUALITY OF OUTPUT
+   Baseline: rework rate / decisions revisited within 30 days
+   Target:   reduction in revisits
+
+3. COGNITIVE LOAD
+   Baseline: self-rated 1-10 on "end-of-day mental fatigue"
+   Target:   sustained reduction across the engagement
+
+4. SCENARIO THROUGHPUT  (Horizon)
+   Baseline: # of options considered before a major decision
+   Target:   10x more scenarios pressure-tested pre-commit
+
+5. DELEGATION RATIO  (Handoff)
+   Baseline: % of recurring decisions still routed through the leader
+   Target:   shift toward governed-not-held
+
+Track impact, not activity. "How many prompts" and "how many tools"
+are vanity metrics. None of the five above is a volume count.</pre></div>
+  <div class="cw"><div class="cl">The 21-Day Habit Lock-In Protocol (H3)</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>PICK         1 daily leader workflow, highest AI ROI, lowest friction
+ANCHOR       Attach it to an existing daily action (no new app, no new slot)
+SHRINK       Reduce the entry to <60 seconds — a saved prompt, not a blank box
+TRACK        Binary yes/no per day for 21 days
+REINFORCE    Weekly coaching check: what broke, what stuck, remove friction
+LOCK         Day 21 — only then add the next workflow. Never stack two at once.
+
+Day:  1  2  3  4  5  6  7   8  9 10 11 12 13 14   15 16 17 18 19 20 21
+      .  .  .  .  .  .  .    .  .  .  .  .  .  .    .  .  .  .  .  .  .</pre></div>
+  <div class="cw"><div class="cl">Handoff Governance Decision Table (H4)</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>For each recurring decision or task, place it in ONE column:
+
+KEEP                    HUMAN-IN-THE-LOOP          AUTONOMOUS
+(leader judgment,       (AI drafts / proposes,     (AI executes,
+ irreducible)            human approves)            leader audits later)
+---------------------   ------------------------   --------------------
+Strategy & vision       Hiring shortlists          Scheduling
+People decisions        Customer-facing comms      First-draft research
+Capital allocation      Financial analysis         Summarization
+                        Risk assessments           Routine reporting
+
+Rule: anything in KEEP that you can't justify is hoarding.
+Anything in AUTONOMOUS without an audit trail is negligence.</pre></div>
+  <div class="cw"><div class="cl">Objection-handling script — "I already test things myself"</div><button class="cp" onclick="cpCode(this)">Copy</button><pre>LEADER:  "I already test AI things myself."
+COACH:   "Good — that means you've adopted a tool. Adoption depth is
+          different. 68% of leaders say they keep pace with AI; 93% report
+          their teams can't execute. Confident and blind at the same time.
+          So let's not debate whether you use it — let's baseline whether
+          it's changed a single decision you made this month. If it has,
+          we measure it. If it hasn't, that's the gap, and that's coachable."</pre></div>
+</div>
+
+<div id="tab-pitfalls" class="panel container">
+  <p class="sh2">What kills the engagement</p>
+  <h2>Pitfalls &amp; failure modes</h2>
+  <div style="margin-top:20px">
+    <div class="acc open"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">1</span><span class="acc-t">Optimizing the team before the leader</span><span class="acc-a">▶</span></div><div class="acc-b">The most common and most expensive mistake. Rolling AI out to the team while the leader's own decision process is unchanged installs a new bottleneck at the top. H1 is first for a reason — fix the constraint, then cascade.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">2</span><span class="acc-t">Confusing tool use with adoption</span><span class="acc-a">▶</span></div><div class="acc-b">"I use ChatGPT" is not adoption; it's using a tool. Adoption is integrating AI into how you think, decide, and lead. A leader who can't name one decision AI changed this month has a depth gap, regardless of how many tools they've tried.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">3</span><span class="acc-t">Skipping the baseline</span><span class="acc-a">▶</span></div><div class="acc-b">If you don't capture the before-state in Week 3, Harvest has nothing to measure against and the whole engagement collapses into anecdote. No baseline, no business case.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">4</span><span class="acc-t">Treating habits as a willpower problem</span><span class="acc-a">▶</span></div><div class="acc-b">Telling a leader to "just use AI more" fails under pressure every time. Behavior change needs friction removal and reinforcement. If a habit didn't stick, the entry point had too much friction — fix the friction, don't blame the leader.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">5</span><span class="acc-t">Stacking habits</span><span class="acc-a">▶</span></div><div class="acc-b">Installing 3–5 new AI habits simultaneously guarantees all of them revert. One at a time, locked at 21 days, then the next. The protocol is sequential by design.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">6</span><span class="acc-t">Measuring activity instead of impact</span><span class="acc-a">▶</span></div><div class="acc-b">Counting tools, users, and prompts feels like progress and proves nothing. The five dashboard metrics are all impact or outcome measures — none is a volume count. If a metric goes up when you simply do more, it's the wrong metric.</div></div>
+    <div class="acc"><div class="acc-h" onclick="togAcc(this)"><span class="acc-n">7</span><span class="acc-t">Selling it as a tool engagement</span><span class="acc-a">▶</span></div><div class="acc-b">The moment this becomes "let me show you 50 tools," the differentiation is dead and you're competing with every vendor. It's a philosophy and a coaching relationship. Hold that line.</div></div>
+  </div>
+  <p class="sh2" style="margin-top:32px">Proof of implementation</p>
+  <h2 style="margin-bottom:12px">You know it worked when:</h2>
+  <ul class="cl2">
+    <li><span class="ci">✓</span>A personal AI ROI baseline exists on 3 metrics, captured by end of Week 3</li>
+    <li><span class="ci">✓</span>The leader can name the single biggest constraint in their own thinking process (H1)</li>
+    <li><span class="ci">✓</span>2–3 high-stakes 18-month decisions pressure-tested with 10x more scenarios (H2)</li>
+    <li><span class="ci">✓</span>3–5 daily AI habits locked at 21 days each, not stacked (H3)</li>
+    <li><span class="ci">✓</span>A handoff governance map: KEEP / human-in-the-loop / autonomous (H4)</li>
+    <li><span class="ci">✓</span>The dashboard shows before/after deltas, not activity counts (H5)</li>
+    <li><span class="wi">⚠</span>NOT done if: the team got training but the leader's process is unchanged</li>
+    <li><span class="wi">⚠</span>NOT done if: the dashboard tracks tool count or prompt volume</li>
+  </ul>
+</div>
+
+<div id="tab-pricing" class="panel container">
+  <p class="sh2">Commercialization</p>
+  <h2>Pricing &amp; positioning</h2>
+  <p>Single-leader. No team required to start. Delivered in French or English.</p>
+  <table class="ptable">
+    <thead><tr><th>Tier</th><th>What's included</th><th>Price (CAD)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Five H Diagnostic</strong></td><td>Self-scored gap finder + 1 baseline session (H1/H2 + 3-metric baseline)</td><td class="price">Entry / lead-gen</td></tr>
+      <tr><td><strong>90-Day Engagement</strong></td><td>Full single-leader engagement — all five H's, 3 phases, dashboard, business case</td><td class="price">$6,000–$12,000</td></tr>
+      <tr><td><strong>Leadership-Team Cascade</strong></td><td>Engagement + lighter Five H pass for direct reports</td><td class="price">Custom</td></tr>
+    </tbody>
+  </table>
+  <p class="sh2" style="margin-top:24px">Three sales-page hooks</p>
+  <div class="card"><h3 style="color:var(--red)">The confidence trap</h3><p style="margin:0">"68% of leaders say they keep pace with AI. 93% say their teams can't execute. You can be confident and blind at the same time — and most leaders are."</p></div>
+  <div class="card"><h3 style="color:var(--red)">The cascade</h3><p style="margin:0">"The highest-leverage AI investment in your company isn't your team's tools. It's how <em>you</em> decide. Because every decision you make cascades."</p></div>
+  <div class="card"><h3 style="color:var(--red)">Busier or better</h3><p style="margin:0">"AI should make you a better leader, not a busier one. In 90 days, you'll have the data to know which one it's actually doing."</p></div>
+  <p class="sh2" style="margin-top:24px">Why this beats every other AI coaching offer</p>
+  <ul>
+    <li><strong>Philosophy, not toolbox</strong> — no vendor affiliations, no "50 tools you should try"</li>
+    <li><strong>Leader-first, not org-first</strong> — starts with how you think and work, not your processes</li>
+    <li><strong>Bilingual</strong> — French or English, built for Quebec and Canadian market realities</li>
+    <li><strong>Anti-bullshit by design</strong> — no hype, no AGI predictions, no future-of-work slides</li>
+  </ul>
+  <p class="sh2" style="margin-top:24px">Source research</p>
+  <ul style="font-size:13px">
+    <li>McKinsey State of AI 2025 — 88% of companies use AI; only 6–7% are winning</li>
+    <li>Gartner — 68% of leaders say they keep pace with AI; 93% report team skill gaps</li>
+    <li>Olivero, Bane &amp; Kopelman — coaching + training = 88% productivity gain vs. 22% training alone</li>
+    <li>Slalom 2026 AI Research — leaders overestimate their own AI readiness</li>
+    <li>Gartner CMO survey — the AI blindspot: leaders expect disruption but underestimate skill change</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="ft">
+    <div class="fl"><strong>Cardinal Conseils</strong> — AI advisory for leaders who want results, not theory<br>The Five H Framework v1 &middot; Human · Horizon · Habits · Handoff · Harvest &middot; 2026</div>
+    <div style="font-size:13px;color:var(--dim)">
+      <a href="https://github.com/cardinalconseils/Artifacts">GitHub</a> &middot;
+      <a href="../../../_index.json">_index.json</a> &middot;
+      <a href="../../../llms.txt">llms.txt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tb').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+function showStage(l,card){
+  document.querySelectorAll('.bc').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.sp').forEach(p=>p.classList.remove('active'));
+  card.classList.add('active');
+  document.getElementById('s'+l).classList.add('active');
+}
+function togAcc(h){
+  h.parentElement.classList.toggle('open');
+}
+function cpCode(btn){
+  const pre=btn.nextElementSibling;
+  navigator.clipboard.writeText(pre.textContent).then(()=>{
+    btn.textContent='Copied!';
+    btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('ok');},2000);
+  });
+}
+</script>
+</body>
+</html>
