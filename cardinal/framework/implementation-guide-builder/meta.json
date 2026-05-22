@@ -1,0 +1,18 @@
+{
+  "title": "Implementation Guide Builder — The BUILD Framework",
+  "topic_slug": "implementation-guide-builder",
+  "venture": "cardinal",
+  "modes": ["framework"],
+  "primary_mode": "framework",
+  "format": ["md", "interactive-html"],
+  "branded": true,
+  "source": "internal",
+  "created": "2026-05-22",
+  "published_at": "2026-05-22T00:00:00Z",
+  "version": 1,
+  "versions": [],
+  "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/implementation-guide-builder",
+  "live_url": null,
+  "tags": ["implementation-guide", "framework", "cardinal", "methodology", "ai-tools", "claude-code", "knowledge-packaging"],
+  "summary": "The BUILD framework — Brief, Unpack, Install, Layer, Deploy — for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions."
+}

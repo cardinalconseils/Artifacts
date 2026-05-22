@@ -1,0 +1,37 @@
+# Cardinal Conseils Artifacts
+
+> Deployable implementation guides, frameworks, and methodologies from Cardinal Conseils. Structured using the BUILD framework (Brief → Unpack → Install → Layer → Deploy). Each artifact is a packaged piece of expertise: saved to Obsidian, indexed in Brain, and served via Vercel.
+
+## Structure
+
+Each guide lives at `[venture]/[mode]/[topic-slug]/` with:
+- `README.md` — full guide in markdown with YAML frontmatter
+- `index.html` — interactive HTML version (when produced)
+- `meta.json` — machine-readable metadata (title, modes, venture, format, tags, summary, live_url)
+
+## Machine Index
+
+`/_index.json` — flat array of all guide metadata. Use this to discover available guides programmatically.
+
+## Ventures
+
+- `cardinal/` — Cardinal Conseils advisory frameworks and client methodologies
+- `payfacto/` — PayFacto / Maître'D internal playbooks
+- `serviconnect/` — ServiConnect / Adah agentic builds and voice agent architecture
+- `proposai/` — Proposai.ca product guides and GTM
+- `personal/` — Personal exploration, half-baked ideas
+
+## Modes
+
+- `framework/` — Teachable IP with named models and worked examples
+- `client/` — SMB consulting deliverables with handoff kits
+- `product/` — B2C/B2B digital products with commercialization packs
+- `self/` — Personal tactical playbooks
+
+## Available Guides
+
+### cardinal/framework/implementation-guide-builder
+Title: Implementation Guide Builder — The BUILD Framework  
+Summary: The BUILD framework for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions.  
+Tags: implementation-guide, framework, cardinal, methodology, ai-tools, claude-code, knowledge-packaging  
+GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/implementation-guide-builder
