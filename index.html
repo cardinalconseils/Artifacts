@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The Cardinal Conseils artifact hub — a browsable catalog of deployable frameworks, guides, and methodologies.">
+<title>Artifacts | Cardinal Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--r:8px;--rl:12px;--max:1080px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
+code{font-family:'JetBrains Mono','Fira Code',monospace}
+.container{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--s2);padding:18px 0;position:sticky;top:0;z-index:20;background:rgba(9,9,11,.92);backdrop-filter:blur(8px)}
+.hdr{display:flex;align-items:center;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:0 24px}
+.brand{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red)}
+.badge{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--red-b);color:var(--red);background:var(--red-s)}
+
+.hero{padding:52px 0 28px}
+.hero h1{font-size:clamp(30px,6vw,46px);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:14px}
+.hero h1 span{color:var(--red)}
+.hero .sub{font-size:17px;color:var(--muted);max-width:620px;line-height:1.7}
+.hero .count{margin-top:18px;font-size:13px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+.hero .count b{color:var(--gold);font-weight:500}
+
+.controls{position:sticky;top:59px;z-index:15;background:rgba(9,9,11,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2);padding:18px 0 16px;margin-bottom:8px}
+.search-wrap{position:relative;margin-bottom:14px}
+.search-wrap svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--dim);pointer-events:none}
+#search{width:100%;background:var(--s1);border:1px solid var(--s2);border-radius:var(--r);color:var(--text);font-family:inherit;font-size:14px;padding:12px 14px 12px 40px;transition:border-color .15s}
+#search:focus{outline:none;border-color:var(--red-b)}
+#search::placeholder{color:var(--dim)}
+.filter-group{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.filter-group:last-child{margin-bottom:0}
+.filter-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);width:74px;flex-shrink:0}
+.chip{font-size:12px;font-weight:500;padding:5px 12px;border-radius:999px;border:1px solid var(--s2);background:var(--s1);color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+.chip:hover{border-color:var(--s3);color:var(--text)}
+.chip.active{background:var(--red-s);border-color:var(--red-b);color:var(--red-h)}
+
+main{padding:8px 0 64px;min-height:40vh}
+.venture-section{margin-top:36px}
+.venture-section:first-child{margin-top:18px}
+.venture-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--s2)}
+.venture-head h2{font-size:18px;font-weight:700;letter-spacing:-.01em}
+.venture-head .vc{font-size:12px;color:var(--dim);font-family:'JetBrains Mono',monospace}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.card{display:flex;flex-direction:column;background:var(--s1);border:1px solid var(--s2);border-radius:var(--rl);padding:20px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--red-b);transform:translateY(-2px)}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+.mode-badge{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--s3);color:var(--muted);background:var(--s2)}
+.fmt{display:flex;gap:5px}
+.fmt span{font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--dim);border:1px solid var(--s2);border-radius:3px;padding:2px 5px}
+.card h3{font-size:16px;font-weight:700;line-height:1.3;letter-spacing:-.01em;margin-bottom:8px}
+.card h3 a{color:var(--text)}
+.card h3 a:hover{color:var(--red-h)}
+.card .desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:14px;flex:1}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.tag{font-size:11px;color:var(--dim);background:var(--s2);border-radius:4px;padding:2px 7px;cursor:pointer;transition:color .15s,background .15s}
+.tag:hover{color:var(--text);background:var(--s3)}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:8px 13px;border-radius:var(--r);transition:all .15s}
+.btn-primary{background:var(--red);color:#fff}
+.btn-primary:hover{background:var(--red-h);color:#fff}
+.btn-ghost{background:var(--s2);color:var(--muted);border:1px solid var(--s3)}
+.btn-ghost:hover{color:var(--text);border-color:var(--dim)}
+
+.state{text-align:center;padding:72px 24px;color:var(--dim)}
+.state h3{font-size:16px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.state p{font-size:13px}
+.spinner{width:26px;height:26px;border:2px solid var(--s3);border-top-color:var(--red);border-radius:50%;margin:0 auto 16px;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+footer{border-top:1px solid var(--s2);padding:26px 0;margin-top:40px}
+.foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--dim)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--red-h)}
+
+@media(max-width:560px){
+  .filter-label{width:100%}
+  .grid{grid-template-columns:1fr}
+  .hero{padding:38px 0 22px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr">
+    <div class="brand"><span class="dot"></span> Cardinal Conseils</div>
+    <span class="badge">Artifacts</span>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero">
+    <h1>The <span>Artifact</span> Hub</h1>
+    <p class="sub">Deployable frameworks, guides, and methodologies — every artifact built for Cardinal Conseils and its ventures, in one place.</p>
+    <div class="count" id="count">Loading catalog&hellip;</div>
+  </section>
+</div>
+
+<div class="controls">
+  <div class="container">
+    <div class="search-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="search" type="search" placeholder="Search artifacts by title, summary, or tag&hellip;" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="filter-group" id="venture-filters"><span class="filter-label">Venture</span></div>
+    <div class="filter-group" id="mode-filters"><span class="filter-label">Mode</span></div>
+  </div>
+</div>
+
+<main class="container">
+  <div id="catalog">
+    <div class="state"><div class="spinner"></div><p>Loading artifacts&hellip;</p></div>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>&copy; <span id="year"></span> Cardinal Conseils &middot; Built &amp; deployed via Claude Code</span>
+    <span class="foot-links">
+      <a href="/_index.json">_index.json</a>
+      <a href="/llms.txt">llms.txt</a>
+      <a href="https://github.com/cardinalconseils/Artifacts" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var VENTURE_NAMES={cardinal:"Cardinal Conseils",payfacto:"PayFacto",serviconnect:"ServiConnect",proposai:"Proposai",personal:"Personal"};
+  var MODE_NAMES={framework:"Framework",client:"Client",product:"Product",self:"Self"};
+  var MODE_ORDER=["framework","product","client","self"];
+
+  var state={data:[],search:"",venture:"all",mode:"all"};
+  var catalog=document.getElementById("catalog");
+  var countEl=document.getElementById("count");
+
+  document.getElementById("year").textContent=new Date().getFullYear();
+
+  function titleCase(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+  function ventureName(v){return VENTURE_NAMES[v]||titleCase(v||"other");}
+  function modeName(m){return MODE_NAMES[m]||titleCase(m||"general");}
+  function esc(s){var d=document.createElement("div");d.textContent=s==null?"":String(s);return d.innerHTML;}
+  function primaryMode(a){return a.primary_mode||(a.modes&&a.modes[0])||"general";}
+  function modeRank(m){var i=MODE_ORDER.indexOf(m);return i===-1?MODE_ORDER.length:i;}
+
+  function uniqueSorted(values,orderFn){
+    var seen={},out=[];
+    values.forEach(function(v){if(v&&!seen[v]){seen[v]=1;out.push(v);}});
+    out.sort(orderFn||function(a,b){return a.localeCompare(b);});
+    return out;
+  }
+
+  function buildChips(containerId,values,nameFn,axis){
+    var c=document.getElementById(containerId);
+    // remove any existing chips (keep the label)
+    Array.prototype.slice.call(c.querySelectorAll(".chip")).forEach(function(n){n.remove();});
+    var all=["all"].concat(values);
+    all.forEach(function(val){
+      var chip=document.createElement("button");
+      chip.className="chip"+(state[axis]===val?" active":"");
+      chip.textContent=val==="all"?"All":nameFn(val);
+      chip.addEventListener("click",function(){
+        state[axis]=val;
+        Array.prototype.slice.call(c.querySelectorAll(".chip")).forEach(function(n){n.classList.remove("active");});
+        chip.classList.add("active");
+        render();
+      });
+      c.appendChild(chip);
+    });
+  }
+
+  function matches(a){
+    if(state.venture!=="all"&&a.venture!==state.venture)return false;
+    if(state.mode!=="all"){
+      var modes=a.modes&&a.modes.length?a.modes:[primaryMode(a)];
+      if(modes.indexOf(state.mode)===-1)return false;
+    }
+    var q=state.search.trim().toLowerCase();
+    if(q){
+      var hay=[a.title,a.summary].concat(a.tags||[]).join(" ").toLowerCase();
+      if(hay.indexOf(q)===-1)return false;
+    }
+    return true;
+  }
+
+  function card(a){
+    var path=(a.path||"").replace(/^\/+|\/+$/g,"");
+    var open=a.live_url||("/"+path);
+    var fmt=(a.format||[]).map(function(f){
+      var label=f==="interactive-html"?"HTML":(f==="md"?"MD":f.toUpperCase());
+      return '<span>'+esc(label)+'</span>';
+    }).join("");
+    var tags=(a.tags||[]).slice(0,6).map(function(t){
+      return '<span class="tag" data-tag="'+esc(t)+'">'+esc(t)+'</span>';
+    }).join("");
+    var source=a.github_url?'<a class="btn btn-ghost" href="'+esc(a.github_url)+'" target="_blank" rel="noopener">Source</a>':"";
+    return ''
+      +'<article class="card">'
+      +'<div class="card-top"><span class="mode-badge">'+esc(modeName(primaryMode(a)))+'</span><span class="fmt">'+fmt+'</span></div>'
+      +'<h3><a href="'+esc(open)+'">'+esc(a.title)+'</a></h3>'
+      +'<p class="desc">'+esc(a.summary||"")+'</p>'
+      +(tags?'<div class="tags">'+tags+'</div>':'')
+      +'<div class="card-actions"><a class="btn btn-primary" href="'+esc(open)+'">Open &rarr;</a>'+source+'</div>'
+      +'</article>';
+  }
+
+  function render(){
+    var visible=state.data.filter(matches);
+    var ventures=uniqueSorted(visible.map(function(a){return a.venture;}));
+
+    if(!visible.length){
+      catalog.innerHTML='<div class="state"><h3>No artifacts match your filters</h3><p>Try a different search term or reset the filters above.</p></div>';
+      countEl.innerHTML='<b>0</b> of '+state.data.length+' artifacts shown';
+      return;
+    }
+
+    var html="";
+    ventures.forEach(function(v){
+      var items=visible.filter(function(a){return a.venture===v;}).sort(function(a,b){
+        var d=modeRank(primaryMode(a))-modeRank(primaryMode(b));
+        return d!==0?d:(a.title||"").localeCompare(b.title||"");
+      });
+      html+='<section class="venture-section"><div class="venture-head"><h2>'+esc(ventureName(v))+'</h2><span class="vc">'+items.length+' artifact'+(items.length===1?"":"s")+'</span></div><div class="grid">'+items.map(card).join("")+'</div></section>';
+    });
+    catalog.innerHTML=html;
+
+    var totalVentures=uniqueSorted(state.data.map(function(a){return a.venture;})).length;
+    countEl.innerHTML='<b>'+visible.length+'</b> of '+state.data.length+' artifacts &middot; <b>'+totalVentures+'</b> venture'+(totalVentures===1?"":"s");
+
+    // tag click -> search for that tag
+    Array.prototype.slice.call(catalog.querySelectorAll(".tag")).forEach(function(t){
+      t.addEventListener("click",function(){
+        var val=t.getAttribute("data-tag");
+        state.search=val;
+        document.getElementById("search").value=val;
+        render();
+        window.scrollTo({top:0,behavior:"smooth"});
+      });
+    });
+  }
+
+  function init(data){
+    state.data=Array.isArray(data)?data:[];
+    var ventures=uniqueSorted(state.data.map(function(a){return a.venture;}));
+    var modes=uniqueSorted(
+      state.data.reduce(function(acc,a){return acc.concat(a.modes&&a.modes.length?a.modes:[primaryMode(a)]);},[]),
+      function(a,b){return modeRank(a)-modeRank(b);}
+    );
+    buildChips("venture-filters",ventures,ventureName,"venture");
+    buildChips("mode-filters",modes,modeName,"mode");
+
+    var searchEl=document.getElementById("search");
+    var t;
+    searchEl.addEventListener("input",function(){
+      clearTimeout(t);
+      t=setTimeout(function(){state.search=searchEl.value;render();},120);
+    });
+
+    render();
+  }
+
+  fetch("/_index.json",{cache:"no-cache"})
+    .then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+    .then(init)
+    .catch(function(err){
+      catalog.innerHTML='<div class="state"><h3>Couldn’t load the catalog</h3><p>Failed to fetch <code>/_index.json</code> ('+esc(err.message)+'). If you’re opening this file directly, serve it over HTTP instead (e.g. <code>python3 -m http.server</code>).</p></div>';
+      countEl.textContent="";
+    });
+})();
+</script>
+</body>
+</html>
