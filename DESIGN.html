@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System | Cardinal Conseils</title>
+<style>
+/* ── Fonts ──────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Geist+Mono:wght@300..700&display=swap");
+
+@font-face {
+  font-family: "Geist";
+  src: url("/assets/fonts/Geist-VariableFont_wght.ttf") format("truetype-variations"),
+       url("Cardinal Conseils Design System/fonts/Geist-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("/assets/fonts/Geist-Italic-VariableFont_wght.ttf") format("truetype-variations"),
+       url("Cardinal Conseils Design System/fonts/Geist-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Accent (primary brand color) */
+  --accent: #8B1F2A;
+
+  /* Foundations */
+  --cream:        #F4EEE2;
+  --bone:         #ECE4D3;
+  --linen:        #E4DAC5;
+  --ink:          #1A1714;
+  --ink-2:        #3B342C;
+  --ink-3:        #6E6356;
+  --ink-4:        #A29684;
+
+  /* Accent palette */
+  --cardinal:     #8B1F2A;
+  --cardinal-2:   #6F1822;
+  --cardinal-3:   #B05663;
+  --cardinal-wash:#F2DEDF;
+
+  /* Editorial accent */
+  --bronze:       #A67C52;
+  --bronze-2:     #8B6840;
+  --bronze-wash:  #EFE4D1;
+
+  /* Semantic */
+  --positive:     #5C7A4E;
+  --positive-wash:#E2EAD9;
+  --caution:      #B4853A;
+  --caution-wash: #F2E7CC;
+  --negative:     #A0473A;
+  --negative-wash:#F0D9D2;
+  --info:         #4A6276;
+  --info-wash:    #DCE3EA;
+
+  /* Rules */
+  --rule:         rgba(26, 23, 20, 0.12);
+  --rule-strong:  rgba(26, 23, 20, 0.22);
+
+  /* Typography */
+  --font-display: "Source Serif 4", "Tiempos Headline", Georgia, serif;
+  --font-body:    "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono:    "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Motion */
+  --ease:     cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-out: cubic-bezier(0.16, 0.84, 0.30, 1.0);
+  --dur-micro: 180ms;
+  --dur-base:  240ms;
+
+  /* Radii */
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 12px;
+  --r-xl: 20px;
+}
+
+/* ── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
+}
+a { color: var(--ink); text-decoration: none; text-underline-offset: 3px; transition: opacity var(--dur-micro) var(--ease); }
+a:hover { text-decoration: underline; text-decoration-color: var(--cardinal); }
+*:focus-visible { outline: 2px solid var(--cardinal); outline-offset: 2px; border-radius: var(--r-sm); }
+
+/* ── Layout ─────────────────────────────────────────────── */
+.container { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+/* ── Nav ────────────────────────────────────────────────── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(244, 238, 226, 0.84);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border-bottom: 1px solid var(--rule);
+}
+.hdr {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand:hover { text-decoration: none; opacity: 0.8; }
+.brand-mark { display: flex; align-items: center; flex-shrink: 0; }
+.brand-mark img { height: 28px; width: auto; display: block; }
+nav { display: flex; align-items: center; gap: 4px; }
+.nav-link {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: var(--r-md);
+  color: var(--ink-3);
+  transition: background var(--dur-micro) var(--ease), color var(--dur-micro) var(--ease);
+}
+.nav-link:hover { background: var(--bone); color: var(--ink); text-decoration: none; }
+.nav-link.active { background: var(--cardinal); color: var(--cream); }
+.nav-link.disabled { opacity: 0.38; pointer-events: none; }
+
+/* ── Sections ───────────────────────────────────────────── */
+.ds-header {
+  padding: 64px 0 40px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 64px;
+}
+.ds-header .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 16px;
+}
+.ds-header h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.ds-header h1 em { font-style: italic; color: var(--cardinal); }
+.ds-header .meta { font-size: 13px; color: var(--ink-3); font-family: var(--font-mono); }
+
+.section {
+  margin-bottom: 80px;
+}
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+.section h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.section .lede {
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.65;
+  max-width: 60ch;
+  margin-bottom: 32px;
+}
+
+/* ── Color Swatches ─────────────────────────────────────── */
+.swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.swatch-item { border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; background: var(--bone); }
+.swatch-block { height: 80px; width: 100%; }
+.swatch-label { padding: 12px 14px; }
+.swatch-label strong { display: block; font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+.swatch-label code { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); display: block; margin-bottom: 4px; }
+.swatch-label span { font-size: 11px; color: var(--ink-4); line-height: 1.4; display: block; }
+
+.swatch-group-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin: 24px 0 10px;
+}
+.swatch-group-label:first-child { margin-top: 0; }
+
+/* ── Typography ─────────────────────────────────────────── */
+.type-scale { }
+.type-specimen {
+  padding: 20px 0;
+  border-bottom: 1px dashed var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+  align-items: end;
+}
+.type-specimen:last-child { border-bottom: none; }
+.type-specimen .sample { overflow-wrap: break-word; }
+.type-specimen .spec {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-4);
+  text-align: right;
+  line-height: 1.6;
+  flex-shrink: 0;
+}
+
+.weight-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.weight-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  background: var(--bone);
+  min-width: 100px;
+  text-align: center;
+}
+.weight-glyph {
+  font-size: 36px;
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.weight-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-4);
+}
+
+/* ── Spacing ────────────────────────────────────────────── */
+.spacing-table { width: 100%; border-collapse: collapse; }
+.spacing-table tr { border-bottom: 1px dashed var(--rule); }
+.spacing-table tr:last-child { border-bottom: none; }
+.spacing-table td { padding: 10px 0; vertical-align: middle; }
+.spacing-table .token { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); width: 80px; }
+.spacing-table .bar-cell { padding: 10px 16px; }
+.spacing-bar { background: var(--cardinal); height: 12px; border-radius: 2px; display: inline-block; }
+.spacing-table .value { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); text-align: right; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.radii-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.radius-card {
+  background: var(--bone);
+  border: 1px solid var(--rule);
+  padding: 16px 12px;
+  text-align: center;
+}
+.radius-demo {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--linen);
+  border: 1px solid var(--rule-strong);
+  margin-bottom: 8px;
+}
+.radius-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-4);
+  line-height: 1.5;
+}
+
+/* ── Elevation ──────────────────────────────────────────── */
+.elevation-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.elev-card {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 20px;
+}
+.elev-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+.elev-desc {
+  font-size: 12px;
+  color: var(--ink-4);
+}
+
+/* ── Components ─────────────────────────────────────────── */
+.component-section { margin-bottom: 32px; }
+.component-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  margin-bottom: 16px;
+}
+.component-preview {
+  background: var(--bone);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 40px; padding: 0 16px; border-radius: 8px;
+  font-size: 14px; font-weight: 500; letter-spacing: -0.1px;
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform 180ms cubic-bezier(0.2,0,0,1), background 180ms cubic-bezier(0.2,0,0,1);
+  font-family: var(--font-body);
+  text-decoration: none;
+}
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn-primary { background: var(--cardinal); color: var(--cream); }
+.btn-primary:hover { background: var(--cardinal-2); text-decoration: none; color: var(--cream); }
+.btn-secondary { background: var(--bone); color: var(--ink); border-color: var(--rule-strong); }
+.btn-secondary:hover { background: var(--linen); text-decoration: none; }
+.btn-outline { background: transparent; border-color: var(--rule-strong); color: var(--ink); }
+.btn-outline:hover { border-color: var(--cardinal-3); color: var(--cardinal); text-decoration: none; }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--bone); text-decoration: none; }
+.btn-sm { height: 32px; padding: 0 12px; font-size: 13px; border-radius: 6px; }
+.btn-lg { height: 48px; padding: 0 22px; font-size: 15px; border-radius: 10px; }
+
+/* Badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 500;
+  border: 1px solid var(--rule);
+  background: var(--bone); color: var(--ink-2);
+}
+.badge.primary {
+  background: var(--cardinal-wash);
+  color: var(--cardinal);
+  border-color: var(--cardinal-3);
+}
+.badge.positive { background: var(--positive-wash); color: var(--positive); border-color: var(--positive); }
+.badge.caution { background: var(--caution-wash); color: var(--caution); border-color: var(--caution); }
+.badge.negative { background: var(--negative-wash); color: var(--negative); border-color: var(--negative); }
+.badge .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex-shrink: 0; }
+
+/* Inputs */
+.input {
+  width: 100%; height: 40px; padding: 0 14px;
+  border-radius: var(--r-md); border: 1px solid var(--rule-strong);
+  background: var(--cream); color: var(--ink);
+  font-family: var(--font-body); font-size: 14px;
+  outline: none;
+  transition: border-color 180ms cubic-bezier(0.2,0,0,1), box-shadow 180ms cubic-bezier(0.2,0,0,1);
+}
+.input:focus {
+  border-color: var(--cardinal);
+  box-shadow: 0 0 0 3px var(--cardinal-wash);
+}
+.input::placeholder { color: var(--ink-4); }
+.field-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.field-help { font-size: 12px; color: var(--ink-3); margin-top: 6px; font-family: var(--font-mono); }
+
+/* Sample card */
+.card {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background: var(--cream);
+  padding: 22px;
+  transition: box-shadow var(--dur-base) var(--ease), transform var(--dur-base) var(--ease);
+}
+.card:hover {
+  box-shadow: 0 2px 4px rgba(26, 23, 20, 0.06), 0 12px 24px -8px rgba(26, 23, 20, 0.14);
+  transform: translateY(-1px);
+}
+.card .kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cardinal);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.card h4 { font-size: 18px; font-weight: 500; letter-spacing: -0.3px; margin-bottom: 8px; line-height: 1.25; }
+.card p { font-size: 14px; color: var(--ink-2); line-height: 1.55; margin-bottom: 16px; }
+
+.card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+/* Phase tracker */
+.phase-track { display: flex; gap: 0; }
+.phase {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-right: none;
+  background: var(--cream);
+  font-size: 13px;
+}
+.phase:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
+.phase:last-child { border-right: 1px solid var(--rule); border-radius: 0 var(--r-md) var(--r-md) 0; }
+.phase.active { background: var(--cardinal); color: var(--cream); border-color: var(--cardinal); }
+.phase.done { background: var(--bone); }
+.phase-num { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; opacity: 0.7; margin-bottom: 2px; }
+.phase-name { font-weight: 500; }
+
+/* Score metric */
+.metric-block {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  border: 1px solid var(--rule); border-radius: var(--r-lg); padding: 20px 24px;
+  background: var(--cream);
+}
+.metric-num {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cardinal);
+  margin-bottom: 4px;
+}
+.metric-label { font-size: 13px; color: var(--ink-3); font-family: var(--font-mono); }
+
+/* Pull quote */
+.pull-quote {
+  border-left: 2px solid var(--bronze);
+  padding-left: 24px;
+  margin: 32px 0;
+  max-width: 40em;
+}
+.pull-quote p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.pull-quote cite { font-size: 13px; color: var(--bronze); font-style: normal; font-family: var(--font-mono); }
+
+/* ── Dos and Donts ──────────────────────────────────────── */
+.dos-donts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.dos, .donts {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.dos { background: var(--positive-wash); border-top: 3px solid var(--positive); }
+.donts { background: var(--negative-wash); border-top: 3px solid var(--negative); }
+.dos h3 { font-size: 15px; font-weight: 600; color: var(--positive); margin-bottom: 16px; }
+.donts h3 { font-size: 15px; font-weight: 600; color: var(--negative); margin-bottom: 16px; }
+.dos ul, .donts ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.dos ul li, .donts ul li { font-size: 14px; line-height: 1.5; padding-left: 20px; position: relative; color: var(--ink-2); }
+.dos ul li::before { content: "✓"; position: absolute; left: 0; color: var(--positive); font-weight: 600; }
+.donts ul li::before { content: "✗"; position: absolute; left: 0; color: var(--negative); font-weight: 600; }
+
+/* ── Agent prompt guide ─────────────────────────────────── */
+.prompt-block {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+  position: relative;
+}
+.prompt-block .prompt-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+.prompt-block pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  color: #e8e0d4;
+}
+.prompt-block pre em { color: var(--bronze); font-style: normal; }
+
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.checklist li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-2); }
+.checklist li::before { content: "□"; font-family: var(--font-mono); color: var(--ink-4); flex-shrink: 0; margin-top: 1px; }
+
+/* ── Motion tokens display ──────────────────────────────── */
+.motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.motion-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  background: var(--bone);
+}
+.motion-demo {
+  width: 40px; height: 40px;
+  background: var(--cardinal);
+  border-radius: var(--r-md);
+  margin-bottom: 12px;
+}
+.motion-label { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); margin-bottom: 4px; }
+.motion-value { font-family: var(--font-mono); font-size: 11px; color: var(--ink-4); line-height: 1.6; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+.breakpoint-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.breakpoint-table th { text-align: left; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-4); padding: 8px 12px; border-bottom: 1px solid var(--rule-strong); }
+.breakpoint-table td { padding: 10px 12px; border-bottom: 1px dashed var(--rule); font-size: 13px; }
+.breakpoint-table td:first-child { font-family: var(--font-mono); color: var(--cardinal); }
+.breakpoint-table tr:last-child td { border-bottom: none; }
+
+/* ── Print ──────────────────────────────────────────────── */
+@media print {
+  header { display: none; }
+  body { background: white; color: black; font-size: 12px; }
+  .section { page-break-inside: avoid; }
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .hdr { padding: 12px 20px; }
+  nav .nav-link { display: none; }
+  nav .nav-link.active { display: block; }
+  .type-specimen { grid-template-columns: 1fr; }
+  .type-specimen .spec { text-align: left; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .card-grid-3 { grid-template-columns: 1fr; }
+  .dos-donts { grid-template-columns: 1fr; }
+  .elevation-grid { grid-template-columns: 1fr 1fr; }
+  .radii-grid { grid-template-columns: repeat(3, 1fr); }
+  .motion-grid { grid-template-columns: 1fr; }
+  .phase-track { flex-direction: column; }
+  .phase { border-right: 1px solid var(--rule); border-bottom: none; }
+  .phase:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+  .phase:last-child { border-radius: 0 0 var(--r-md) var(--r-md); border-bottom: 1px solid var(--rule); }
+  .swatch-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────── -->
+<header>
+  <div class="hdr">
+    <a class="brand" href="./index.html">
+      <span class="brand-mark">
+        <img src="./Cardinal Conseils Design System/assets/logo-dark-desktop.png" alt="Cardinal Conseils" />
+      </span>
+    </a>
+    <nav>
+      <a class="nav-link" href="./index.html">Hub</a>
+      <a class="nav-link active" href="./DESIGN.html">Design</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── Content ──────────────────────────────────────────── -->
+<main>
+<div class="container">
+
+  <!-- Header -->
+  <div class="ds-header">
+    <p class="eyebrow">Cardinal Conseils — Design System</p>
+    <h1>Visual language for a<br><em>calmly expert</em> brand.</h1>
+    <p class="meta">Last updated: 2026-05-23 · Source: Cardinal Conseils Design System directory</p>
+  </div>
+
+  <!-- §1 · Visual Theme & Atmosphere -->
+  <section class="section" id="theme">
+    <p class="section-eyebrow">§ 01 · Visual Theme &amp; Atmosphere</p>
+    <h2>Editorial magazine meets hospitality concierge.</h2>
+    <p class="lede">Wide margins, a tall refined serif, deep ink on warm cream — with a single confident cardinal-red accent that earns its place.</p>
+
+    <div class="row" style="gap: 8px;">
+      <span class="badge">Warm &amp; editorial</span>
+      <span class="badge">Paper not screen</span>
+      <span class="badge">Calmly expert</span>
+      <span class="badge">Senior judgment</span>
+      <span class="badge primary">One accent. Used sparingly.</span>
+      <span class="badge">No gradients</span>
+      <span class="badge">No glassmorphism</span>
+      <span class="badge">No emoji in product</span>
+    </div>
+
+    <div class="pull-quote" style="margin-top: 32px;">
+      <p>"You stay the expert. We stay invisible."</p>
+      <cite>— Brand posture, Cardinal Conseils</cite>
+    </div>
+
+    <p style="margin-top: 24px; font-size: 14px; color: var(--ink-2); max-width: 60ch; line-height: 1.65;">
+      Cardinal sells to partners who sell to hospitality operators. The visual language respects that hierarchy — it never upstages the partner, never speaks down to a venue, never gets excited about technology for its own sake. Every design decision asks: does this feel like the FT, not like a SaaS blog?
+    </p>
+  </section>
+
+  <!-- §2 · Color Palette -->
+  <section class="section" id="color">
+    <p class="section-eyebrow">§ 02 · Color Palette &amp; Roles</p>
+    <h2>A neutral field. One accent.</h2>
+    <p class="lede">Foundation pair: warm cream against deep ink. One cardinal-red accent used for a single element per view. Bronze for editorial moments. Semantic colors desaturated to live alongside the warm palette.</p>
+
+    <p class="swatch-group-label">Foundation</p>
+    <div class="swatch-grid">
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#F4EEE2;"></div>
+        <div class="swatch-label">
+          <strong>Cream</strong>
+          <code>#F4EEE2</code>
+          <span>Page background — warm paper</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#ECE4D3;"></div>
+        <div class="swatch-label">
+          <strong>Bone</strong>
+          <code>#ECE4D3</code>
+          <span>Secondary surface, cards</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#E4DAC5;"></div>
+        <div class="swatch-label">
+          <strong>Linen</strong>
+          <code>#E4DAC5</code>
+          <span>Tertiary surface, dividers</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#1A1714;"></div>
+        <div class="swatch-label">
+          <strong>Ink</strong>
+          <code>#1A1714</code>
+          <span>Primary text — warm near-black</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#3B342C;"></div>
+        <div class="swatch-label">
+          <strong>Ink 2</strong>
+          <code>#3B342C</code>
+          <span>Secondary text, body</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#6E6356;"></div>
+        <div class="swatch-label">
+          <strong>Ink 3</strong>
+          <code>#6E6356</code>
+          <span>Tertiary text, muted labels</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#A29684;"></div>
+        <div class="swatch-label">
+          <strong>Ink 4</strong>
+          <code>#A29684</code>
+          <span>Placeholder, captions</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="swatch-group-label" style="margin-top: 24px;">Accent — Cardinal Red</p>
+    <div class="swatch-grid">
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#8B1F2A;"></div>
+        <div class="swatch-label">
+          <strong>Cardinal</strong>
+          <code>#8B1F2A</code>
+          <span>THE accent — one use per view</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#6F1822;"></div>
+        <div class="swatch-label">
+          <strong>Cardinal 2</strong>
+          <code>#6F1822</code>
+          <span>Hover, press states</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#B05663;"></div>
+        <div class="swatch-label">
+          <strong>Cardinal 3</strong>
+          <code>#B05663</code>
+          <span>Tint for chips, hover surfaces</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#F2DEDF;border:1px solid #e8cccf;"></div>
+        <div class="swatch-label">
+          <strong>Cardinal Wash</strong>
+          <code>#F2DEDF</code>
+          <span>Lightest tint, badge backgrounds</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="swatch-group-label" style="margin-top: 24px;">Editorial Accent — Bronze</p>
+    <div class="swatch-grid">
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#A67C52;"></div>
+        <div class="swatch-label">
+          <strong>Bronze</strong>
+          <code>#A67C52</code>
+          <span>Pull-quotes, dividers, medals</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#8B6840;"></div>
+        <div class="swatch-label">
+          <strong>Bronze 2</strong>
+          <code>#8B6840</code>
+          <span>Hover, active bronze</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#EFE4D1;border:1px solid #ddd;"></div>
+        <div class="swatch-label">
+          <strong>Bronze Wash</strong>
+          <code>#EFE4D1</code>
+          <span>Bronze tint backgrounds</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="swatch-group-label" style="margin-top: 24px;">Semantic Status</p>
+    <div class="swatch-grid">
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#5C7A4E;"></div>
+        <div class="swatch-label">
+          <strong>Positive</strong>
+          <code>#5C7A4E</code>
+          <span>Success, passed gate</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#E2EAD9;border:1px solid #cdd9c4;"></div>
+        <div class="swatch-label">
+          <strong>Positive Wash</strong>
+          <code>#E2EAD9</code>
+          <span>Positive badge background</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#B4853A;"></div>
+        <div class="swatch-label">
+          <strong>Caution</strong>
+          <code>#B4853A</code>
+          <span>Warning, review required</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#F2E7CC;border:1px solid #e5d3a8;"></div>
+        <div class="swatch-label">
+          <strong>Caution Wash</strong>
+          <code>#F2E7CC</code>
+          <span>Caution badge background</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#A0473A;"></div>
+        <div class="swatch-label">
+          <strong>Negative</strong>
+          <code>#A0473A</code>
+          <span>Error, failed gate</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#F0D9D2;border:1px solid #e2c0b8;"></div>
+        <div class="swatch-label">
+          <strong>Negative Wash</strong>
+          <code>#F0D9D2</code>
+          <span>Negative badge background</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#4A6276;"></div>
+        <div class="swatch-label">
+          <strong>Info</strong>
+          <code>#4A6276</code>
+          <span>Informational state</span>
+        </div>
+      </div>
+      <div class="swatch-item">
+        <div class="swatch-block" style="background:#DCE3EA;border:1px solid #c3cfd9;"></div>
+        <div class="swatch-label">
+          <strong>Info Wash</strong>
+          <code>#DCE3EA</code>
+          <span>Info badge background</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §3 · Typography -->
+  <section class="section" id="typography">
+    <p class="section-eyebrow">§ 03 · Typography Rules</p>
+    <h2>Two typefaces. One hierarchy.</h2>
+    <p class="lede">Source Serif 4 for display and headlines. Geist for body, UI, and labels. Geist Mono for IDs, codes, and system metadata only — never decorative. Hierarchy built with size and weight, not color.</p>
+
+    <div class="type-scale" style="border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; background: var(--bone); padding: 0 24px;">
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:72px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;">Display</p>
+        <div class="spec">Source Serif 4<br>72px / 400 / −0.02em<br>lh 1.05</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;font-weight:400;line-height:1.08;letter-spacing:-0.02em;">Heading 1 — A measured approach.</p>
+        <div class="spec">Source Serif 4<br>56px / 400 / −0.02em<br>lh 1.08</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;">Heading 2 — Working with leaders.</p>
+        <div class="spec">Source Serif 4<br>40px / 400 / −0.01em<br>lh 1.2</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;">Heading 3 — Engagements &amp; advisory.</p>
+        <div class="spec">Source Serif 4<br>28px / 400 / −0.01em<br>lh 1.2</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:20px;font-weight:500;line-height:1.2;letter-spacing:0;">Heading 4 — Partner-facing metrics.</p>
+        <div class="spec">Geist<br>20px / 500 / 0<br>lh 1.2</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:18px;font-weight:400;line-height:1.65;">Lead — We work alongside founders and operators to make the next decision a confident one.</p>
+        <div class="spec">Geist<br>18px / 400 / 0<br>lh 1.65</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:16px;font-weight:400;line-height:1.65;color:var(--ink-2);">Body — Pragmatic frameworks, calm communication, and senior judgment applied to growth, governance, and capital.</p>
+        <div class="spec">Geist<br>16px / 400 / 0<br>lh 1.65</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:14px;font-weight:400;line-height:1.5;color:var(--ink-2);">Body small — Captions, helper text, and inline footnotes for dense UI contexts.</p>
+        <div class="spec">Geist<br>14px / 400 / 0<br>lh 1.5</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:13px;font-weight:400;line-height:1.5;color:var(--ink-3);">Caption — Supporting metadata, timestamps, secondary labels.</p>
+        <div class="spec">Geist<br>13px / 400 / 0<br>lh 1.5</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);">Eyebrow · Section label</p>
+        <div class="spec">Geist<br>12px / 500 / 0.12em<br>uppercase</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Geist Mono',monospace;font-size:13px;font-weight:400;color:var(--ink-3);">mono · system labels · §01 · geist-mono · IDs only</p>
+        <div class="spec">Geist Mono<br>13px / 400 / 0.04em<br>metadata only</div>
+      </div>
+      <div class="type-specimen">
+        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:72px;font-weight:400;line-height:1;letter-spacing:-0.02em;color:var(--cardinal);">87</p>
+        <div class="spec">Metric (serif)<br>72px / 400 / −0.02em<br>tabular-nums</div>
+      </div>
+    </div>
+
+    <div class="weight-row">
+      <div class="weight-card">
+        <div class="weight-glyph" style="font-weight:300;">Aa</div>
+        <div class="weight-label">Light · 300</div>
+      </div>
+      <div class="weight-card">
+        <div class="weight-glyph" style="font-weight:400;">Aa</div>
+        <div class="weight-label">Regular · 400</div>
+      </div>
+      <div class="weight-card">
+        <div class="weight-glyph" style="font-weight:500;">Aa</div>
+        <div class="weight-label">Medium · 500</div>
+      </div>
+      <div class="weight-card">
+        <div class="weight-glyph" style="font-weight:600;">Aa</div>
+        <div class="weight-label">Semibold · 600</div>
+      </div>
+      <div class="weight-card">
+        <div class="weight-glyph" style="font-weight:700;">Aa</div>
+        <div class="weight-label">Bold · 700</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §4 · Components -->
+  <section class="section" id="components">
+    <p class="section-eyebrow">§ 04 · Component Stylings</p>
+    <h2>A small, opinionated kit.</h2>
+    <p class="lede">Buttons, badges, inputs, cards, phase trackers, and metrics. Every component reads from tokens — never hardcoded colors.</p>
+
+    <div class="component-section">
+      <div class="component-label">Buttons</div>
+      <div class="component-preview">
+        <div class="row" style="margin-bottom: 14px;">
+          <button class="btn btn-primary">Book a consultation</button>
+          <button class="btn btn-secondary">Learn more</button>
+          <button class="btn btn-outline">Outline</button>
+          <button class="btn btn-ghost">Ghost</button>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary btn-sm">Small</button>
+          <button class="btn btn-primary">Default</button>
+          <button class="btn btn-primary btn-lg">Large</button>
+          <button class="btn btn-outline" disabled style="opacity:0.45;cursor:not-allowed;">Disabled</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Badges</div>
+      <div class="component-preview">
+        <div class="row">
+          <span class="badge primary"><span class="dot"></span>Active</span>
+          <span class="badge"><span class="dot"></span>Draft</span>
+          <span class="badge positive"><span class="dot"></span>Passed</span>
+          <span class="badge caution"><span class="dot"></span>Review</span>
+          <span class="badge negative"><span class="dot"></span>Failed</span>
+          <span class="badge">Mandat conseil</span>
+          <span class="badge primary">New</span>
+          <span class="badge">v1.0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Form Fields</div>
+      <div class="component-preview" style="max-width: 480px;">
+        <label class="field-label" for="email-demo">Email address</label>
+        <input id="email-demo" class="input" type="email" placeholder="vous@entreprise.com"/>
+        <div class="field-help">We respond within one business day.</div>
+        <br>
+        <label class="field-label" for="name-demo" style="margin-top:16px;">Full name</label>
+        <input id="name-demo" class="input" type="text" placeholder="Pierre Martin"/>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Content Cards</div>
+      <div class="card-grid-3">
+        <div class="card">
+          <div class="kicker">Advisory</div>
+          <h4>Quarterly review</h4>
+          <p>A 90-minute working session with leadership to align on the next quarter's bets — written follow-up included.</p>
+          <button class="btn btn-outline btn-sm">Read brief →</button>
+        </div>
+        <div class="card" style="background:var(--cardinal);color:var(--cream);border-color:transparent;">
+          <div class="kicker" style="color:rgba(244,238,226,0.65);">Featured</div>
+          <h4 style="color:var(--cream);">Fractional CFO</h4>
+          <p style="color:rgba(244,238,226,0.85);">Embedded finance leadership for growth-stage teams — capital, forecasting, and board prep.</p>
+          <button class="btn btn-sm" style="background:var(--cream);color:var(--cardinal);border:none;">Start a conversation</button>
+        </div>
+        <div class="card">
+          <div class="kicker">Workshop</div>
+          <h4>Pricing reset</h4>
+          <p>A two-day intensive on packaging, pricing tiers, and willingness to pay — for B2B teams between $1M–$20M ARR.</p>
+          <button class="btn btn-outline btn-sm">Read brief →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Phase Tracker</div>
+      <div class="component-preview">
+        <div class="phase-track">
+          <div class="phase done">
+            <div class="phase-num">Phase 1</div>
+            <div class="phase-name">Discover</div>
+          </div>
+          <div class="phase active">
+            <div class="phase-num">Phase 2</div>
+            <div class="phase-name">Design</div>
+          </div>
+          <div class="phase">
+            <div class="phase-num">Phase 3</div>
+            <div class="phase-name">Pilot</div>
+          </div>
+          <div class="phase">
+            <div class="phase-num">Phase 4</div>
+            <div class="phase-name">Deploy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Metrics &amp; Scorecard</div>
+      <div class="component-preview">
+        <div class="row">
+          <div class="metric-block">
+            <div class="metric-num">87</div>
+            <div class="metric-label">Feasibility score</div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-num" style="color:var(--positive);">3</div>
+            <div class="metric-label">Phases passed</div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-num" style="color:var(--caution);">1</div>
+            <div class="metric-label">Under review</div>
+          </div>
+          <div class="metric-block">
+            <div class="metric-num" style="color:var(--bronze);">CA$</div>
+            <div class="metric-label">Currency format</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-section">
+      <div class="component-label">Pull Quote (Editorial)</div>
+      <div class="component-preview">
+        <div class="pull-quote" style="margin: 0;">
+          <p>"Score the engagement before you scope it."</p>
+          <cite style="margin-top: 8px; display: block;">— Cardinal Conseils Feasibility Framework</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 · Layout Principles -->
+  <section class="section" id="layout">
+    <p class="section-eyebrow">§ 05 · Layout Principles</p>
+    <h2>8px base. Generous whitespace.</h2>
+    <p class="lede">Spacing follows an 8-point grid. Marketing pages target 96–128px between sections. Dashboards target 24–32px between modules. Cramming is a cardinal sin.</p>
+
+    <div class="grid-2">
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">Spacing Scale</p>
+        <table class="spacing-table">
+          <tr><td class="token">--s-1</td><td class="bar-cell"><div class="spacing-bar" style="width:4px;"></div></td><td class="value">4px</td></tr>
+          <tr><td class="token">--s-2</td><td class="bar-cell"><div class="spacing-bar" style="width:8px;"></div></td><td class="value">8px</td></tr>
+          <tr><td class="token">--s-3</td><td class="bar-cell"><div class="spacing-bar" style="width:12px;"></div></td><td class="value">12px</td></tr>
+          <tr><td class="token">--s-4</td><td class="bar-cell"><div class="spacing-bar" style="width:16px;"></div></td><td class="value">16px</td></tr>
+          <tr><td class="token">--s-5</td><td class="bar-cell"><div class="spacing-bar" style="width:24px;"></div></td><td class="value">24px</td></tr>
+          <tr><td class="token">--s-6</td><td class="bar-cell"><div class="spacing-bar" style="width:32px;"></div></td><td class="value">32px</td></tr>
+          <tr><td class="token">--s-7</td><td class="bar-cell"><div class="spacing-bar" style="width:48px;"></div></td><td class="value">48px</td></tr>
+          <tr><td class="token">--s-8</td><td class="bar-cell"><div class="spacing-bar" style="width:64px;"></div></td><td class="value">64px</td></tr>
+          <tr><td class="token">--s-9</td><td class="bar-cell"><div class="spacing-bar" style="width:96px;"></div></td><td class="value">96px</td></tr>
+          <tr><td class="token">--s-10</td><td class="bar-cell"><div class="spacing-bar" style="width:128px;"></div></td><td class="value">128px</td></tr>
+        </table>
+      </div>
+      <div>
+        <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">Corner Radii</p>
+        <div class="radii-grid">
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:2px;"></div>
+            <div class="radius-label">--r-xs<br>2px</div>
+          </div>
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:4px;"></div>
+            <div class="radius-label">--r-sm<br>4px · inputs</div>
+          </div>
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:6px;"></div>
+            <div class="radius-label">--r-md<br>6px · cards, btns</div>
+          </div>
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:12px;"></div>
+            <div class="radius-label">--r-lg<br>12px · hero containers</div>
+          </div>
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:20px;"></div>
+            <div class="radius-label">--r-xl<br>20px</div>
+          </div>
+          <div class="radius-card">
+            <div class="radius-demo" style="border-radius:999px;"></div>
+            <div class="radius-label">pill<br>999px · badges only</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--ink-3);margin-top:12px;line-height:1.55;">Pills (999px radius) are reserved for status badges where the shape carries semantic meaning. Card corners are small (4–12px). No fully-rounded cards.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; border: 1px solid var(--rule); border-radius: var(--r-lg); padding: 24px; background: var(--bone);">
+      <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:16px;">Grid System</p>
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:8px;margin-bottom:12px;">
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+        <div style="height:32px;background:rgba(139,31,42,0.12);border-radius:3px;grid-column:span 1;"></div>
+      </div>
+      <p style="font-size:13px;color:var(--ink-3);">12-column grid. 24–32px gutters at desktop. Max-width: 1200px content, 1440px wide. Editorial pages frequently break to 6-column or asymmetric 4/8 layout.</p>
+    </div>
+  </section>
+
+  <!-- §6 · Depth & Elevation -->
+  <section class="section" id="elevation">
+    <p class="section-eyebrow">§ 06 · Depth &amp; Elevation</p>
+    <h2>Shadows are reserved. Warm-tinted.</h2>
+    <p class="lede">Cards are flat. Elevation is whisper-light — only floating elements (menus, toasts, modals) get a soft shadow. All shadows are warm-tinted, never neutral gray.</p>
+
+    <div class="elevation-grid">
+      <div class="elev-card" style="box-shadow:none;">
+        <div class="elev-label">Flat</div>
+        <div class="elev-desc">No shadow. Hairline border carries all separation.</div>
+        <code style="display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--ink-4);">none</code>
+      </div>
+      <div class="elev-card" style="box-shadow:0 1px 0 rgba(26,23,20,.04), 0 1px 2px rgba(26,23,20,.06);">
+        <div class="elev-label">Lift</div>
+        <div class="elev-desc">Subtle lift for hover state on cards.</div>
+        <code style="display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--ink-4);">0 1px 0 rgba(26,23,20,.04),<br>0 1px 2px rgba(26,23,20,.06)</code>
+      </div>
+      <div class="elev-card" style="box-shadow:0 2px 4px rgba(26,23,20,.06), 0 12px 24px -8px rgba(26,23,20,.14);">
+        <div class="elev-label">Pop</div>
+        <div class="elev-desc">Dropdowns, floating panels, hover-lifted cards.</div>
+        <code style="display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--ink-4);">0 2px 4px rgba(26,23,20,.06),<br>0 12px 24px -8px rgba(26,23,20,.14)</code>
+      </div>
+      <div class="elev-card" style="box-shadow:0 8px 16px rgba(26,23,20,.10), 0 32px 64px -16px rgba(26,23,20,.28);">
+        <div class="elev-label">Modal</div>
+        <div class="elev-desc">Modals, toasts, sticky nav after scroll.</div>
+        <code style="display:block;margin-top:8px;font-family:var(--font-mono);font-size:10px;color:var(--ink-4);">0 8px 16px rgba(26,23,20,.10),<br>0 32px 64px -16px rgba(26,23,20,.28)</code>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:16px;">Motion Tokens</p>
+      <div class="motion-grid">
+        <div class="motion-card">
+          <div class="motion-label">Easing · --ease</div>
+          <div class="motion-value">cubic-bezier(0.2, 0.0, 0.0, 1.0)<br>Calm, not bouncy. All standard transitions.</div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-label">Easing · --ease-out</div>
+          <div class="motion-value">cubic-bezier(0.16, 0.84, 0.30, 1.0)<br>Enter animations, elements arriving.</div>
+        </div>
+        <div class="motion-card">
+          <div class="motion-label">Duration scale</div>
+          <div class="motion-value">180ms · micro (hover, opacity)<br>240ms · base (layout, slide)<br>360ms · page transitions</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- §7 · Do's and Don'ts -->
+  <section class="section" id="dos-donts">
+    <p class="section-eyebrow">§ 07 · Do's and Don'ts</p>
+    <h2>Rules that protect the register.</h2>
+    <p class="lede">Cardinal's editorial tone is fragile. One wrong decision pulls the brand toward generic SaaS. These rules are not aesthetic preferences — they are brand integrity.</p>
+
+    <div class="dos-donts">
+      <div class="dos">
+        <h3>Do</h3>
+        <ul>
+          <li>Use cardinal red (#8B1F2A) for exactly one focal element per view — one CTA, one key metric, one status pip</li>
+          <li>Use sentence case for all headings, buttons, and navigation labels</li>
+          <li>Use Source Serif 4 for display text (32px+) and hero headlines</li>
+          <li>Maintain at least 96px vertical spacing between marketing sections</li>
+          <li>Use hairline borders (1px, rgba(26,23,20,0.12)) for card separation</li>
+          <li>Use Geist Mono only for IDs, system codes, metadata, and small labels</li>
+          <li>Use bronze (#A67C52) for pull-quotes, divider rules, and scorecard medals</li>
+          <li>Use the pill radius (999px) only on status badges where shape carries meaning</li>
+          <li>Use warm-tinted shadows (rgba(26,23,20,...)) — never neutral gray</li>
+          <li>Write "Phase 1 · Discover" with a middle-dot separator (not a colon)</li>
+        </ul>
+      </div>
+      <div class="donts">
+        <h3>Don't</h3>
+        <ul>
+          <li>Don't use gradient text or gradient buttons — ever</li>
+          <li>Don't use glassmorphism beyond the sticky-nav scroll case</li>
+          <li>Don't use emoji in product UI, marketing copy, or templates</li>
+          <li>Don't use a bluish-purple "AI" palette — Cardinal is hospitality first</li>
+          <li>Don't use rounded-pill cards with a single colored left border accent (AI slop tell)</li>
+          <li>Don't use more than one cardinal-red element per view</li>
+          <li>Don't use Geist Mono as a decorative choice — it is a functional signal only</li>
+          <li>Don't use auto-playing video heroes or floating testimonial carousels</li>
+          <li>Don't nest cards inside cards — use spacing and type hierarchy instead</li>
+          <li>Don't use all-caps for body copy or long passages — only eyebrow labels</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- §8 · Responsive Behavior -->
+  <section class="section" id="responsive">
+    <p class="section-eyebrow">§ 08 · Responsive Behavior</p>
+    <h2>Mobile-first with editorial restraint.</h2>
+    <p class="lede">Single-column below 768px. Navigation collapses. Typography scales with clamp(). Whitespace reduces proportionally — never eliminated.</p>
+
+    <table class="breakpoint-table">
+      <thead>
+        <tr>
+          <th>Breakpoint</th>
+          <th>Width</th>
+          <th>Grid</th>
+          <th>Container padding</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>xs (mobile)</td>
+          <td>0–639px</td>
+          <td>1 column</td>
+          <td>20px</td>
+          <td>Single column, nav collapses to active tab only</td>
+        </tr>
+        <tr>
+          <td>sm (tablet)</td>
+          <td>640–767px</td>
+          <td>2 columns</td>
+          <td>24px</td>
+          <td>2-col cards, stacked phase tracker</td>
+        </tr>
+        <tr>
+          <td>md (landscape)</td>
+          <td>768–1023px</td>
+          <td>2–3 columns</td>
+          <td>32px</td>
+          <td>Full nav visible, hero at 48px</td>
+        </tr>
+        <tr>
+          <td>lg (desktop)</td>
+          <td>1024–1199px</td>
+          <td>3–4 columns</td>
+          <td>32px</td>
+          <td>Full design intent at this breakpoint</td>
+        </tr>
+        <tr>
+          <td>xl (wide)</td>
+          <td>1200px+</td>
+          <td>Max 1200px</td>
+          <td>32px</td>
+          <td>Content caps at --max-content: 1200px</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 24px; border: 1px solid var(--rule); border-radius: var(--r-lg); padding: 20px; background: var(--bone);">
+      <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:12px;">Typography Clamping</p>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <code style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);">display: clamp(48px, 6vw, 88px)</code>
+        <code style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);">h1:    clamp(36px, 5.5vw, 56px)</code>
+        <code style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);">h2:    clamp(28px, 4vw, 40px)</code>
+        <code style="font-family:var(--font-mono);font-size:12px;color:var(--ink-2);">body:  16px (fixed)</code>
+      </div>
+      <p style="font-size:13px;color:var(--ink-3);margin-top:12px;">Sticky elements: top nav scrolls into position at 80px. In product, left sidebar fixed; single bottom-right support handle. Nothing fixed in marketing.</p>
+    </div>
+  </section>
+
+  <!-- §9 · Agent Prompt Guide -->
+  <section class="section" id="agent-guide">
+    <p class="section-eyebrow">§ 09 · Agent Prompt Guide</p>
+    <h2>Copy-paste prompts for design tools.</h2>
+    <p class="lede">Use these prompts when instructing Claude, v0, Lovable, or Google Stitch to generate Cardinal Conseils UI. Always paste the token block first.</p>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Token Block — paste this in every prompt</div>
+      <pre>Cardinal Conseils design system tokens:
+Background: <em>#F4EEE2</em> (warm cream), Surface: <em>#ECE4D3</em> (bone), Text: <em>#1A1714</em> (warm ink)
+Accent: <em>#8B1F2A</em> (cardinal red, ONE use per view), Bronze: <em>#A67C52</em> (editorial)
+Display font: Source Serif 4 (weight 400, italic for pull-quotes)
+Body font: Geist (weights 300–700)
+Mono font: Geist Mono (metadata/IDs only, never decorative)
+Base radius: 6px cards, 4px inputs, 999px status badges only
+Shadows: warm-tinted rgba(26,23,20,...), never neutral gray
+Spacing: 8px base unit (4/8/12/16/24/32/48/64/96/128px)
+Voice: sentence case, no emoji, no gradients, editorial tone</pre>
+    </div>
+
+    <div class="prompt-block" style="margin-top:16px;">
+      <div class="prompt-label">Claude Code prompt — new marketing section</div>
+      <pre>Using the Cardinal Conseils design system (token block above):
+Build a [SECTION NAME] section for the marketing site.
+- Background: var(--cream) #F4EEE2
+- Heading in Source Serif 4, weight 400, size 40px
+- Body in Geist, 16–18px, color #3B342C
+- One CTA button in cardinal red (#8B1F2A), pill radius NOT allowed
+- No gradients, no glassmorphism, no emoji
+- Em-dashes for asides. Sentence case throughout.
+- Section padding: 96px top/bottom on desktop, 64px on mobile</pre>
+    </div>
+
+    <div class="prompt-block" style="margin-top:16px;">
+      <div class="prompt-label">v0 / Lovable prompt — dashboard card</div>
+      <pre>Design a partner dashboard card for Cardinal Conseils.
+Brand tokens: bg #F4EEE2, surface #ECE4D3, ink #1A1714, accent #8B1F2A, bronze #A67C52
+Typography: Geist body, Geist Mono for labels/IDs, Source Serif 4 for the metric number
+Card style: 1px border rgba(26,23,20,0.12), border-radius 12px, no shadow unless hovered
+Hover: translateY(-1px) + warm shadow 0 12px 24px -8px rgba(26,23,20,0.14)
+Status badges: pill shape (border-radius 999px), use semantic colors (#5C7A4E pos, #B4853A caution, #A0473A neg)
+One cardinal-red element maximum per card. No gradients.</pre>
+    </div>
+
+    <div class="prompt-block" style="margin-top:16px;">
+      <div class="prompt-label">Google Stitch / Figma prompt — full page</div>
+      <pre>Generate a [PAGE TYPE] for Cardinal Conseils, a B2B hospitality AI consultancy.
+Aesthetic: editorial magazine meets hospitality concierge. FT-style, not SaaS-blog.
+Color palette: warm cream #F4EEE2 background, deep ink #1A1714 text, cardinal red #8B1F2A accent
+Typography: Source Serif 4 for headlines, Geist for body/UI, Geist Mono for codes and labels
+Layout: 12-column grid, 32px gutters, max-width 1200px, generous whitespace (96–128px between sections)
+Brand rules: sentence case everywhere, no emoji, no pill cards, no gradient text, no purple/blue AI palette
+Iconography: Lucide icons at 1.5px stroke, color currentColor at 80% opacity</pre>
+    </div>
+
+    <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-top:32px;margin-bottom:12px;">Iteration Checklist</p>
+    <ul class="checklist">
+      <li>Cardinal red appears exactly once per view (one CTA, one metric, one status pip)</li>
+      <li>All headings and buttons are sentence case — not Title Case</li>
+      <li>No gradients (text, buttons, backgrounds)</li>
+      <li>No emoji in any copy or label</li>
+      <li>Source Serif 4 used only at 28px+ — never for body or UI labels</li>
+      <li>Geist Mono used only for IDs, codes, metadata, and short system labels</li>
+      <li>Card radius is 6–12px — no fully-rounded cards, no pill-shaped cards</li>
+      <li>Shadows, if present, use rgba(26,23,20,...) warm tint</li>
+      <li>No nested cards — use spacing and type hierarchy for structure</li>
+      <li>Bronze (#A67C52) used for editorial accents only (pull-quotes, dividers, medals)</li>
+    </ul>
+  </section>
+
+</div><!-- /container -->
+</main>
+
+<!-- ── Footer ────────────────────────────────────────────── -->
+<footer style="border-top:1px solid var(--rule);padding:32px 0;margin-top:64px;">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-4);">Cardinal Conseils · Design System · 2026</span>
+    <span style="font-family:var(--font-mono);font-size:11px;color:var(--ink-4);">Source: <code style="color:var(--ink-3);">Cardinal Conseils Design System/</code></span>
+  </div>
+</footer>
+
+<script>
+// Sticky nav scroll class
+window.addEventListener('scroll', () => {
+  document.querySelector('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+</script>
+</body>
+</html>
