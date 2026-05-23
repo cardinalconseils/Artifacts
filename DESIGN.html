@@ -6,7 +6,7 @@
 <title>Design System | Cardinal Conseils</title>
 <style>
 /* ── Fonts ──────────────────────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Geist+Mono:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300..700&display=swap");
 
 @font-face {
   font-family: "Geist";
@@ -65,7 +65,7 @@
   --rule-strong:  rgba(26, 23, 20, 0.22);
 
   /* Typography */
-  --font-display: "Source Serif 4", "Tiempos Headline", Georgia, serif;
+  --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-body:    "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono:    "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
@@ -156,14 +156,14 @@ nav { display: flex; align-items: center; gap: 4px; }
 }
 .ds-header h1 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(40px, 5.5vw, 72px);
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   color: var(--ink);
   margin-bottom: 16px;
 }
-.ds-header h1 em { font-style: italic; color: var(--cardinal); }
+.ds-header h1 em { font-style: normal; font-weight: 400; color: var(--cardinal); }
 .ds-header .meta { font-size: 13px; color: var(--ink-3); font-family: var(--font-mono); }
 
 .section {
@@ -189,10 +189,10 @@ nav { display: flex; align-items: center; gap: 4px; }
 }
 .section h2 {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 32px;
+  font-weight: 600;
+  font-size: 28px;
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.025em;
   margin-bottom: 8px;
 }
 .section .lede {
@@ -447,9 +447,9 @@ nav { display: flex; align-items: center; gap: 4px; }
 .metric-num {
   font-family: var(--font-display);
   font-size: 56px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   color: var(--cardinal);
   margin-bottom: 4px;
 }
@@ -465,8 +465,9 @@ nav { display: flex; align-items: center; gap: 4px; }
 .pull-quote p {
   font-family: var(--font-display);
   font-style: italic;
+  font-weight: 300;
   font-size: 24px;
-  line-height: 1.35;
+  line-height: 1.4;
   color: var(--ink);
 }
 .pull-quote cite { font-size: 13px; color: var(--bronze); font-style: normal; font-family: var(--font-mono); }
@@ -577,7 +578,7 @@ nav { display: flex; align-items: center; gap: 4px; }
   <div class="hdr">
     <a class="brand" href="./index.html">
       <span class="brand-mark">
-        <img src="./Cardinal Conseils Design System/assets/logo-dark-desktop.png" alt="Cardinal Conseils" />
+        <img src="./assets/logo-dark.png" alt="Cardinal Conseils" />
       </span>
     </a>
     <nav>
@@ -828,24 +829,24 @@ nav { display: flex; align-items: center; gap: 4px; }
   <section class="section" id="typography">
     <p class="section-eyebrow">§ 03 · Typography Rules</p>
     <h2>Two typefaces. One hierarchy.</h2>
-    <p class="lede">Source Serif 4 for display and headlines. Geist for body, UI, and labels. Geist Mono for IDs, codes, and system metadata only — never decorative. Hierarchy built with size and weight, not color.</p>
+    <p class="lede">Geist throughout — display, body, and UI. Geist Mono for IDs, codes, and system metadata only — never decorative. Hierarchy built with size, weight, and tracking, not color.</p>
 
     <div class="type-scale" style="border: 1px solid var(--rule); border-radius: var(--r-lg); overflow: hidden; background: var(--bone); padding: 0 24px;">
       <div class="type-specimen">
-        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:72px;font-weight:400;line-height:1.05;letter-spacing:-0.02em;">Display</p>
-        <div class="spec">Source Serif 4<br>72px / 400 / −0.02em<br>lh 1.05</div>
+        <p class="sample" style="font-family:'Geist',sans-serif;font-size:72px;font-weight:600;line-height:1.05;letter-spacing:-0.04em;">Display</p>
+        <div class="spec">Geist<br>72px / 600 / −0.04em<br>lh 1.05</div>
       </div>
       <div class="type-specimen">
-        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:56px;font-weight:400;line-height:1.08;letter-spacing:-0.02em;">Heading 1 — A measured approach.</p>
-        <div class="spec">Source Serif 4<br>56px / 400 / −0.02em<br>lh 1.08</div>
+        <p class="sample" style="font-family:'Geist',sans-serif;font-size:56px;font-weight:600;line-height:1.08;letter-spacing:-0.035em;">Heading 1 — A measured approach.</p>
+        <div class="spec">Geist<br>56px / 600 / −0.035em<br>lh 1.08</div>
       </div>
       <div class="type-specimen">
-        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:40px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;">Heading 2 — Working with leaders.</p>
-        <div class="spec">Source Serif 4<br>40px / 400 / −0.01em<br>lh 1.2</div>
+        <p class="sample" style="font-family:'Geist',sans-serif;font-size:40px;font-weight:600;line-height:1.2;letter-spacing:-0.025em;">Heading 2 — Working with leaders.</p>
+        <div class="spec">Geist<br>40px / 600 / −0.025em<br>lh 1.2</div>
       </div>
       <div class="type-specimen">
-        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:28px;font-weight:400;line-height:1.2;letter-spacing:-0.01em;">Heading 3 — Engagements &amp; advisory.</p>
-        <div class="spec">Source Serif 4<br>28px / 400 / −0.01em<br>lh 1.2</div>
+        <p class="sample" style="font-family:'Geist',sans-serif;font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-0.02em;">Heading 3 — Engagements &amp; advisory.</p>
+        <div class="spec">Geist<br>28px / 600 / −0.02em<br>lh 1.2</div>
       </div>
       <div class="type-specimen">
         <p class="sample" style="font-size:20px;font-weight:500;line-height:1.2;letter-spacing:0;">Heading 4 — Partner-facing metrics.</p>
@@ -876,7 +877,7 @@ nav { display: flex; align-items: center; gap: 4px; }
         <div class="spec">Geist Mono<br>13px / 400 / 0.04em<br>metadata only</div>
       </div>
       <div class="type-specimen">
-        <p class="sample" style="font-family:'Source Serif 4',Georgia,serif;font-size:72px;font-weight:400;line-height:1;letter-spacing:-0.02em;color:var(--cardinal);">87</p>
+        <p class="sample" style="font-family:'Geist',sans-serif;font-size:72px;font-weight:600;line-height:1;letter-spacing:-0.04em;color:var(--cardinal);">87</p>
         <div class="spec">Metric (serif)<br>72px / 400 / −0.02em<br>tabular-nums</div>
       </div>
     </div>
@@ -1174,7 +1175,7 @@ nav { display: flex; align-items: center; gap: 4px; }
         <ul>
           <li>Use cardinal red (#8B1F2A) for exactly one focal element per view — one CTA, one key metric, one status pip</li>
           <li>Use sentence case for all headings, buttons, and navigation labels</li>
-          <li>Use Source Serif 4 for display text (32px+) and hero headlines</li>
+          <li>Use Geist semibold (600) with tight tracking for display text (28px+) and hero headlines</li>
           <li>Maintain at least 96px vertical spacing between marketing sections</li>
           <li>Use hairline borders (1px, rgba(26,23,20,0.12)) for card separation</li>
           <li>Use Geist Mono only for IDs, system codes, metadata, and small labels</li>
@@ -1280,7 +1281,7 @@ nav { display: flex; align-items: center; gap: 4px; }
       <pre>Cardinal Conseils design system tokens:
 Background: <em>#F4EEE2</em> (warm cream), Surface: <em>#ECE4D3</em> (bone), Text: <em>#1A1714</em> (warm ink)
 Accent: <em>#8B1F2A</em> (cardinal red, ONE use per view), Bronze: <em>#A67C52</em> (editorial)
-Display font: Source Serif 4 (weight 400, italic for pull-quotes)
+Display font: Geist (weight 600, tracking −0.03em for large headings)
 Body font: Geist (weights 300–700)
 Mono font: Geist Mono (metadata/IDs only, never decorative)
 Base radius: 6px cards, 4px inputs, 999px status badges only
@@ -1294,7 +1295,7 @@ Voice: sentence case, no emoji, no gradients, editorial tone</pre>
       <pre>Using the Cardinal Conseils design system (token block above):
 Build a [SECTION NAME] section for the marketing site.
 - Background: var(--cream) #F4EEE2
-- Heading in Source Serif 4, weight 400, size 40px
+- Heading in Geist, weight 600, size 40px, letter-spacing −0.025em
 - Body in Geist, 16–18px, color #3B342C
 - One CTA button in cardinal red (#8B1F2A), pill radius NOT allowed
 - No gradients, no glassmorphism, no emoji
@@ -1306,7 +1307,7 @@ Build a [SECTION NAME] section for the marketing site.
       <div class="prompt-label">v0 / Lovable prompt — dashboard card</div>
       <pre>Design a partner dashboard card for Cardinal Conseils.
 Brand tokens: bg #F4EEE2, surface #ECE4D3, ink #1A1714, accent #8B1F2A, bronze #A67C52
-Typography: Geist body, Geist Mono for labels/IDs, Source Serif 4 for the metric number
+Typography: Geist body, Geist Mono for labels/IDs, Geist 600 for metric numbers
 Card style: 1px border rgba(26,23,20,0.12), border-radius 12px, no shadow unless hovered
 Hover: translateY(-1px) + warm shadow 0 12px 24px -8px rgba(26,23,20,0.14)
 Status badges: pill shape (border-radius 999px), use semantic colors (#5C7A4E pos, #B4853A caution, #A0473A neg)
@@ -1318,7 +1319,7 @@ One cardinal-red element maximum per card. No gradients.</pre>
       <pre>Generate a [PAGE TYPE] for Cardinal Conseils, a B2B hospitality AI consultancy.
 Aesthetic: editorial magazine meets hospitality concierge. FT-style, not SaaS-blog.
 Color palette: warm cream #F4EEE2 background, deep ink #1A1714 text, cardinal red #8B1F2A accent
-Typography: Source Serif 4 for headlines, Geist for body/UI, Geist Mono for codes and labels
+Typography: Geist 600 tight-tracked for headlines, Geist for body/UI, Geist Mono for codes and labels
 Layout: 12-column grid, 32px gutters, max-width 1200px, generous whitespace (96–128px between sections)
 Brand rules: sentence case everywhere, no emoji, no pill cards, no gradient text, no purple/blue AI palette
 Iconography: Lucide icons at 1.5px stroke, color currentColor at 80% opacity</pre>
@@ -1330,7 +1331,7 @@ Iconography: Lucide icons at 1.5px stroke, color currentColor at 80% opacity</pr
       <li>All headings and buttons are sentence case — not Title Case</li>
       <li>No gradients (text, buttons, backgrounds)</li>
       <li>No emoji in any copy or label</li>
-      <li>Source Serif 4 used only at 28px+ — never for body or UI labels</li>
+      <li>Geist 600 with −0.025em tracking for display headings (28px+) — not body or UI labels</li>
       <li>Geist Mono used only for IDs, codes, metadata, and short system labels</li>
       <li>Card radius is 6–12px — no fully-rounded cards, no pill-shaped cards</li>
       <li>Shadows, if present, use rgba(26,23,20,...) warm tint</li>
