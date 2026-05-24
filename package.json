@@ -1,0 +1,16 @@
+{
+  "name": "cardinal-artifacts-queue",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Queue processor for Cardinal Conseils artifact pipeline — GitHub Actions only, not used by Vercel",
+  "type": "module",
+  "scripts": {
+    "process-queue": "node scripts/process-queue.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
