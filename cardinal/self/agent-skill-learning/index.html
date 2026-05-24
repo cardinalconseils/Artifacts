@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Four-layer architecture for controlled AI agent self-improvement: config &amp; routing, LLM reasoning, memory, and skill creation with quarantine gates.">
+<title>Agent Self-Learning — Skill Creation Architecture | Cardinal Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --background: oklch(0.98 0.005 80);
+  --foreground: oklch(0.15 0.01 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.01 260);
+  --primary: oklch(0.52 0.2 25);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.95 0.005 80);
+  --secondary-foreground: oklch(0.25 0.01 260);
+  --muted: oklch(0.93 0.005 80);
+  --muted-foreground: oklch(0.45 0.01 260);
+  --accent: oklch(0.95 0.008 80);
+  --border: oklch(0.88 0.005 80);
+  --input: oklch(0.92 0.005 80);
+  --ring: oklch(0.52 0.2 25);
+  --radius: 0.5rem;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--background);color:var(--foreground);font-family:'Geist','Geist Fallback',ui-sans-serif,system-ui,sans-serif;font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-size:15px;line-height:1.65}
+::selection{background:color-mix(in oklch,var(--primary) 20%,transparent)}
+
+.page{max-width:860px;margin:0 auto;padding:40px 32px 80px}
+
+/* topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1px solid var(--border);border-radius:calc(var(--radius) + 4px);background:var(--card);margin-bottom:40px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:26px;height:26px;background:var(--primary);border-radius:5px;display:grid;place-items:center;color:var(--primary-foreground);font:600 11px/1 'Geist Mono',ui-monospace}
+.logo-name{font:600 14px/1 'Geist',sans-serif;letter-spacing:-0.3px;color:var(--foreground)}
+.topbar-tag{font:500 11px/1 'Geist Mono',ui-monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground)}
+
+/* nav */
+.nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.nb{background:none;border:1px solid var(--border);color:var(--muted-foreground);font:500 12px/1 'Geist',sans-serif;padding:6px 14px;border-radius:999px;cursor:pointer;letter-spacing:.01em;transition:all .15s ease}
+.nb:hover{border-color:color-mix(in oklch,var(--primary) 40%,var(--border));color:var(--foreground)}
+.nb.on{background:var(--primary);border-color:var(--primary);color:var(--primary-foreground)}
+
+/* sections */
+.sec{display:none;animation:fi .2s ease}
+.sec.on{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* eyebrow */
+.eyebrow{font:500 11px/1 'Geist Mono',ui-monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:16px}
+.eyebrow::before{content:"§ ";color:var(--primary)}
+
+/* headings */
+.h1{font:300 clamp(26px,4.5vw,42px)/1.1 'Geist',sans-serif;letter-spacing:-0.5px;margin-bottom:16px;color:var(--foreground)}
+.h1 em{color:var(--primary);font-style:normal}
+.h2{font:300 clamp(20px,3.5vw,28px)/1.2 'Geist',sans-serif;letter-spacing:-0.3px;margin-bottom:12px;color:var(--foreground)}
+.h2 em{color:var(--primary);font-style:normal}
+.lede{font:400 14px/1.8 'Geist',sans-serif;color:var(--muted-foreground);max-width:560px;margin-bottom:32px}
+
+/* callouts */
+.callout{border-left:2px solid var(--border);background:var(--secondary);border-radius:0 8px 8px 0;padding:16px 20px;margin:20px 0;font:400 13px/1.8 'Geist',sans-serif;color:var(--muted-foreground)}
+.callout strong{color:var(--foreground);font-weight:500}
+.callout.accent{border-left-color:var(--primary)}
+.callout.accent strong{color:var(--primary)}
+.callout.warn{border-left-color:oklch(0.52 0.15 50);background:oklch(0.97 0.008 60)}
+.callout.warn strong{color:oklch(0.40 0.15 50)}
+.callout.good{border-left-color:oklch(0.52 0.15 160);background:oklch(0.97 0.008 160)}
+.callout.good strong{color:oklch(0.38 0.15 160)}
+
+/* section headers */
+.sh{margin:40px 0 24px}
+
+/* layers */
+.layers{display:flex;flex-direction:column;gap:6px;margin:24px 0}
+.layer{border-radius:8px;padding:16px 18px;border:1px solid var(--border);background:var(--card);cursor:pointer;transition:border-color .15s}
+.layer:hover{border-color:color-mix(in oklch,var(--primary) 30%,var(--border))}
+.layer.open{border-color:var(--primary)}
+.l-header{display:flex;align-items:center;gap:10px}
+.l-badge{font:500 10px/1 'Geist Mono',ui-monospace;padding:3px 8px;border-radius:4px;flex-shrink:0;letter-spacing:.06em;text-transform:uppercase}
+.l-badge.det{background:oklch(0.93 0.005 240);color:oklch(0.35 0.08 240)}
+.l-badge.prob{background:oklch(0.93 0.005 290);color:oklch(0.35 0.1 290)}
+.l-badge.mem{background:oklch(0.93 0.008 160);color:oklch(0.35 0.1 160)}
+.l-badge.skill{background:color-mix(in oklch,var(--primary) 12%,var(--background));color:var(--primary)}
+.l-title{font:500 14px/1 'Geist',sans-serif;flex:1;color:var(--foreground)}
+.l-hint{font:400 11px/1 'Geist Mono',ui-monospace;color:var(--muted-foreground)}
+.l-body{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font:400 13px/1.8 'Geist',sans-serif;color:var(--muted-foreground)}
+.layer.open .l-body{display:block}
+.l-body p{margin-bottom:12px}
+.l-body p:last-child{margin-bottom:0}
+.l-body strong{color:var(--foreground);font-weight:500}
+
+/* code */
+.code{background:oklch(0.12 0.01 260);border:1px solid oklch(0.22 0.01 260);border-radius:6px;padding:16px 18px;font:400 11px/1.8 'Geist Mono',ui-monospace;color:oklch(0.82 0.005 80);margin:12px 0;overflow-x:auto;white-space:pre}
+.code .c{color:oklch(0.50 0.005 80)}
+.code .k{color:oklch(0.72 0.12 160)}
+.code .s{color:oklch(0.72 0.1 60)}
+.code .p{color:var(--primary)}
+ic{font:500 11px/1 'Geist Mono',ui-monospace;background:var(--muted);padding:1px 5px;border-radius:3px;color:var(--foreground)}
+
+/* skill parts */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:24px 0}
+.sp{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;transition:border-color .15s;cursor:default}
+.sp:hover{border-color:color-mix(in oklch,var(--primary) 30%,var(--border))}
+.sp-num{font:500 10px/1 'Geist Mono',ui-monospace;color:var(--primary);margin-bottom:8px;letter-spacing:.06em}
+.sp-title{font:500 13px/1.3 'Geist',sans-serif;color:var(--foreground);margin-bottom:6px}
+.sp-desc{font:400 12px/1.6 'Geist',sans-serif;color:var(--muted-foreground)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;margin:24px 0 16px;border-bottom:1px solid var(--border);padding-bottom:0}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted-foreground);font:500 13px/1 'Geist',sans-serif;padding:8px 14px 10px;cursor:pointer;transition:all .15s;margin-bottom:-1px}
+.tab:hover{color:var(--foreground)}
+.tab.on{color:var(--primary);border-bottom-color:var(--primary)}
+.tab-panel{display:none}
+.tab-panel.on{display:block;animation:fi .15s ease}
+
+/* loop */
+.loop{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px;margin:20px 0}
+.loop-label{font:500 10px/1 'Geist Mono',ui-monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:18px}
+.loop-row{display:flex;align-items:center;gap:0;flex-wrap:nowrap}
+.loop-node{flex:1;min-width:0;background:var(--secondary);border:1px solid var(--border);border-radius:6px;padding:10px 8px;text-align:center}
+.loop-node.hi{background:color-mix(in oklch,var(--primary) 10%,var(--background));border-color:color-mix(in oklch,var(--primary) 40%,var(--border))}
+.loop-node.hi .ln-l{color:var(--primary)}
+.ln-l{font:500 12px/1.3 'Geist',sans-serif;color:var(--foreground)}
+.ln-s{font:400 10px/1.4 'Geist Mono',ui-monospace;color:var(--muted-foreground);margin-top:3px}
+.loop-arr{color:var(--border);font-size:14px;padding:0 4px;flex-shrink:0}
+.loop-note{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font:400 12px/1.7 'Geist',sans-serif;color:var(--muted-foreground)}
+
+/* steps */
+.steps{margin:24px 0}
+.step{display:flex;gap:14px;margin-bottom:20px}
+.step-dot{width:26px;height:26px;border-radius:50%;background:var(--secondary);border:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font:500 11px/1 'Geist Mono',ui-monospace;color:var(--primary);margin-top:1px}
+.st-title{font:500 14px/1.3 'Geist',sans-serif;color:var(--foreground);margin-bottom:5px}
+.st-desc{font:400 13px/1.75 'Geist',sans-serif;color:var(--muted-foreground)}
+
+/* compare */
+.cstrip{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
+.cs-col{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:18px}
+.cs-head{font:500 11px/1 'Geist Mono',ui-monospace;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.cs-head.h{color:oklch(0.42 0.12 160)}
+.cs-head.c{color:oklch(0.38 0.1 240)}
+.cs-item{font:400 12px/1.6 'Geist',sans-serif;color:var(--muted-foreground);margin-bottom:8px;padding-left:12px;position:relative}
+.cs-item::before{content:'–';position:absolute;left:0;color:var(--primary)}
+
+/* guard table */
+.gtable{width:100%;border-collapse:collapse;font-size:12px;margin:20px 0}
+.gtable th{text-align:left;padding:8px 10px;font:500 10px/1 'Geist Mono',ui-monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);border-bottom:1px solid var(--border)}
+.gtable td{padding:10px 10px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6;color:var(--muted-foreground);font:400 12px/1.6 'Geist',sans-serif}
+.gtable tr:last-child td{border-bottom:none}
+.gtable td:first-child{color:var(--foreground);font-weight:500}
+
+/* decision */
+.df-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.df-q{flex:1;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font:400 13px/1.4 'Geist',sans-serif;color:var(--foreground)}
+.df-arr{color:var(--border);font-size:16px;flex-shrink:0}
+.df-a{flex:0 0 120px;border-radius:6px;padding:10px 14px;font:500 12px/1.3 'Geist',sans-serif;text-align:center}
+.df-a.h{background:oklch(0.93 0.008 160);color:oklch(0.35 0.12 160)}
+.df-a.c{background:oklch(0.93 0.005 240);color:oklch(0.32 0.1 240)}
+.df-a.b{background:color-mix(in oklch,var(--primary) 10%,var(--background));color:var(--primary)}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark">CC</div>
+    <span class="logo-name">Cardinal Conseils</span>
+  </div>
+  <span class="topbar-tag">Guide · Self-learning agents</span>
+</div>
+
+<nav class="nav">
+  <button class="nb on" onclick="go('mental')">Mental model</button>
+  <button class="nb" onclick="go('anatomy')">Skill anatomy</button>
+  <button class="nb" onclick="go('loop')">Learning loop</button>
+  <button class="nb" onclick="go('guardrails')">Guardrails</button>
+  <button class="nb" onclick="go('impl')">Implementation</button>
+  <button class="nb" onclick="go('both')">Hermes / Claude Code</button>
+</nav>
+
+<!-- MENTAL MODEL -->
+<div id="mental" class="sec on">
+  <div class="eyebrow">Framework</div>
+  <h1 class="h1">How agents <em>learn, create skills,</em><br>and improve over time</h1>
+  <p class="lede">Not trial-and-error. A structured architecture with four distinct layers — each with a specific job and a specific failure mode. Most implementations only build two of the four.</p>
+
+  <div class="callout warn">
+    <strong>The core risk:</strong> most self-learning setups are garbage-in, garbage-out. The agent learns from its own mistakes without a correction gate. Skills drift. Bad patterns get encoded. You lose control within days.
+  </div>
+
+  <div class="sh">
+    <div class="eyebrow">The four layers</div>
+    <h2 class="h2">Every self-improving agent needs <em>four layers.</em></h2>
+    <p class="lede" style="margin-bottom:8px">Click each layer to understand what it does and where it breaks.</p>
+  </div>
+
+  <div class="layers">
+    <div class="layer" onclick="tgl(this)">
+      <div class="l-header">
+        <span class="l-badge det">Deterministic</span>
+        <span class="l-title">Layer 1 — Config &amp; routing</span>
+        <span class="l-hint">expand</span>
+      </div>
+      <div class="l-body">
+        <p>YAML rules, routing logic, model assignments. Same input → same decision. This layer never changes unless you change it. It's your control surface.</p>
+        <p>In Hermes: <ic>config.yaml</ic> — which model handles which task, what tools are available, which skills are in scope.<br>In Claude Code: <ic>CLAUDE.md</ic> + power commands — the rules the orchestrator always follows.</p>
+        <p><strong>Failure mode:</strong> the layer is too loose. "Any task, any model" instead of explicit rules. The agent improvises. It works until it doesn't.</p>
+        <div class="code"><span class="c"># config.yaml — deterministic routing</span>
+routing_rules:
+  - task_type: <span class="s">"code_generation"</span>
+    model: <span class="s">"claude-sonnet-4-6"</span>
+    skill_scope: <span class="s">"skills/coding/"</span>
+  - task_type: <span class="s">"research"</span>
+    model: <span class="s">"claude-opus-4-6"</span>
+    skill_scope: <span class="s">"skills/research/"</span></div>
+      </div>
+    </div>
+
+    <div class="layer" onclick="tgl(this)">
+      <div class="l-header">
+        <span class="l-badge prob">Probabilistic</span>
+        <span class="l-title">Layer 2 — LLM reasoning</span>
+        <span class="l-hint">expand</span>
+      </div>
+      <div class="l-body">
+        <p>The LLM's actual output. Same prompt → slightly different result each run. That's not a bug — it's how language models work. The goal is not to make this layer deterministic.</p>
+        <p>The goal is to <strong>constrain its input</strong> — what context, what skills, what memory it can access — so probabilistic reasoning stays within useful bounds.</p>
+        <p><strong>Failure mode:</strong> trying to fix this layer with better prompts. Prompts don't hold. Fix the problem at Layer 1 (routing) and Layer 3 (memory).</p>
+      </div>
+    </div>
+
+    <div class="layer" onclick="tgl(this)">
+      <div class="l-header">
+        <span class="l-badge mem">Memory</span>
+        <span class="l-title">Layer 3 — Memory &amp; context</span>
+        <span class="l-hint">expand</span>
+      </div>
+      <div class="l-body">
+        <p>What the agent knows before it starts a task. This is where learning actually lives. Three types:</p>
+        <p><strong>Short-term:</strong> current session context.<br>
+        <strong>Long-term:</strong> encoded facts, past decisions, correction logs. Persisted across sessions. In Hermes: markdown files in <ic>~/.hermes/memory/</ic>. In your stack: Supabase + Brain MCP.<br>
+        <strong>Skill memory:</strong> reusable procedures — "how to do X" — derived from past experience. Queried before starting similar tasks.</p>
+        <p><strong>Failure mode:</strong> memory grows without curation. Old corrections conflict with new ones. Regular pruning is not optional.</p>
+        <div class="code"><span class="c"># Memory structure</span>
+memory/
+  agent_memory.md     <span class="c"># accumulated facts</span>
+  correction_log.md   <span class="c"># mistake → fix pairs</span>
+  user_profile.md     <span class="c"># stable constraints</span>
+skills/
+  quarantine/         <span class="c"># new skills, not yet approved</span>
+  validated/          <span class="c"># gatekeeper-approved</span>
+  archived/           <span class="c"># deprecated, kept for rollback</span></div>
+      </div>
+    </div>
+
+    <div class="layer" onclick="tgl(this)">
+      <div class="l-header">
+        <span class="l-badge skill">Skill creation</span>
+        <span class="l-title">Layer 4 — Skill creation &amp; improvement</span>
+        <span class="l-hint">expand</span>
+      </div>
+      <div class="l-body">
+        <p>New reusable procedures get written, tested, approved, and added to the skill library. Three triggers:</p>
+        <p><strong>1. Post-task:</strong> agent completes a complex task → reflects → writes to <ic>skills/quarantine/</ic>.<br>
+        <strong>2. Correction:</strong> reviewer catches a mistake → fix gets encoded → becomes a skill rule.<br>
+        <strong>3. Curriculum ingestion:</strong> you feed a vetted repo or course → agent derives skills from that source.</p>
+        <p>Every new skill goes through the Gatekeeper before moving from <ic>quarantine/</ic> to <ic>validated/</ic>. No exceptions.</p>
+        <p><strong>Failure mode:</strong> skipping the quarantine step. Skills go live immediately. One bad pattern propagates into every future task. You can't trace what broke.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout accent">
+    <strong>The key insight:</strong> layers 1, 3, and 4 are under your control. Layer 2 is not — and doesn't need to be. Design the controllable layers tightly, and the probabilistic layer stays useful.
+  </div>
+</div>
+
+<!-- SKILL ANATOMY -->
+<div id="anatomy" class="sec">
+  <div class="eyebrow">Skill anatomy</div>
+  <h1 class="h1">What a <em>skill actually is</em></h1>
+  <p class="lede">A skill is a reusable, versioned procedure. Not a prompt. Not a system instruction. A procedure with a trigger, a body, validation criteria, and a provenance trail.</p>
+
+  <div class="skill-grid">
+    <div class="sp">
+      <div class="sp-num">01 — Trigger</div>
+      <div class="sp-title">When to invoke</div>
+      <div class="sp-desc">Keywords or task types that cause the agent to pull this skill into context. Without a precise trigger, skills collide or get missed.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">02 — Body</div>
+      <div class="sp-title">What to do</div>
+      <div class="sp-desc">Step-by-step procedure. Explicit enough that a different agent instance can execute it without ambiguity. Instructions, not prose.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">03 — Validation</div>
+      <div class="sp-title">How to verify</div>
+      <div class="sp-desc">Checklist the output must pass before the skill is considered successful. This is what the Reviewer checks against.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">04 — Provenance</div>
+      <div class="sp-title">Where it came from</div>
+      <div class="sp-desc">Source, version number, gatekeeper sign-off, date. Required for audit and rollback.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">05 — Scope</div>
+      <div class="sp-title">Who can use it</div>
+      <div class="sp-desc">Which agents, which task types. Scoping prevents a skill trained on Python from contaminating a JavaScript task.</div>
+    </div>
+    <div class="sp">
+      <div class="sp-num">06 — Improvement log</div>
+      <div class="sp-title">How it changed</div>
+      <div class="sp-desc">Every modification, what triggered it, what changed and why. This is how you track improvement vs drift.</div>
+    </div>
+  </div>
+
+  <div class="code"><span class="c"># skills/validated/python_fastapi_endpoint.md</span>
+---
+<span class="k">trigger</span>: [<span class="s">"create endpoint"</span>, <span class="s">"fastapi route"</span>, <span class="s">"REST endpoint"</span>]
+<span class="k">scope</span>: [<span class="s">"developer_agent"</span>]
+<span class="k">source</span>: <span class="s">"curriculum: fastapi_course_v2/"</span>
+<span class="k">version</span>: 3
+<span class="k">gatekeeper_approved</span>: <span class="s">"2026-05-20"</span>
+---
+
+<span class="c">## Procedure</span>
+1. Define Pydantic models for request + response
+2. Add route decorator with explicit HTTP method
+3. Include dependency injection for auth
+4. Add OpenAPI description string
+5. Write unit test before returning
+
+<span class="c">## Validation criteria</span>
+- [ ] Pydantic model covers all fields
+- [ ] Auth dependency present
+- [ ] Test file exists at test_[filename].py
+
+<span class="c">## Improvement log</span>
+- v1: derived from curriculum ingestion
+- v2: added auth requirement (correction 2026-05-15)
+- v3: added test requirement (gatekeeper flag 2026-05-20)</div>
+
+  <div class="callout">
+    <strong>Rule:</strong> if a skill doesn't have a validation criteria section, it's not a skill — it's a note. The Reviewer needs something concrete to check against.
+  </div>
+</div>
+
+<!-- LOOP -->
+<div id="loop" class="sec">
+  <div class="eyebrow">The core loop</div>
+  <h1 class="h1">Three ways agents <em>actually learn</em></h1>
+  <p class="lede">Each path creates skills differently. All three route through the same Gatekeeper before anything gets encoded permanently.</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="stab(this,'t1','t1,t2,t3')">Curriculum ingestion</button>
+    <button class="tab" onclick="stab(this,'t2','t1,t2,t3')">Feedback correction</button>
+    <button class="tab" onclick="stab(this,'t3','t1,t2,t3')">Post-task reflection</button>
+  </div>
+
+  <div id="t1" class="tab-panel on">
+    <div class="callout good">
+      <strong>Best for:</strong> loading a new domain. Give it a course, a codebase, or documentation. It reads, extracts patterns, derives skills. You control what goes in — so you control what comes out.
+    </div>
+    <div class="loop">
+      <div class="loop-label">Curriculum ingestion path</div>
+      <div class="loop-row">
+        <div class="loop-node hi"><div class="ln-l">Vetted source</div><div class="ln-s">Repo / course</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Ingestion agent</div><div class="ln-s">Reads + extracts</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Skill draft</div><div class="ln-s">quarantine/</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Gatekeeper</div><div class="ln-s">Review + approve</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Skill library</div><div class="ln-s">validated/</div></div>
+      </div>
+      <div class="loop-note">The agent never invents. It derives from what you fed it. This is the difference between controlled learning and garbage accumulation.</div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-dot">1</div><div><div class="st-title">Prepare the source</div><div class="st-desc">A clean repo, a course folder, a documentation set. Remove anything you don't want the agent learning from. The quality of the input is the ceiling of the output.</div></div></div>
+      <div class="step"><div class="step-dot">2</div><div><div class="st-title">Run ingestion with explicit scope</div><div class="st-desc">Tell the ingestion agent exactly what to extract: patterns, procedures, constraints, anti-patterns. Not "read this and learn" — "read this and extract reusable procedures for [specific task type]."</div></div></div>
+      <div class="step"><div class="step-dot">3</div><div><div class="st-title">All drafts go to quarantine</div><div class="st-desc">Every derived skill lands in <ic>skills/quarantine/</ic> — never directly to <ic>validated/</ic>. The Gatekeeper reviews before anything goes live.</div></div></div>
+      <div class="step"><div class="step-dot">4</div><div><div class="st-title">Gatekeeper reviews against your rules</div><div class="st-desc">Clear trigger? Validation criteria? Conflict with an existing skill? If any check fails, it stays in quarantine with a reason logged.</div></div></div>
+    </div>
+    <div class="code"><span class="c"># Ingestion agent prompt (Hermes or Claude Code)</span>
+<span class="k">system</span>: |
+  You are an ingestion agent. Read the provided source
+  and extract reusable procedures. Each procedure must
+  follow the skill format exactly.
+  Do not invent. Do not generalize beyond the source.
+  Output to skills/quarantine/ only.
+
+<span class="k">source</span>: <span class="s">"./my_course/module_03_api_design/"</span>
+<span class="k">extract_for</span>: <span class="s">"REST API development tasks"</span>
+<span class="k">output_path</span>: <span class="s">"skills/quarantine/"</span>
+<span class="k">max_skills_per_run</span>: 10</div>
+  </div>
+
+  <div id="t2" class="tab-panel">
+    <div class="callout good">
+      <strong>Best for:</strong> ongoing improvement during active work. Every mistake caught by the Reviewer becomes a learning signal. The agent doesn't just fix the output — it encodes the fix as a skill rule.
+    </div>
+    <div class="loop">
+      <div class="loop-label">Feedback correction path</div>
+      <div class="loop-row">
+        <div class="loop-node"><div class="ln-l">Developer</div><div class="ln-s">Writes output</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node hi"><div class="ln-l">Reviewer</div><div class="ln-s">Specific feedback</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Developer</div><div class="ln-s">Fixes + resubmits</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Correction log</div><div class="ln-s">mistake → fix</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Skill update</div><div class="ln-s">quarantine → gate</div></div>
+      </div>
+      <div class="loop-note">Feedback must be specific: file, line, issue, suggested fix. "Needs improvement" is noise, not a learning signal. The correction log is your training corpus.</div>
+    </div>
+    <div class="code"><span class="c"># Correction log entry format</span>
+---
+<span class="k">date</span>: <span class="s">"2026-05-23"</span>
+<span class="k">task_id</span>: <span class="s">"task_4829"</span>
+<span class="k">agent</span>: <span class="s">"developer_agent"</span>
+<span class="k">mistake</span>: |
+  Missing null check before accessing user.profile.email
+  File: src/handlers/auth.py, line 42
+<span class="k">correction</span>: |
+  Always validate nested object existence before access.
+  Use optional chaining or an explicit null guard.
+<span class="k">skill_updated</span>: <span class="s">"skills/quarantine/python_null_safety.md"</span>
+<span class="k">iterations</span>: 2 <span class="c"># took 2 revisions to pass review</span></div>
+  </div>
+
+  <div id="t3" class="tab-panel">
+    <div class="callout good">
+      <strong>Best for:</strong> capturing tacit knowledge after novel tasks. When the agent solves something it hasn't done before, make it reflect and extract the procedure before moving on.
+    </div>
+    <div class="loop">
+      <div class="loop-label">Post-task reflection path</div>
+      <div class="loop-row">
+        <div class="loop-node"><div class="ln-l">Complex task</div><div class="ln-s">Completed</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node hi"><div class="ln-l">Reflection</div><div class="ln-s">Auto-triggered</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Skill draft</div><div class="ln-s">quarantine/</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Gatekeeper</div><div class="ln-s">Review</div></div>
+        <div class="loop-arr">›</div>
+        <div class="loop-node"><div class="ln-l">Library</div><div class="ln-s">validated/</div></div>
+      </div>
+      <div class="loop-note">Triggered automatically after any task above a complexity threshold. The agent extracts "what I did and why it worked" — not just the output.</div>
+    </div>
+    <div class="code"><span class="c"># Post-task reflection prompt (auto-appended by orchestrator)</span>
+You just completed a complex task. Before closing:
+
+1. What was the core approach you used?
+2. What would you do differently on a similar task?
+3. Is there a reusable procedure here? If yes, write
+   it as a skill file and save to skills/quarantine/.
+4. What context would a future agent need before
+   starting this type of task?
+
+Only write a skill if the procedure is genuinely
+reusable. Do not write skills for one-off tasks.</div>
+  </div>
+</div>
+
+<!-- GUARDRAILS -->
+<div id="guardrails" class="sec">
+  <div class="eyebrow">Control architecture</div>
+  <h1 class="h1">Guardrails that <em>prevent drift</em><br>without stopping improvement</h1>
+  <p class="lede">Control what gets permanently encoded. Probabilistic reasoning is fine at runtime. Permanent skill updates need gates.</p>
+
+  <div class="callout warn">
+    <strong>Without guardrails:</strong> the agent improves for three days, then one bad correction gets encoded. Every subsequent task inherits that bad pattern. You can't trace it. You start over.
+  </div>
+
+  <table class="gtable">
+    <thead><tr><th>Gate</th><th>What it checks</th><th>Failure action</th></tr></thead>
+    <tbody>
+      <tr><td>Format check</td><td>Has trigger, body, validation criteria, provenance</td><td>Stays in quarantine with reason logged</td></tr>
+      <tr><td>Conflict check</td><td>Doesn't contradict an existing validated skill</td><td>Flag conflict, require manual resolution</td></tr>
+      <tr><td>Scope check</td><td>Skill scope matches the task type it was created for</td><td>Narrow the scope or reject</td></tr>
+      <tr><td>Source check</td><td>Provenance points to a vetted source or logged correction</td><td>Reject — no orphan skills</td></tr>
+      <tr><td>Human review</td><td>Any skill that modifies behavior in a new domain</td><td>Hold in quarantine until you review it</td></tr>
+      <tr><td>Rollback</td><td>Version history on every skill file</td><td>Revert to previous version on flag</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sh">
+    <div class="eyebrow">Changing behavior</div>
+    <h2 class="h2">The right way to <em>change how an agent behaves</em></h2>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-dot">→</div><div><div class="st-title">Behavior change = config or skill update, not prompt tweak</div><div class="st-desc">If you want the agent to permanently behave differently, update <ic>config.yaml</ic> or a skill file. Prompts drift and can't be versioned cleanly.</div></div></div>
+    <div class="step"><div class="step-dot">→</div><div><div class="st-title">Every config change is a commit</div><div class="st-desc">Treat config.yaml and skill files like code. Version controlled, commit messages, rollback available. This is your audit trail.</div></div></div>
+    <div class="step"><div class="step-dot">→</div><div><div class="st-title">Test in quarantine before promoting</div><div class="st-desc">Run the new skill against known-good examples before moving it to <ic>validated/</ic>. Same output as the manual approach → promote. Different → fix the skill body first.</div></div></div>
+    <div class="step"><div class="step-dot">→</div><div><div class="st-title">Prune stale skills on a cadence</div><div class="st-desc">Skills not invoked in 30 days get reviewed. Skills overridden by newer skills get archived. Dead skills accumulate context noise.</div></div></div>
+  </div>
+</div>
+
+<!-- IMPLEMENTATION -->
+<div id="impl" class="sec">
+  <div class="eyebrow">Implementation</div>
+  <h1 class="h1">How to <em>wire this up</em><br>in your actual stack</h1>
+  <p class="lede">Concrete folder structure, config patterns, and the minimum viable setup for self-learning in both Hermes and Claude Code.</p>
+
+  <div class="tabs">
+    <button class="tab on" onclick="stab(this,'i1','i1,i2,i3,i4')">Folder structure</button>
+    <button class="tab" onclick="stab(this,'i2','i1,i2,i3,i4')">Gatekeeper agent</button>
+    <button class="tab" onclick="stab(this,'i3','i1,i2,i3,i4')">Supabase schema</button>
+    <button class="tab" onclick="stab(this,'i4','i1,i2,i3,i4')">Observability</button>
+  </div>
+
+  <div id="i1" class="tab-panel on">
+    <div class="code"><span class="c"># Minimum viable self-learning structure</span>
+project/
+  config.yaml              <span class="c"># routing, model assignments, scopes</span>
+  CLAUDE.md                <span class="c"># orchestrator rules (Claude Code)</span>
+  skills/
+    quarantine/            <span class="c"># new skills, not yet approved</span>
+    validated/             <span class="c"># gatekeeper-approved, in active use</span>
+    archived/              <span class="c"># deprecated, kept for rollback</span>
+  memory/
+    agent_memory.md        <span class="c"># accumulated facts + context</span>
+    correction_log.md      <span class="c"># mistake → fix pairs</span>
+    user_profile.md        <span class="c"># stable preferences + constraints</span>
+  curriculum/
+    source_01/             <span class="c"># vetted input for ingestion</span>
+    source_02/
+  gatekeeper/
+    rules.md               <span class="c"># what the gatekeeper checks</span>
+    review_log.md          <span class="c"># every decision + reason</span>
+  .git/                    <span class="c"># version control on everything above</span></div>
+  </div>
+
+  <div id="i2" class="tab-panel">
+    <div class="code"><span class="c"># gatekeeper/rules.md</span>
+
+<span class="c">## Required fields (all must be present)</span>
+- trigger: non-empty list of strings
+- scope: at least one agent name
+- source: curriculum path or correction_log reference
+- validation_criteria: at least 2 checkable items
+- version: integer starting at 1
+
+<span class="c">## Conflict check</span>
+- Search validated/ for overlapping triggers
+- If overlap: flag, do not auto-promote
+- Resolution: merge, narrow scope, or archive older
+
+<span class="c">## Rejection reasons (must be logged)</span>
+- MISSING_FIELDS
+- TRIGGER_CONFLICT
+- ORPHAN_SOURCE: no traceable provenance
+- SCOPE_TOO_BROAD: "all agents" is not valid
+- NO_VALIDATION</div>
+    <div class="code"><span class="c"># Gatekeeper agent prompt</span>
+You are the Gatekeeper. Review skill files in
+skills/quarantine/ against gatekeeper/rules.md.
+
+For each skill:
+1. Check all required fields are present
+2. Search validated/ for trigger conflicts
+3. Verify source is traceable
+4. Check scope is specific (not "all agents")
+
+If all checks pass: move to validated/, log approval.
+If any check fails: leave in quarantine, append
+  rejection reason to gatekeeper/review_log.md.
+
+You do not write skills. You do not modify skills.
+You only approve, reject, or flag for human review.</div>
+  </div>
+
+  <div id="i3" class="tab-panel">
+    <div class="code"><span class="c">-- Supabase: agent_skills</span>
+<span class="k">CREATE TABLE</span> agent_skills (
+  id          uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  name        text NOT NULL,
+  trigger     text[] NOT NULL,
+  scope       text[] NOT NULL,
+  body        text NOT NULL,
+  validation  text NOT NULL,
+  source      text NOT NULL,
+  version     int DEFAULT 1,
+  status      text DEFAULT <span class="s">'quarantine'</span>,
+  approved_at timestamptz,
+  created_at  timestamptz DEFAULT now()
+);
+
+<span class="c">-- Correction log</span>
+<span class="k">CREATE TABLE</span> correction_log (
+  id          uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  task_id     text,
+  agent_id    text,
+  mistake     text NOT NULL,
+  correction  text NOT NULL,
+  skill_id    uuid REFERENCES agent_skills(id),
+  iterations  int DEFAULT 1,
+  created_at  timestamptz DEFAULT now()
+);
+
+<span class="c">-- Agents read validated only</span>
+<span class="k">CREATE POLICY</span> agent_read ON agent_skills
+  FOR SELECT USING (status = <span class="s">'validated'</span>);</div>
+  </div>
+
+  <div id="i4" class="tab-panel">
+    <div class="code"><span class="c"># Observability — what to track</span>
+
+Every skill created      → quarantine entry timestamp
+Every gatekeeper decision → approve/reject + reason
+Every correction logged  → task_id, mistake, fix
+Every skill invocation   → which skill, which task
+Skills promoted          → quarantine → validated + date
+Skills archived          → when + why
+
+<span class="c"># Alert triggers</span>
+- Skill in quarantine > 7 days, no decision
+- Gatekeeper rejection rate > 40% in a week
+- Same correction logged 3+ times (systemic issue)
+- Memory file > 50KB (needs pruning)
+- config.yaml modified by an agent (should never happen)
+
+<span class="c"># Tools</span>
+LangSmith        → LLM call traces, prompt versions
+Supabase logs    → job state, correction entries
+Git history      → config + skill file changes
+Mission Control  → Hermes fleet visibility
+Tmux logs        → Claude Code worker output</div>
+  </div>
+</div>
+
+<!-- HERMES VS CLAUDE CODE -->
+<div id="both" class="sec">
+  <div class="eyebrow">Platform comparison</div>
+  <h1 class="h1">Self-learning in <em>Hermes vs Claude Code</em></h1>
+  <p class="lede">Same architecture. Different execution. Know what each platform handles natively and what you build yourself.</p>
+
+  <div class="cstrip">
+    <div class="cs-col">
+      <div class="cs-head h">Hermes v2</div>
+      <div class="cs-item">Skill files native — markdown in <ic>~/.hermes/skills/</ic></div>
+      <div class="cs-item">Post-task reflection built in — runs automatically after complex tasks</div>
+      <div class="cs-item">FTS5 search across memory — agent queries past experience before starting</div>
+      <div class="cs-item">Persistent process — learning accumulates while you sleep</div>
+      <div class="cs-item">Quarantine folder is a convention you add — not enforced natively</div>
+      <div class="cs-item">Gatekeeper wired via YAML sub-agent config</div>
+      <div class="cs-item">Model swap per agent — one YAML change, no code</div>
+    </div>
+    <div class="cs-col">
+      <div class="cs-head c">Claude Code</div>
+      <div class="cs-item">Skill files = power commands in <ic>.claude/commands/</ic></div>
+      <div class="cs-item">Post-task reflection is a command you define and trigger</div>
+      <div class="cs-item">No native cross-session memory — wire Supabase + Brain MCP yourself</div>
+      <div class="cs-item">Session-bound — learning only persists if you explicitly save it</div>
+      <div class="cs-item">Tmux controller gives direct visibility into every agent action</div>
+      <div class="cs-item">Gatekeeper = a dedicated worker in your orchestrator setup</div>
+      <div class="cs-item">Commit hooks enforce rules before patterns land in the codebase</div>
+    </div>
+  </div>
+
+  <div class="callout accent">
+    <strong>Practical split:</strong> Hermes for the persistent learning layer — curriculum ingestion, always-on memory, background skill improvement. Claude Code for active development sprints where you want direct oversight. Wire both to the same Supabase skills table and Brain MCP. One learning corpus, two execution modes.
+  </div>
+
+  <div class="sh">
+    <div class="eyebrow">Start here</div>
+    <h2 class="h2">Minimum viable setup</h2>
+  </div>
+
+  <div class="steps">
+    <div class="step"><div class="step-dot">1</div><div><div class="st-title">Create the folder structure</div><div class="st-desc"><ic>skills/quarantine/</ic>, <ic>skills/validated/</ic>, <ic>memory/correction_log.md</ic>, <ic>gatekeeper/rules.md</ic>. Put it under git. Everything else builds on this.</div></div></div>
+    <div class="step"><div class="step-dot">2</div><div><div class="st-title">Write your gatekeeper rules first</div><div class="st-desc">Before running any ingestion or feedback loops, define what a valid skill looks like. The Gatekeeper is only as good as the rules you give it.</div></div></div>
+    <div class="step"><div class="step-dot">3</div><div><div class="st-title">Run one curriculum ingestion end-to-end manually</div><div class="st-desc">Pick one small, well-scoped source. Run the ingestion agent. Review what lands in quarantine yourself. Promote or reject with explicit reasons. This calibrates your rules before you automate.</div></div></div>
+    <div class="step"><div class="step-dot">4</div><div><div class="st-title">Add the correction log before adding the feedback loop</div><div class="st-desc">Wire the correction log first. Without it, fixes are one-offs and nothing is learned. The log is what makes corrections reusable.</div></div></div>
+    <div class="step"><div class="step-dot">5</div><div><div class="st-title">Automate the Gatekeeper only after manual review works</div><div class="st-desc">Review the first 20 skill files yourself. You'll find gaps in your rules. Fix the rules first, then hand off to the automated Gatekeeper. Premature automation is how garbage gets in.</div></div></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function go(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  const ids=['mental','anatomy','loop','guardrails','impl','both'];
+  document.querySelectorAll('.nb')[ids.indexOf(id)].classList.add('on');
+}
+function tgl(el){el.classList.toggle('open')}
+function stab(btn,id,all){
+  btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  all.split(',').forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('on')});
+  document.getElementById(id).classList.add('on');
+}
+</script>
+</body>
+</html>
