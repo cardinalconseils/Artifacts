@@ -1,0 +1,29 @@
+/* Cardinal Conseils — Artifact Shell
+   Shared header + Geist font declarations for all artifact pages.
+   Link this before the page's own <style> block. */
+
+/* ── Geist (local) ────────────────────────────────────── */
+@font-face{font-family:"Geist";src:url("/assets/fonts/Geist-VariableFont_wght.ttf") format("truetype-variations");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("/assets/fonts/Geist-Italic-VariableFont_wght.ttf") format("truetype-variations");font-weight:100 900;font-style:italic;font-display:swap}
+
+/* ── Grain overlay ────────────────────────────────────── */
+body::before{content:'';position:fixed;inset:0;background-image:url('/assets/grain.svg');opacity:.28;pointer-events:none;z-index:0}
+
+/* ── Artifact header shell ────────────────────────────── */
+.art-header{position:sticky;top:0;z-index:40;background:rgba(244,238,226,.92);backdrop-filter:blur(14px) saturate(120%);-webkit-backdrop-filter:blur(14px) saturate(120%);border-bottom:1px solid rgba(26,23,20,.12)}
+.art-hdr{max-width:1120px;margin:0 auto;padding:13px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.art-brand{display:flex;align-items:center;gap:7px;text-decoration:none;color:#6E6356;font-family:"Geist",-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;-webkit-font-smoothing:antialiased}
+.art-brand:hover{opacity:.72;text-decoration:none}
+.art-brand img{display:block;flex-shrink:0}
+.art-sep{color:rgba(26,23,20,.28);font-size:13px;line-height:1}
+.art-bc-home{color:#6E6356}
+.art-bc-cat{color:#6E6356}
+.art-bc-title{color:#1A1714;font-weight:500}
+.art-badge{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid rgba(26,23,20,.22);color:#6E6356;background:transparent;font-family:"Geist",sans-serif;white-space:nowrap}
+
+/* ── Mobile ───────────────────────────────────────────── */
+@media(max-width:600px){
+  .art-hdr{padding:12px 20px}
+  .art-bc-cat,.art-sep:nth-child(4),.art-bc-title{display:none}
+  .art-badge{display:none}
+}

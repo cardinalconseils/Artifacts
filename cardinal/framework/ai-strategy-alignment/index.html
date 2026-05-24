@@ -7,14 +7,15 @@
 <title>The AI–Strategy Alignment Framework | Cardinal Conseils</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/cardinal-artifact.css">
 <style>
-:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--green-s:rgba(34,197,94,.1);--green-b:rgba(34,197,94,.3);--blue:#3B82F6;--r:8px;--rl:12px;--max:920px}
+:root{--bg:#F4EEE2;--s1:#ECE4D3;--s2:rgba(26,23,20,.1);--s3:rgba(26,23,20,.2);--text:#1A1714;--muted:#3B342C;--dim:#6E6356;--red:#8B1F2A;--red-h:#A82535;--red-s:#F2DEDF;--red-b:rgba(139,31,42,.22);--gold:#A67C52;--green:#2D6A4F;--green-s:rgba(45,106,79,.08);--green-b:rgba(45,106,79,.28);--blue:#2C5F8A;--r:6px;--rl:12px;--max:920px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11";position:relative}
 a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
-code,pre{font-family:'JetBrains Mono','Fira Code',monospace}
+code,pre{font-family:"Geist Mono","JetBrains Mono",ui-monospace,monospace}
 pre{font-size:13px;background:var(--s1);border:1px solid var(--s3);border-radius:var(--r);padding:16px;overflow-x:auto;line-height:1.55;tab-size:2}
 .container{max-width:var(--max);margin:0 auto;padding:0 24px}
 
@@ -47,7 +48,7 @@ header{border-bottom:1px solid var(--s2);padding:18px 0}
 .sm h2{font-size:20px;font-weight:700;letter-spacing:-.01em}
 .sm .sw{font-size:12px;color:var(--dim)}
 
-.tabs-bar{position:sticky;top:0;z-index:10;background:rgba(9,9,11,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2)}
+.tabs-bar{position:sticky;top:47px;z-index:10;background:rgba(244,238,226,.94);backdrop-filter:blur(8px) saturate(120%);border-bottom:1px solid var(--s2)}
 .tabs{display:flex;max-width:var(--max);margin:0 auto;padding:0 24px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tb{flex-shrink:0;padding:13px 15px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s}
@@ -125,7 +126,7 @@ li{margin-bottom:5px}li strong{color:var(--text)}
 .loop-svg{width:100%;max-width:300px;margin:0 auto}
 .loop-node{cursor:pointer}
 .loop-node circle{fill:var(--s1);stroke:var(--s3);stroke-width:2;transition:all .2s}
-.loop-node text{fill:var(--muted);font-size:13px;font-weight:600;font-family:'Inter',sans-serif;text-anchor:middle;dominant-baseline:middle;transition:fill .2s;pointer-events:none}
+.loop-node text{fill:var(--muted);font-size:13px;font-weight:600;font-family:"Geist",sans-serif;text-anchor:middle;dominant-baseline:middle;transition:fill .2s;pointer-events:none}
 .loop-node:hover circle{stroke:var(--dim)}
 .loop-node.active circle{fill:var(--red-s);stroke:var(--red);stroke-width:2.5}
 .loop-node.active text{fill:var(--red-h)}
@@ -192,7 +193,7 @@ li{margin-bottom:5px}li strong{color:var(--text)}
 .lens .lt span{color:var(--dim);font-size:12px}
 
 /* live preview */
-.cv-preview{position:sticky;top:64px}
+.cv-preview{position:sticky;top:96px}
 .cv-card{background:linear-gradient(160deg,var(--s1),#101013);border:1px solid var(--s2);border-radius:var(--rl);padding:20px;overflow:hidden}
 .cv-card .cvc-h{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .cvc-row{margin-bottom:13px}
@@ -241,10 +242,18 @@ footer{border-top:1px solid var(--s2);padding:28px 0;margin-top:8px}
 </style>
 </head>
 <body>
-<header>
-  <div class="hdr">
-    <div class="brand"><span class="dot"></span> Cardinal Conseils</div>
-    <span class="badge">Framework</span>
+<header class="art-header" id="site-header">
+  <div class="art-hdr">
+    <a href="/" class="art-brand">
+      <img src="/assets/monogram.svg" alt="Cardinal Conseils" height="20" width="20">
+      <span class="art-sep">›</span>
+      <span class="art-bc-home">Artifacts</span>
+      <span class="art-sep">›</span>
+      <span class="art-bc-cat">Framework</span>
+      <span class="art-sep">›</span>
+      <span class="art-bc-title">AI–Strategy Alignment</span>
+    </a>
+    <span class="art-badge">Framework</span>
   </div>
 </header>
 

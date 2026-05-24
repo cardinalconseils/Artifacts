@@ -6,14 +6,16 @@
 <meta name="description" content="The BUILD Framework — Brief, Unpack, Install, Layer, Deploy. Turn any input into a deployable, sellable, teachable guide in one Claude Code session.">
 <title>BUILD Framework — Implementation Guide Builder | Cardinal Conseils</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/cardinal-artifact.css">
 <style>
-:root{--bg:#09090B;--s1:#18181B;--s2:#27272A;--s3:#3F3F46;--text:#FAFAFA;--muted:#A1A1AA;--dim:#71717A;--red:#DC2626;--red-h:#EF4444;--red-s:rgba(220,38,38,.1);--red-b:rgba(220,38,38,.25);--gold:#F59E0B;--green:#22C55E;--r:8px;--rl:12px;--max:880px}
+:root{--bg:#F4EEE2;--s1:#ECE4D3;--s2:rgba(26,23,20,.1);--s3:rgba(26,23,20,.2);--text:#1A1714;--muted:#3B342C;--dim:#6E6356;--red:#8B1F2A;--red-h:#A82535;--red-s:#F2DEDF;--red-b:rgba(139,31,42,.22);--gold:#A67C52;--green:#2D6A4F;--r:6px;--rl:12px;--max:880px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.65}
+body{background:var(--bg);color:var(--text);font-family:"Geist",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11";position:relative}
 a{color:var(--red);text-decoration:none}a:hover{color:var(--red-h)}
-code,pre{font-family:'JetBrains Mono','Fira Code',monospace}
+code,pre{font-family:"Geist Mono","JetBrains Mono",ui-monospace,monospace}
 pre{font-size:13px;background:var(--s1);border:1px solid var(--s3);border-radius:var(--r);padding:16px;overflow-x:auto;line-height:1.55;tab-size:2}
 .container{max-width:var(--max);margin:0 auto;padding:0 24px}
 
@@ -42,7 +44,7 @@ header{border-bottom:1px solid var(--s2);padding:18px 0}
 .sw{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
 .sm h2{font-size:19px;font-weight:700;letter-spacing:-.01em;margin-top:2px}
 
-.tabs-bar{position:sticky;top:0;z-index:10;background:rgba(9,9,11,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--s2)}
+.tabs-bar{position:sticky;top:47px;z-index:10;background:rgba(244,238,226,.94);backdrop-filter:blur(8px) saturate(120%);border-bottom:1px solid var(--s2)}
 .tabs{display:flex;max-width:var(--max);margin:0 auto;padding:0 24px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tb{flex-shrink:0;padding:13px 16px;font-size:13px;font-weight:500;color:var(--dim);cursor:pointer;border:none;border-bottom:2px solid transparent;background:none;white-space:nowrap;transition:color .15s,border-color .15s}
@@ -115,10 +117,18 @@ footer{border-top:1px solid var(--s2);padding:28px 0;margin-top:48px}
 </style>
 </head>
 <body>
-<header>
-  <div class="hdr">
-    <div class="brand"><span class="dot"></span>Cardinal Conseils</div>
-    <span class="badge">Framework</span>
+<header class="art-header" id="site-header">
+  <div class="art-hdr">
+    <a href="/" class="art-brand">
+      <img src="/assets/monogram.svg" alt="Cardinal Conseils" height="20" width="20">
+      <span class="art-sep">›</span>
+      <span class="art-bc-home">Artifacts</span>
+      <span class="art-sep">›</span>
+      <span class="art-bc-cat">Framework</span>
+      <span class="art-sep">›</span>
+      <span class="art-bc-title">BUILD Framework</span>
+    </a>
+    <span class="art-badge">Framework</span>
   </div>
 </header>
 
