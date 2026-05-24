@@ -43,7 +43,13 @@ Tags: framework, cardinal, ai-adoption, leadership, coaching, ai-strategy, chang
 GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/five-h-framework
 
 ### cardinal/framework/implementation-guide-builder
-Title: Implementation Guide Builder — The BUILD Framework  
-Summary: The BUILD framework for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions.  
-Tags: implementation-guide, framework, cardinal, methodology, ai-tools, claude-code, knowledge-packaging  
+Title: Implementation Guide Builder — The BUILD Framework
+Summary: The BUILD framework for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions.
+Tags: implementation-guide, framework, cardinal, methodology, ai-tools, claude-code, knowledge-packaging
 GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/implementation-guide-builder
+
+### cardinal/self/agent-skill-learning
+Title: Agent Self-Learning — Skill Creation Architecture
+Summary: Four-layer architecture for controlled AI agent self-improvement: Config & routing (deterministic), LLM reasoning (probabilistic), Memory & context, and Skill creation with quarantine gates. Covers curriculum ingestion, feedback correction, post-task reflection, and guardrails that prevent skill drift — with a Hermes vs Claude Code comparison and minimum viable setup.
+Tags: self, cardinal, agents, skill-creation, self-learning, quarantine, gatekeeper, hermes, claude-code, memory
+GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/agent-skill-learning

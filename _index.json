@@ -70,5 +70,23 @@
     "live_url": null,
     "tags": ["implementation-guide", "framework", "cardinal", "methodology", "ai-tools", "claude-code", "knowledge-packaging"],
     "summary": "The BUILD framework — Brief, Unpack, Install, Layer, Deploy — for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions."
+  },
+  {
+    "title": "Agent Self-Learning — Skill Creation Architecture",
+    "topic_slug": "agent-skill-learning",
+    "venture": "cardinal",
+    "modes": ["self"],
+    "primary_mode": "self",
+    "format": ["md", "interactive-html"],
+    "branded": true,
+    "source": "internal",
+    "created": "2026-05-23",
+    "published_at": "2026-05-23T00:00:00Z",
+    "version": 1,
+    "path": "cardinal/self/agent-skill-learning",
+    "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/agent-skill-learning",
+    "live_url": null,
+    "tags": ["self", "cardinal", "agents", "skill-creation", "self-learning", "quarantine", "gatekeeper", "hermes", "claude-code", "memory"],
+    "summary": "Four-layer architecture for controlled AI agent self-improvement: Config & routing (deterministic), LLM reasoning (probabilistic), Memory & context, and Skill creation with quarantine gates. Covers curriculum ingestion, feedback correction, post-task reflection, and guardrails that prevent skill drift — with a Hermes vs Claude Code comparison and minimum viable setup."
   }
 ]
