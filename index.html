@@ -119,7 +119,31 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:28px
 .foot-links a{color:var(--ink-3);font-family:var(--font-mono);font-size:11px}
 .foot-links a:hover{color:var(--cardinal);text-decoration:none}
 
+/* ── Catalog layout (sidebar + main) ────────────────────── */
+.catalog-layout{display:flex;align-items:flex-start;gap:40px;padding-top:12px;padding-bottom:80px}
+.catalog-sidebar{width:192px;flex-shrink:0;position:sticky;top:196px}
+.catalog-main{flex:1;min-width:0}
+
+/* sidebar */
+.sb-section{margin-bottom:20px}
+.sb-head{font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-4);padding-bottom:7px;border-bottom:1px solid var(--rule);margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;border-radius:var(--r);font-size:13px;color:var(--ink-3);cursor:pointer;transition:all var(--dur) var(--ease);user-select:none;border:none;background:none;width:100%;text-align:left;font-family:var(--font-body);gap:8px}
+.sb-item:hover{background:rgba(26,23,20,.05);color:var(--ink)}
+.sb-item.active{background:var(--cardinal-wash);color:var(--cardinal);font-weight:500}
+.sb-count{font-size:11px;font-family:var(--font-mono);color:var(--ink-4);flex-shrink:0}
+.sb-item.active .sb-count{color:var(--cardinal)}
+.sb-artifact{display:block;padding:4px 8px 4px 14px;border-radius:var(--r);font-size:12px;color:var(--ink-3);text-decoration:none;transition:color var(--dur) var(--ease);line-height:1.4;margin-top:1px}
+.sb-artifact:hover{color:var(--cardinal);text-decoration:none}
+.sb-artifact::before{content:"›";margin-right:5px;color:var(--ink-4);font-size:11px}
+
 /* ── Mobile ─────────────────────────────────────────────── */
+@media(max-width:768px){
+  .catalog-layout{flex-direction:column;gap:24px;padding-top:8px}
+  .catalog-sidebar{width:100%;position:static}
+  .sb-section{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:0}
+  .sb-head{display:none}
+  .sb-artifact{display:none}
+}
 @media(max-width:600px){
   .container{padding:0 20px}
   .hdr{padding:14px 20px}
@@ -164,14 +188,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:28px
   </div>
 </div>
 
-<main class="container" id="main-content">
-  <div id="catalog">
-    <div class="state">
-      <div class="spinner"></div>
-      <p>Loading artifacts&hellip;</p>
-    </div>
+<div class="container">
+  <div class="catalog-layout">
+    <aside class="catalog-sidebar" id="catalog-sidebar"></aside>
+    <main class="catalog-main" id="main-content">
+      <div id="catalog">
+        <div class="state">
+          <div class="spinner"></div>
+          <p>Loading artifacts&hellip;</p>
+        </div>
+      </div>
+    </main>
   </div>
-</main>
+</div>
 
 <footer>
   <div class="container foot">
@@ -319,6 +348,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:28px
   }
 
   function render(){
+    buildSidebar();
     var visible=state.data.filter(matches);
     var ventures=uniqueSorted(visible.map(function(a){return a.venture;}));
 
@@ -372,6 +402,52 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:28px
     });
   }
 
+  function buildSidebar(){
+    var sb=document.getElementById("catalog-sidebar");
+    if(!sb)return;
+    while(sb.firstChild)sb.removeChild(sb.firstChild);
+
+    function makeSbBtn(label,count,isActive,onClick){
+      var btn=el("button","sb-item"+(isActive?" active":""));
+      btn.appendChild(el("span",null,label));
+      btn.appendChild(el("span","sb-count",String(count)));
+      btn.addEventListener("click",onClick);
+      return btn;
+    }
+
+    var allSec=el("div","sb-section");
+    allSec.appendChild(makeSbBtn("All Artifacts",state.data.length,state.mode==="all",function(){
+      state.mode="all";buildSidebar();render();
+    }));
+    sb.appendChild(allSec);
+
+    var modes=uniqueSorted(
+      state.data.reduce(function(acc,a){return acc.concat(a.modes&&a.modes.length?a.modes:[primaryMode(a)]);},[]),
+      function(a,b){return modeRank(a)-modeRank(b);}
+    );
+    if(modes.length){
+      var catSec=el("div","sb-section");
+      var catHead=el("div","sb-head");catHead.textContent="Categories";
+      catSec.appendChild(catHead);
+      modes.forEach(function(m){
+        var items=state.data.filter(function(a){
+          var ms=a.modes&&a.modes.length?a.modes:[primaryMode(a)];
+          return ms.indexOf(m)!==-1;
+        });
+        catSec.appendChild(makeSbBtn(modeName(m),items.length,state.mode===m,function(mCopy){
+          return function(){state.mode=mCopy;buildSidebar();render();};
+        }(m)));
+        items.sort(function(a,b){return(a.title||"").localeCompare(b.title||"");}).forEach(function(a){
+          var path=(a.path||"").replace(/^\/+|\/+$/g,"");
+          var link=el("a","sb-artifact",a.title||"");
+          link.href=a.live_url||("/"+path);
+          catSec.appendChild(link);
+        });
+      });
+      sb.appendChild(catSec);
+    }
+  }
+
   function init(data){
     state.data=Array.isArray(data)?data:[];
     var ventures=uniqueSorted(state.data.map(function(a){return a.venture;}));
@@ -381,6 +457,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:28px
     );
     buildChips("venture-filters",ventures,ventureName,"venture");
     buildChips("mode-filters",modes,modeName,"mode");
+    buildSidebar();
 
     var searchEl=document.getElementById("search");
     var t;
