@@ -1,0 +1,312 @@
+<!--
+  Cardinal Conseils — The Cardinal Publishing Pipeline — A Reference Guide
+  Type: reading-guide
+  Slug: publishing-pipeline-reference
+  Mode: self
+  Venture: cardinal
+  Language: EN
+  Version: 1
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Cardinal Publishing Pipeline — A Reference Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&family=Geist+Mono:wght@300..700&display=swap" rel="stylesheet">
+  <style>
+  :root {
+    --cream: #F4EEE2;
+    --bone: #ECE4D3;
+    --linen: #E4DAC5;
+    --ink: #1A1714;
+    --ink-2: #3B342C;
+    --ink-3: #6E6356;
+    --ink-4: #A29684;
+    --cardinal: #8B1F2A;
+    --cardinal-2: #6F1822;
+    --cardinal-wash: #F2DF0F;
+    --bronze: #A67C52;
+    --bronze-wash: #EFE4D1;
+    --rule: rgba(26,23,20,.12);
+    --rule-strong: rgba(26,23,20,.22);
+    --font-display: "Source Serif 4", Georgia, serif;
+    --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+    --r: 6px;
+    --rl: 12px;
+  }
+
+  @font-face {
+    font-family: "Geist";
+    src: url("/assets/fonts/Geist-VariableFont_wght.ttf") format("truetype-variations");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('/assets/grain.svg');
+    opacity: .35;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .brand img { display: block; height: 26px; }
+  .nav-back {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color .15s ease;
+  }
+  .nav-back:hover { color: var(--ink); }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 32px 64px;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  h1 {
+    margin: 0 0 16px;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .lede {
+    margin: 0 0 48px;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+
+  h2 {
+    margin: 48px 0 16px;
+    font-family: var(--font-display);
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  h3 {
+    margin: 32px 0 12px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--cardinal);
+  }
+
+  p {
+    margin: 0 0 16px;
+    line-height: 1.7;
+  }
+
+  ul {
+    padding-left: 16px;
+    margin: 0 0 16px;
+  }
+  li {
+    margin-bottom: 4px;
+    line-height: 1.7;
+  }
+
+  .definition {
+    border-left: 2px solid var(--rule);
+    padding-left: 16px;
+    margin: 16px 0;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 32px 0;
+  }
+
+  .stage-card {
+    background: var(--bone);
+    padding: 24px;
+    border-radius: var(--rl);
+  }
+
+  .stage-card h4 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .stage-card .output {
+    family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-3);
+text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  footer {
+    position: relative;
+    z-index: 1;
+    padding: 48px 32px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1120px;
+    margin: 0 auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 768px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .hdr { padding: 16px 20px; }
+    main { padding: 0 20px 48px; }
+    h1 { font-size: 30px; }
+    h2 { margin-top: 36px; }
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hdr">
+      <a href="/" class="brand">
+        <img src="/assets/logo-dark.png" alt="Cardinal Conseils" height="26">
+      </a>
+      <a href="/" class="nav-back">← Artifacts</a>
+    </div>
+  </header>
+
+
+  <main>
+    <p class="eyebrow">Cardinal Conseils — Self publishing</p>
+    <h1>The Cardinal Publishing Pipeline — <em>A Reference Guide</em></h1>
+    <p class="lede">You write a brief on Sunday. You wake Monday knowing it passed validation, was built, and is waiting for your final review — no manual building required.</p>
+
+    <h2>The four stages in fifteen minutes</h2>
+    <div class="stage-grid">
+      <div class="stage-card">
+        <h4>WRITE</h4>
+        <p class="output">Output: brief in Obsidian</p>
+        <p>You compose the brief in Obsidian using the standard template. The format must satisfy the editorial gate — the prompt acts as the only specification.</p>
+      </div>
+      <div class="stage-card">
+        <h4>BRIEF</h4>
+        <p class="output">Gate: frontmatter validation</p>
+        <p>The cron validates frontmatter and brief completeness. If it passes, the job continues. Otherwise it stays in queue with a log explaining the gap.</p>
+      </div>
+      <div class="stage-card">
+        <h4>BUILD</h4>
+        <p class="output">Artifact: complete index.html</p>
+        <p>The API builds an artifact from your brief. Same inputs as manual Claude Code but fully automated. Includes validation and download file if requested.</p>
+      </div>
+      <div class="stage-card">
+        <h4>SHIP</h4>
+        <p class="output">Live: auto-PR to main</p>
+        <p>Files committed as <code>feat/[slug]</code>, PR opened with diff and brief. Monday review checks tone, then merge triggers Vercel deploy in href="cdn...">~60 seconds.</p>
+      </div>
+    </div>
+
+    <h2>Two delivery modes compared</h2>
+    <p>The pipeline supports two speeds, each appropriate at different moments:</p>
+
+    <h3>Manual — Claude Code now</h3>
+    <p>Run <code>artifact-builder</code> in Claude Code when:</p>
+    <ul>
+      <li>The brief is longer than 2,000 tokens — Claude can verify it fits before calling API</li>
+      <li>You want to iterate on tone or layout before publishing</li>
+      <li>The workflow-builder variant is uncertain</li>
+    </ul>
+
+    <h3>Automated — Sunday cron</h3>
+    <p>Use the cron when:</p>
+    <ul>
+      <li>The brief is complete and editorial gate passed</li>
+      <li>You finished writing at 11pm and want it built overnight</li>
+      <li>You prefer reviewing finished artifacts rather than building them</li>
+    </ul>
+
+    <h2>What the cron actually does</h2>
+    <p>At 8am EST every Sunday, the job reads <code>queue/</code> and processes each file in order:</p>
+    <ol>
+      <li>Validates YAML frontmatter with the same rules as manual validation</li>
+      <li>Detects workflow-builder variant from brief content if not specified</li>
+      <li>Calls the API with ARTIFACT-BUILD-INSTRUCTIONS.md as system prompt</li>
+      <li>Writes files to <code>cardinal/{mode}/{slug}/</code> exactly as manual build</li>
+      <li>Updates <code>_index.json</code>, <code>llms.txt</code>, root README with new entry</li>
+      <li>Runs <code>git mv brief processed/</code> to archive the brief</li>
+      <li>Opens PR with clear commit history and diff</li>
+    </ol>
+
+    <h2>Failure modes and recovery</h2>
+    <h3>Invalid frontmatter</h3>
+    <p>The job dies but logs which field failed. Fix the brief manually and push — cron will retry next Sunday. The artifact subdirectory is never created, so queue/ acts as inbox sorter.</p>
+
+    <h3>API errors</h3>
+    <p>Rate limits or build errors hit the retry mechanism. If all attempts fail, the brief stays in queue/ with detailed logs. Run <code>process-queue -f [slug]</code> from CLI to retry manually.</p>
+
+    <h3>Malformed JSON response</h3>
+    <p>API returns unparsable JSON — logged with full prompt/response. Job fails cleanly. Use manual Claude Code with verbose logging() to debug.</p>
+
+    <h3>Bad PR merge</h3>
+    <p>Deploy step validates _index.json before Vercel build. If merge breaks JSON, Vercel refuses to build. The pipeline fails fast, alerting whichever human triggered the merge.</p>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <span>Cardinal Conseils</span>
+      <span class="foot-url">guides.cardinalconseils.com</span>
+    </div>
+  </footer>
+</body>
+</html>

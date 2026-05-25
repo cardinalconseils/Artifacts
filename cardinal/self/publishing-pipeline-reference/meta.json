@@ -1,0 +1,29 @@
+{
+  "title": "The Cardinal Publishing Pipeline — A Reference Guide",
+  "topic_slug": "publishing-pipeline-reference",
+  "venture": "cardinal",
+  "modes": [
+    "self"
+  ],
+  "primary_mode": "self",
+  "format": [
+    "md",
+    "interactive-html"
+  ],
+  "branded": true,
+  "source": "internal",
+  "created": "2026-05-25",
+  "published_at": "2026-05-25T00:00:00Z",
+  "version": 1,
+  "versions": [],
+  "path": "cardinal/self/publishing-pipeline-reference",
+  "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/publishing-pipeline-reference",
+  "live_url": null,
+  "tags": [
+    "pipeline",
+    "publishing",
+    "automation"
+  ],
+  "summary": "Complete mental model of how Cardinal Conseils artifacts move from raw idea to live published guide using automated Sunday cron or manual Claude Code",
+  "workflow_builder_variant": null
+}

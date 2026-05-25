@@ -18,6 +18,7 @@ The live site root (`/`) is the **Artifact Hub** — a browsable, searchable cat
 
 | Guide | Summary | Formats |
 |-------|---------|--------|
+| [The Cardinal Publishing Pipeline — A Reference Guide](https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/publishing-pipeline-reference) | self | Complete mental model of how Cardinal Conseils artifacts move from raw idea to l... |
 | [MANTIS — Web Tracker Audit Workflow](./cardinal/self/mantis-tracker-audit/) | SCAN → CLASSIFY → TRACE → DECIDE — a 30-minute workflow producing a complete third-party tracker inventory with privacy risk scoring and Loi 25 / GDPR exposure findings. | MD · HTML |
 | [Agent Self-Learning — Skill Creation Architecture](./cardinal/self/agent-skill-learning/) | Four-layer architecture for controlled agent self-improvement: deterministic routing, probabilistic reasoning, memory curation, and quarantine-gated skill creation. | MD · HTML |
 

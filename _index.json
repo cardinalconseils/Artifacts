@@ -3,9 +3,14 @@
     "title": "The AI–Strategy Alignment Framework",
     "topic_slug": "ai-strategy-alignment",
     "venture": "cardinal",
-    "modes": ["framework"],
+    "modes": [
+      "framework"
+    ],
     "primary_mode": "framework",
-    "format": ["md", "interactive-html"],
+    "format": [
+      "md",
+      "interactive-html"
+    ],
     "branded": true,
     "source": "internal",
     "created": "2026-05-22",
@@ -14,16 +19,33 @@
     "path": "cardinal/framework/ai-strategy-alignment",
     "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/ai-strategy-alignment",
     "live_url": null,
-    "tags": ["framework", "cardinal", "ai-strategy", "alignment", "okrs", "scrum", "strategy-execution", "outcomes", "measurement", "ai-adoption"],
+    "tags": [
+      "framework",
+      "cardinal",
+      "ai-strategy",
+      "alignment",
+      "okrs",
+      "scrum",
+      "strategy-execution",
+      "outcomes",
+      "measurement",
+      "ai-adoption"
+    ],
     "summary": "Link every AI initiative to corporate strategy. Three frameworks — the five AI roles across the strategy lifecycle, OKRs + Scrum for organizing around outcomes, and the Define→Build→Measure→Adapt alignment loop — plus an interactive Alignment Canvas that scores any AI project on strategic, operational, and financial value before you build, surfacing the output-vs-outcome trap that stalls most AI work."
   },
   {
     "title": "The Five H Framework — A Leadership Philosophy for Real AI Adoption",
     "topic_slug": "five-h-framework",
     "venture": "cardinal",
-    "modes": ["framework", "product"],
+    "modes": [
+      "framework",
+      "product"
+    ],
     "primary_mode": "framework",
-    "format": ["md", "interactive-html"],
+    "format": [
+      "md",
+      "interactive-html"
+    ],
     "branded": true,
     "source": "internal",
     "created": "2026-05-22",
@@ -32,16 +54,31 @@
     "path": "cardinal/framework/five-h-framework",
     "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/five-h-framework",
     "live_url": null,
-    "tags": ["framework", "cardinal", "ai-adoption", "leadership", "coaching", "ai-strategy", "change-management", "quebec", "bilingual"],
+    "tags": [
+      "framework",
+      "cardinal",
+      "ai-adoption",
+      "leadership",
+      "coaching",
+      "ai-strategy",
+      "change-management",
+      "quebec",
+      "bilingual"
+    ],
     "summary": "The Five H Framework — Human, Horizon, Habits, Handoff, Harvest — a leadership philosophy for real AI adoption delivered as a 90-day single-leader coaching engagement. Diagnoses where a leader's own AI adoption is shallow, installs AI-augmented habits and team governance, and proves impact with a Leader AI Impact Dashboard measuring outcomes, not activity."
   },
   {
     "title": "MANTIS — Web Tracker Audit Workflow",
     "topic_slug": "mantis-tracker-audit",
     "venture": "cardinal",
-    "modes": ["self"],
+    "modes": [
+      "self"
+    ],
     "primary_mode": "self",
-    "format": ["md", "interactive-html"],
+    "format": [
+      "md",
+      "interactive-html"
+    ],
     "branded": true,
     "source": "internal",
     "created": "2026-05-21",
@@ -50,16 +87,30 @@
     "path": "cardinal/self/mantis-tracker-audit",
     "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/mantis-tracker-audit",
     "live_url": null,
-    "tags": ["implementation-guide", "self", "privacy", "security", "tracker-audit", "loi25", "ciso", "web-audit"],
+    "tags": [
+      "implementation-guide",
+      "self",
+      "privacy",
+      "security",
+      "tracker-audit",
+      "loi25",
+      "ciso",
+      "web-audit"
+    ],
     "summary": "SCAN → CLASSIFY → TRACE → DECIDE — a 30-minute workflow using the MANTIS Chrome extension and DuckDuckGo Tracker Radar to produce a complete third-party tracker inventory for any website, with privacy risk scoring and a Loi 25 / GDPR exposure findings file."
   },
   {
     "title": "Implementation Guide Builder — The BUILD Framework",
     "topic_slug": "implementation-guide-builder",
     "venture": "cardinal",
-    "modes": ["framework"],
+    "modes": [
+      "framework"
+    ],
     "primary_mode": "framework",
-    "format": ["md", "interactive-html"],
+    "format": [
+      "md",
+      "interactive-html"
+    ],
     "branded": true,
     "source": "internal",
     "created": "2026-05-22",
@@ -68,16 +119,29 @@
     "path": "cardinal/framework/implementation-guide-builder",
     "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/framework/implementation-guide-builder",
     "live_url": null,
-    "tags": ["implementation-guide", "framework", "cardinal", "methodology", "ai-tools", "claude-code", "knowledge-packaging"],
+    "tags": [
+      "implementation-guide",
+      "framework",
+      "cardinal",
+      "methodology",
+      "ai-tools",
+      "claude-code",
+      "knowledge-packaging"
+    ],
     "summary": "The BUILD framework — Brief, Unpack, Install, Layer, Deploy — for turning any raw input into a structured guide ready to act on, sell, or teach. Runs as a Claude Code skill producing MD + interactive HTML deployed to Vercel via GitHub Actions."
   },
   {
     "title": "Agent Self-Learning — Skill Creation Architecture",
     "topic_slug": "agent-skill-learning",
     "venture": "cardinal",
-    "modes": ["self"],
+    "modes": [
+      "self"
+    ],
     "primary_mode": "self",
-    "format": ["md", "interactive-html"],
+    "format": [
+      "md",
+      "interactive-html"
+    ],
     "branded": true,
     "source": "internal",
     "created": "2026-05-23",
@@ -86,7 +150,47 @@
     "path": "cardinal/self/agent-skill-learning",
     "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/agent-skill-learning",
     "live_url": null,
-    "tags": ["self", "cardinal", "agents", "skill-creation", "self-learning", "quarantine", "gatekeeper", "hermes", "claude-code", "memory"],
+    "tags": [
+      "self",
+      "cardinal",
+      "agents",
+      "skill-creation",
+      "self-learning",
+      "quarantine",
+      "gatekeeper",
+      "hermes",
+      "claude-code",
+      "memory"
+    ],
     "summary": "Four-layer architecture for controlled AI agent self-improvement: Config & routing (deterministic), LLM reasoning (probabilistic), Memory & context, and Skill creation with quarantine gates. Covers curriculum ingestion, feedback correction, post-task reflection, and guardrails that prevent skill drift — with a Hermes vs Claude Code comparison and minimum viable setup."
+  },
+  {
+    "title": "The Cardinal Publishing Pipeline — A Reference Guide",
+    "topic_slug": "publishing-pipeline-reference",
+    "venture": "cardinal",
+    "modes": [
+      "self"
+    ],
+    "primary_mode": "self",
+    "format": [
+      "md",
+      "interactive-html"
+    ],
+    "branded": true,
+    "source": "internal",
+    "created": "2026-05-25",
+    "published_at": "2026-05-25T00:00:00Z",
+    "version": 1,
+    "versions": [],
+    "path": "cardinal/self/publishing-pipeline-reference",
+    "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/publishing-pipeline-reference",
+    "live_url": null,
+    "tags": [
+      "pipeline",
+      "publishing",
+      "automation"
+    ],
+    "summary": "Complete mental model of how Cardinal Conseils artifacts move from raw idea to live published guide using automated Sunday cron or manual Claude Code",
+    "workflow_builder_variant": null
   }
 ]
