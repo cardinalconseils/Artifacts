@@ -279,17 +279,19 @@ async function processBrief(briefFile) {
     throw new Error('_index.json is invalid JSON after update — aborting');
   }
 
+  // Copy brief to processed/ and remove original
+  const processedPath = path.join(QUEUE_DIR, 'processed', path.basename(briefFile));
+  fs.copyFileSync(briefFile, processedPath);
+  fs.unlinkSync(briefFile);
+
   const branch = `artifact/${canonicalSlug}`;
 
   git('config', 'user.name', 'Cardinal Artifacts Bot');
   git('config', 'user.email', 'artifacts@cardinalconseils.com');
   git('checkout', '-b', branch);
 
-  // Move brief to processed/ and stage as a git mv (deletes old, adds new)
-  git('mv', `queue/${path.basename(briefFile)}`, `queue/processed/${path.basename(briefFile)}`);
-
-  git('add', artifactPath + '/');
-  git('add', '_index.json', 'llms.txt', 'README.md');
+  // Stage all changes — git add -A is more reliable than git mv for this flow
+  execFileSync('git', ['add', '-A'], { stdio: 'inherit', cwd: ROOT });
 
   git('commit', '-m', `publish: ${artifactPath} — ${meta.title}`);
   git('push', 'origin', branch);
@@ -317,9 +319,13 @@ Review checklist:
 
 Approve → merge → ships in ~60 seconds.`;
 
-  gh('pr', 'create', '--title', `publish: ${meta.title}`, '--body', prBody, '--base', 'master', '--head', branch);
-
-  console.log(`  PR opened: ${branch} → master`);
+  try {
+    gh('pr', 'create', '--title', `publish: ${meta.title}`, '--body', prBody, '--base', 'master', '--head', branch);
+    console.log(`  PR opened: ${branch} → master`);
+  } catch {
+    console.log(`  PR creation from Actions blocked. Open manually:`);
+    console.log(`  https://github.com/cardinalconseils/Artifacts/pull/new/${branch}`);
+  }
 
   git('checkout', 'master');
 }
