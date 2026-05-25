@@ -20,8 +20,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Validate _index.json
+        run: python3 -c "import json; json.load(open('_index.json'))"
+
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@41.4.1
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}

@@ -189,11 +189,11 @@ async function processBrief(briefFile) {
   const systemPrompt = fs.readFileSync(BUILD_INSTRUCTIONS, 'utf8');
   const today = new Date().toISOString().split('T')[0];
 
-  console.log('  Calling Claude API...');
+  console.log('  Calling Kimi K2 via OpenRouter...');
   const result = await buildArtifact(briefContent, frontmatter, systemPrompt);
 
   if (!result.index_html || !result.readme_md || !result.meta) {
-    throw new Error(`Claude response missing required keys for ${slug}`);
+    throw new Error(`API response missing required keys for ${slug}`);
   }
 
   const canonicalSlug = frontmatter.slug || slug;
@@ -244,30 +244,26 @@ async function processBrief(briefFile) {
     throw new Error('_index.json is invalid JSON after update — aborting');
   }
 
-  fs.renameSync(briefFile, path.join(PROCESSED_DIR, path.basename(briefFile)));
-
   const branch = `artifact/${canonicalSlug}`;
 
   git('config', 'user.name', 'Cardinal Artifacts Bot');
   git('config', 'user.email', 'artifacts@cardinalconseils.com');
   git('checkout', '-b', branch);
+
+  // Move brief to processed/ and stage as a git mv (deletes old, adds new)
+  git('mv', `queue/${path.basename(briefFile)}`, `queue/processed/${path.basename(briefFile)}`);
+
   git('add', artifactPath + '/');
   git('add', '_index.json', 'llms.txt', 'README.md');
-  git('add', `queue/processed/${path.basename(briefFile)}`);
-
-  // Remove from queue staging (ignore errors if not staged)
-  try {
-    git('rm', '--cached', `queue/${path.basename(briefFile)}`);
-  } catch { /* brief may not have been staged */ }
 
   git('commit', '-m', `publish: ${artifactPath} — ${meta.title}`);
   git('push', 'origin', branch);
 
   const prBody = `## ${meta.title}
 
-**Type:** ${frontmatter.type}
-**Mode:** ${meta.primary_mode}
-**Venture:** meta.venture
+|**Type:** ${frontmatter.type}
+|**Mode:** ${meta.primary_mode}
+|**Venture:** ${meta.venture}
 
 ${meta.summary}
 

@@ -10,7 +10,7 @@
   "created": "2026-05-21",
   "published_at": "2026-05-22T00:00:00Z",
   "version": 1,
-  "versions": [],
+  "path": "cardinal/self/mantis-tracker-audit",
   "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/mantis-tracker-audit",
   "live_url": null,
   "tags": ["implementation-guide", "self", "privacy", "security", "tracker-audit", "loi25", "ciso", "web-audit"],

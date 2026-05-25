@@ -10,7 +10,7 @@
   "created": "2026-05-23",
   "published_at": "2026-05-23T00:00:00Z",
   "version": 1,
-  "versions": [],
+  "path": "cardinal/self/agent-skill-learning",
   "github_url": "https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/agent-skill-learning",
   "live_url": null,
   "tags": ["self", "cardinal", "agents", "skill-creation", "self-learning", "quarantine", "gatekeeper", "hermes", "claude-code", "memory"],
