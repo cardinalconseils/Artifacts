@@ -89,7 +89,7 @@ Commit convention: `publish: cardinal/{mode}/{slug} — {Title}`
 ## Do Not
 
 - Introduce a build step, bundler, or new npm dependency without explicit discussion
-- Commit any value for `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VERCEL_TOKEN`, or `ANTHROPIC_API_KEY`
+- Commit any value for `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VERCEL_TOKEN`, or `OPENROUTER_API_KEY`
 - Deploy without verifying `_index.json` is valid JSON and the hub renders the new artifact
 - Rename or restructure the `cardinal/{mode}/{slug}/` convention — existing URLs depend on it
 - Add inline styles or `<style>` blocks to artifact `index.html` files when a shared pattern exists

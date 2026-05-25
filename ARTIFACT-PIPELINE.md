@@ -146,7 +146,7 @@ Every Sunday at 8am EST, GitHub Actions:
    - Validates required frontmatter fields
    - Reads `ARTIFACT-BUILD-INSTRUCTIONS.md` as the system prompt
    - Detects workflow-builder type from frontmatter or keywords
-   - Calls Claude API (`claude-sonnet-4-6`) → gets complete `index.html` + `meta` object
+   - Calls Kimi K2 via OpenRouter → gets complete `index.html` + `meta` object
    - Creates `cardinal/{mode}/{slug}/` with all required files
    - Updates `_index.json`, `llms.txt`, root `README.md`
    - Moves brief to `queue/processed/`
@@ -204,7 +204,7 @@ The variant is selected based on the brief content and recorded in `meta.json` a
 
 | Secret | Where |
 |--------|-------|
-| `ANTHROPIC_API_KEY` | GitHub repo → Settings → Secrets → Actions |
+| `OPENROUTER_API_KEY` | GitHub repo → Settings → Secrets → Actions |
 
 Already present: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`
 

@@ -5,14 +5,14 @@
  * Called by GitHub Actions every Sunday at 8am EST, and on manual workflow_dispatch.
  * For each .md brief in queue/ (excluding README.md and BRIEF-TEMPLATE.md):
  *   1. Validates required frontmatter fields
- *   2. Calls Claude API with ARTIFACT-BUILD-INSTRUCTIONS.md as system prompt
+ *   2. Calls Kimi K2 via OpenRouter with ARTIFACT-BUILD-INSTRUCTIONS.md as system prompt
  *   3. Creates cardinal/{mode}/{slug}/ with index.html, README.md, meta.json
  *   4. Updates _index.json, llms.txt, root README.md
  *   5. Moves brief to queue/processed/
  *   6. Opens a PR: artifact/{slug} → master
  */
 
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
@@ -25,7 +25,11 @@ const INDEX_JSON = path.join(ROOT, '_index.json');
 const LLMS_TXT = path.join(ROOT, 'llms.txt');
 const README_MD = path.join(ROOT, 'README.md');
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const client = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+  defaultHeaders: { 'HTTP-Referer': 'https://guides.cardinalconseils.com' },
+});
 
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);
@@ -101,14 +105,16 @@ Today's date: ${today}${variantNote}
 
 Return only valid JSON. No explanation, no markdown fences around the JSON.`;
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+  const response = await client.chat.completions.create({
+    model: 'moonshotai/kimi-k2',
     max_tokens: 16000,
-    system: systemPrompt,
-    messages: [{ role: 'user', content: userMessage }],
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userMessage },
+    ],
   });
 
-  const text = response.content[0].text.trim();
+  const text = response.choices[0].message.content.trim();
   const jsonText = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '');
   return JSON.parse(jsonText);
 }
@@ -291,8 +297,8 @@ async function main() {
   console.log('Cardinal Conseils — Artifact Queue Processor');
   console.log(`Root: ${ROOT}`);
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('ERROR: ANTHROPIC_API_KEY not set');
+  if (!process.env.OPENROUTER_API_KEY) {
+    console.error('ERROR: OPENROUTER_API_KEY not set');
     process.exit(1);
   }
 
