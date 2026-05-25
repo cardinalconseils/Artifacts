@@ -53,3 +53,9 @@ Title: Agent Self-Learning — Skill Creation Architecture
 Summary: Four-layer architecture for controlled AI agent self-improvement: Config & routing (deterministic), LLM reasoning (probabilistic), Memory & context, and Skill creation with quarantine gates. Covers curriculum ingestion, feedback correction, post-task reflection, and guardrails that prevent skill drift — with a Hermes vs Claude Code comparison and minimum viable setup.
 Tags: self, cardinal, agents, skill-creation, self-learning, quarantine, gatekeeper, hermes, claude-code, memory
 GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/agent-skill-learning
+
+### cardinal/self/publishing-pipeline-reference
+Title: The Cardinal Publishing Pipeline — A Reference Guide
+Summary: Complete mental model of how Cardinal Conseils artifacts move from raw idea to live published guide using automated Sunday cron or manual Claude Code
+Tags: pipeline, publishing, automation
+GitHub: https://github.com/cardinalconseils/Artifacts/tree/master/cardinal/self/publishing-pipeline-reference
