@@ -115,8 +115,43 @@ Return only valid JSON. No explanation, no markdown fences around the JSON.`;
   });
 
   const text = response.choices[0].message.content.trim();
-  const jsonText = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '');
-  return JSON.parse(jsonText);
+  let jsonText = text.replace(/^```(?:json)?\n?/i, '').replace(/\n?```$/i, '');
+
+  // Try strict parse first
+  try {
+    return JSON.parse(jsonText);
+  } catch (err) {
+    // Fallback 1: find outermost braces
+    const firstBrace = jsonText.indexOf('{');
+    const lastBrace = jsonText.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const subset = jsonText.slice(firstBrace, lastBrace + 1);
+      try {
+        return JSON.parse(subset);
+      } catch {
+        // continue to next fallback
+      }
+    }
+
+    // Fallback 2: try to repair common LLM JSON errors
+    // Remove trailing commas before } or ]
+    let repaired = jsonText.replace(/,\s*([}\]])/g, '$1');
+    // Remove control characters
+    repaired = repaired.replace(/[\x00-\x1F\x7F]/g, '');
+    try {
+      return JSON.parse(repaired);
+    } catch {
+      // continue
+    }
+
+    // Last resort: log snippet around error for debugging
+    const match = err.message.match(/position (\d+)/);
+    const pos = match ? parseInt(match[1]) : 9600;
+    const snippet = jsonText.slice(Math.max(0, pos - 100), pos + 100);
+    console.error('\n  JSON parse failed. Snippet around error:');
+    console.error('  ...' + snippet.replace(/\n/g, '\\n') + '...');
+    throw new Error(`JSON parse failed at position ${pos}: ${err.message}`);
+  }
 }
 
 function updateIndexJson(metaEntry) {
