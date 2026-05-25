@@ -4,7 +4,7 @@
 
 Static artifact catalog for Cardinal Conseils. Deployable frameworks, guides, and methodologies — each structured with the BUILD framework. Root `/` is the Artifact Hub: a browsable, searchable catalog rendered from `_index.json`. No backend, no build step, no package manager. Pure HTML/CSS/JS deployed to Vercel on push to master.
 
-Current state: 4 artifacts published, hub live, CI/CD operational. Workflow is "author new artifact → publish PR → merge to master → auto-deploy."
+Current state: 5 artifacts published, hub live, CI/CD operational. Workflow is "author new artifact → publish PR → merge to master → auto-deploy." Artifact pipeline added: queue-based Sunday batch builder + manual Claude Code flow.
 
 ## Stack
 
@@ -23,8 +23,14 @@ Current state: 4 artifacts published, hub live, CI/CD operational. Workflow is "
 ├── llms.txt                    ← AI agent / LLM discovery index
 ├── README.md                   ← Human-readable catalog + project overview
 ├── vercel.json                 ← Static deploy config (no build, outputDir: .)
-├── .github/workflows/          ← vercel-deploy.yml (push to master → prod)
-├── .claude/skills/             ← implementation-guide-builder skill
+├── .github/workflows/          ← vercel-deploy.yml (push to master → prod) + process-queue.yml (Sunday cron)
+├── .claude/skills/             ← artifact-builder + workflow-builder skills
+├── ARTIFACT-BUILD-INSTRUCTIONS.md  ← canonical brand spec (read by Claude API + Claude Code)
+├── CARDINAL-BRIEF-TEMPLATE.md ← editorial gate template
+├── ARTIFACT-PIPELINE.md        ← pipeline documentation
+├── package.json                ← queue processor dep (@anthropic-ai/sdk) — Vercel never runs npm
+├── scripts/process-queue.js   ← Sunday batch builder
+├── queue/                      ← drop completed briefs here for Sunday processing
 └── cardinal/
     ├── framework/{slug}/       ← framework artifacts (README.md, index.html, meta.json)
     └── self/{slug}/            ← self-use methodology artifacts
@@ -41,7 +47,12 @@ Current state: 4 artifacts published, hub live, CI/CD operational. Workflow is "
 
 ### Publishing a New Artifact
 
-1. Create `cardinal/{mode}/{slug}/` containing `README.md`, `index.html`, `meta.json`
+**Manual (Claude Code):** paste content or reference `New/` file → `artifact-builder` skill runs the brief gate, builds, commits, opens PR.
+
+**Automated (queue):** drop a brief `.md` in `queue/` → push → Sunday cron builds and PRs automatically.
+
+Manual file steps:
+1. Create `cardinal/{mode}/{slug}/` containing `README.md`, `index.html`, `meta.json`, `brief.md`
 2. Add entry to root `_index.json` (matches schema of existing entries)
 3. Add entry to `llms.txt` under the correct venture section
 4. Update `README.md` catalog table
@@ -65,7 +76,7 @@ Commit convention: `publish: cardinal/{mode}/{slug} — {Title}`
 - Never touch `vercel.json` buildCommand or outputDirectory — static deploy depends on empty build
 - Every new artifact must have an entry in `_index.json` and `llms.txt` before the PR merges
 - `_index.json` schema must match existing entries exactly (same keys, same types)
-- Do not introduce a package.json, build system, or npm dependency without explicit discussion
+- `package.json` exists for the queue processor only (`@anthropic-ai/sdk`) — Vercel ignores it (`buildCommand: ""`). Do not add further npm dependencies without explicit discussion.
 
 ## Environment Variables
 
@@ -77,8 +88,8 @@ Commit convention: `publish: cardinal/{mode}/{slug} — {Title}`
 
 ## Do Not
 
-- Introduce a build step, bundler, or package.json without explicit discussion
-- Commit any value for `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, or `VERCEL_TOKEN`
+- Introduce a build step, bundler, or new npm dependency without explicit discussion
+- Commit any value for `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VERCEL_TOKEN`, or `ANTHROPIC_API_KEY`
 - Deploy without verifying `_index.json` is valid JSON and the hub renders the new artifact
 - Rename or restructure the `cardinal/{mode}/{slug}/` convention — existing URLs depend on it
 - Add inline styles or `<style>` blocks to artifact `index.html` files when a shared pattern exists

@@ -23,6 +23,17 @@ The live site root (`/`) is the **Artifact Hub** — a browsable, searchable cat
 
 ---
 
+## Pipeline
+
+Artifacts are built via two paths:
+
+- **Manual (Claude Code):** paste content in a session → Cardinal Brief gate → build → PR. Uses the `artifact-builder` skill.
+- **Automated (Sunday batch):** drop a completed brief in `queue/` → GitHub Actions cron calls Claude API every Sunday at 8am EST → artifact files created → PR opened.
+
+See [ARTIFACT-PIPELINE.md](./ARTIFACT-PIPELINE.md) for the full workflow, editorial gate, and review checklist.
+
+---
+
 *Browsable hub: [/](./index.html)*  
 *Machine-readable catalog: [_index.json](./_index.json)*  
 *AI agent index: [llms.txt](./llms.txt)*  
